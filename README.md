@@ -1,2 +1,2 @@
-PHP GIT API library
+PHP GUS API library
 ===================
