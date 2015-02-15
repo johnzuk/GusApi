@@ -1,0 +1,20 @@
+{
+  "name": "gusapi/gusapi",
+  "description": "Gus Api Library for PHP",
+  "type" : "library",
+  "license": "LGPL-2.1",
+  "keywords":["gus","nip","regon","krs","api"],
+  "authors": [
+    {
+      "name": "Janusz Żukowicz",
+      "email": "john_zuk@wp.pl"
+    }
+  ],
+  "require": {
+    "php" : ">=5.3",
+    "php-curl-class/php-curl-class": "2.1.1"
+  },
+  "autoload":{
+    "classmap": ["src/"]
+  }
+}
