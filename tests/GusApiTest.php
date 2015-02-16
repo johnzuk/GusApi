@@ -1,7 +1,5 @@
 <?php
 
-require_once "../vendor/autoload.php";
-
 use Gus\GusApi\GusApi\GusApi;
 
 class GusApiTest extends PHPUnit_Framework_TestCase
