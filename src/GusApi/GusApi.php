@@ -93,7 +93,7 @@ class GusApi
         $image = fopen($this->captchaFileName,'w+');
         if(!$image)
         {
-            throw new \Exception("NO file!");
+            throw new NoFileAccessException("No access to file: {$this->captchaFileName}");
         }
 
         fwrite($image, base64_decode($curl->response->d));

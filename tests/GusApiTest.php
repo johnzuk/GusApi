@@ -7,6 +7,6 @@ class GusApiTest extends PHPUnit_Framework_TestCase
     public function testLoginGus()
     {
         $gus = new GusApi();
-        $this->assertEquals(null,$gus->login());
+        $this->assertEquals($gus,$gus->login());
     }
 }
