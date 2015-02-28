@@ -4,6 +4,7 @@ namespace Gus\GusApi\GusApi;
 
 use Curl\Curl;
 use Gus\GusApi\Exception\InvalidUserKeyException;
+use Gus\GusApi\Exception\NoFileAccessException;
 
 /**
  * Class GusApi
@@ -16,7 +17,7 @@ class GusApi
 
     private $sid = null;
 
-    private $loginData = ["pKluczUzytkownika" => "aaaaaabbbbbcccccdddd"];
+    const loginData = "aaaaaabbbbbcccccdddd";
 
      private $searchData = [
         'jestWojPowGmn' => true,
@@ -70,7 +71,7 @@ class GusApi
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
 
-        $curl->post($this->loginUrl, json_encode($this->loginData));
+        $curl->post($this->loginUrl, json_encode(["pKluczUzytkownika" => self::loginData]));
 
         if(empty($curl->response->d)){
             throw new InvalidUserKeyException("Invalid user key!");
