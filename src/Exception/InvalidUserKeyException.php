@@ -1,6 +1,6 @@
 <?php
 
-namespace Gus\GusApi\Exception;
+namespace GusApi\Exception;
 
 class InvalidUserKeyException extends \InvalidArgumentException{
 

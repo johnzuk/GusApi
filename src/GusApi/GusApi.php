@@ -1,10 +1,9 @@
 <?php
 
-namespace Gus\GusApi\GusApi;
+namespace GusApi;
 
 use Curl\Curl;
-use Gus\GusApi\Exception\InvalidUserKeyException;
-use Gus\GusApi\Exception\NoFileAccessException;
+use GusApi\Exception\InvalidUserKeyException;
 
 /**
  * Class GusApi
@@ -15,9 +14,7 @@ use Gus\GusApi\Exception\NoFileAccessException;
 class GusApi
 {
 
-    private $sid = null;
-
-    const loginData = "aaaaaabbbbbcccccdddd";
+    const userKey = "aaaaaabbbbbcccccdddd";
 
      private $searchData = [
         'jestWojPowGmn' => true,
@@ -44,10 +41,7 @@ class GusApi
         ]
      ];
 
-    /**
-     * @var string
-     */
-    private $captchaFileName = "captcha.jpeg";
+    private $responseType;
 
     private $loginUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/Zaloguj';
 
@@ -59,140 +53,127 @@ class GusApi
 
     private $getComplexDataUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/DanePobierzPelnyRaport';
 
-    private $captchaStatus = false;
-
-    public function __construct()
+    public function __construct($assoc = false)
     {
-        $this->login();
+        $this->responseType = $assoc;
     }
 
+    /**
+     * Login user to regon server
+     *
+     * @return string session id
+     */
     public function login()
     {
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
 
-        $curl->post($this->loginUrl, json_encode(["pKluczUzytkownika" => self::loginData]));
+        $curl->post($this->loginUrl, json_encode(["pKluczUzytkownika" => self::userKey]));
 
         if(empty($curl->response->d)){
             throw new InvalidUserKeyException("Invalid user key!");
         }
 
-        $this->sid = $curl->response->d;
-
         $curl->close();
 
-        return $this;
+        return $curl->response->d;
     }
 
-    public function getCaptcha()
+    /**
+     * Return base64 encode value of captcha file
+     *
+     * @param string $sid session id
+     * @return string base64 encode value of captcha file
+     */
+    public function getCaptcha($sid)
     {
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $this->sid );
+        $curl->setHeader('sid', $sid );
         $curl->post($this->getCaptchaUrl,'');
 
-        $image = fopen($this->captchaFileName,'w+');
-        if(!$image)
-        {
-            throw new NoFileAccessException("No access to file: {$this->captchaFileName}");
-        }
-
-        fwrite($image, base64_decode($curl->response->d));
-        fclose($image);
-
         $curl->close();
 
-        return $this;
+        return $curl->response->d;
     }
 
-    public function checkCaptcha($captcha)
+    /**
+     * Check captcha value
+     *
+     * @param string $sid session id
+     * @param string $captcha value
+     * @return bool captcha status
+     */
+    public function checkCaptcha($sid, $captcha)
     {
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $this->sid);
+        $curl->setHeader('sid', $sid);
         $curl->post($this->checkCaptchaUrl, json_encode(array('pCaptcha'=>$captcha)));
         $curl->close();
 
-        $this->captchaStatus = (bool)$curl->response->d;
-        return $this->captchaStatus;
+        return (bool)$curl->response->d;
     }
 
-    public function getInfoByNip($nip)
+    public function getInfoByNip($sid, $nip, $types = 'DaneRaportPrawnaPubl')
     {
-        $basicInfo = $this->getBasicInfoByNip($nip);
 
-        return $this->getComplexData($basicInfo[0]->Regon);
+        $info = $this->search($sid, [
+            'pParametryWyszukiwania' => [
+                'Nip' => $nip
+            ]
+        ]);
+
+        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-    public function getInfoByRegon($regon)
+    public function getInfoByRegon($sid, $regon, $types = 'DaneRaportPrawnaPubl')
     {
-        $basicInfo = $this->getBasicInfoByRegon($regon);
+        $info = $this->search($sid, [
+            'pParametryWyszukiwania' => [
+                'Regon' => $regon
+            ]
+        ]);
 
-        return $this->getComplexData($basicInfo[0]->Regon);
+        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-    public function getInfoByKrs($krs)
+    public function getInfoByKrs($sid, $krs, $types = 'DaneRaportPrawnaPubl')
     {
-        $basicInfo = $this->getBasicInfoByKrs($krs);
+        $info = $this->search($sid, [
+            'pParametryWyszukiwania' => [
+                'Krs' => $krs
+            ]
+        ]);
 
-        return $this->getComplexData($basicInfo[0]->Regon);
+        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-    public function getBasicInfoByNip($nip)
-    {
-        $this->clearSearch();
-        $this->searchData['pParametryWyszukiwania']['Nip'] = $nip;
-        return $this->search();
-    }
 
-    public function getBasicInfoByRegon($regon)
-    {
-        $this->clearSearch();
-        $this->searchData['pParametryWyszukiwania']['Regon'] = $regon;
-        return $this->search();
-    }
-
-    public function getBasicInfoByKrs($krs)
-    {
-        $this->clearSearch();
-        $this->searchData['pParametryWyszukiwania']['Krs'] = $krs;
-        return $this->search();
-    }
-
-    public function getCaptchaStatus()
-    {
-        return $this->captchaStatus;
-    }
-
-    private function getComplexData($regon)
+    private function getComplexData($sid, $regon, $types)
     {
         $searchData = [
-            'pNazwaRaportu'=>'DaneRaportPrawnaPubl',
+            'pNazwaRaportu'=>$types,
             'pRegon' => $regon,
             'pSilosID' => 0
         ];
 
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $this->sid);
+        $curl->setHeader('sid', $sid);
         $curl->post($this->getComplexDataUrl, json_encode($searchData));
         $curl->close();
 
-        $response = json_decode($curl->response->d);
+        $response = json_decode($curl->response->d, $this->responseType);
         return $response[0];
     }
 
-    private function clearSearch()
-    {
-        array_walk($this->searchData['pParametryWyszukiwania'],function($item,$key){ return null; });
-    }
-
-    private function search()
+    private function search($sid, array $searchData)
     {
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $this->sid);
-        $curl->post($this->searchDataUrl, json_encode($this->searchData));
+        $curl->setHeader('sid', $sid);
+        $curl->post($this->searchDataUrl, json_encode($searchData));
         $curl->close();
 
         return json_decode($curl->response->d);

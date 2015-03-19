@@ -2,41 +2,42 @@
 
 require_once '../vendor/autoload.php';
 
-use Gus\GusApi\GusApi\GusApi;
-use Gus\GusApi\Exception\NoFileAccessException;
-
+use GusApi\GusApi;
+use GusApi\ReportTypes;
 
 session_start();
 
-if(!isset($_SESSION['gus']) || isset($_GET['reset']))
-{
-    $_SESSION['gus'] = new GusApi();
+$gus = new GusApi();
 
-    $gus = &$_SESSION['gus'];
-    $gus->getCaptcha();
+if(!isset($_SESSION['sid'])){
+    $_SESSION['sid'] = $gus->login();
 }
 
-$gus = &$_SESSION['gus'];
-
-if(!($gus->getCaptchaStatus()) && $gus == null)
+if(isset($_GET['captcha']))
 {
-    try{
-        $gus->getCaptcha();
-    }catch (NoFileAccessException $e)
-    {
-        $e->getMessage();
-    }
+    $image = fopen("captcha.jpeg",'w+');
 
+    $captcha = $gus->getCaptcha($_SESSION['sid']);
+
+    fwrite($image, base64_decode($captcha));
+    fclose($image);
 }
 
-if($gus->getCaptchaStatus() || isset($_POST['captcha']))
-{
-    if($gus->getCaptchaStatus() || $gus->checkCaptcha($_POST['captcha']))
-    {
-        var_dump($gus->getInfoByNip("5250010976"));
-        var_dump($gus->getInfoByRegon("010344708"));
+if(isset($_POST['captcha'])){
+    if($gus->checkCaptcha($_SESSION['sid'], $_POST['captcha'])){
+
+        echo '<form action="" method="POST">';
+        echo '<input type="text" name="nip" >';
+        echo '<input type="submit" value="check">';
+        echo '</form>';
+
     }
 }
+
+if(isset($_POST['nip'])){
+    var_dump($gus->getInfoByNip($_SESSION['sid'], '5250010976'));
+}
+
 
 echo '<img src="captcha.jpeg?'.time().'">';
 echo '<form action="" method="POST">';
