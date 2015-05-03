@@ -15,7 +15,7 @@
     "php-curl-class/php-curl-class": "2.1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "3.7"
+    "phpunit/phpunit": "4.6.6"
   },
   "autoload":{
 
