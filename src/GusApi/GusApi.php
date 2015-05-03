@@ -1,9 +1,10 @@
 <?php
-
 namespace GusApi;
 
 use Curl\Curl;
 use GusApi\Exception\InvalidUserKeyException;
+use GusApi\Exception\CurlException;
+use GusApi\ReportType;
 
 /**
  * Class GusApi
@@ -13,169 +14,217 @@ use GusApi\Exception\InvalidUserKeyException;
  */
 class GusApi
 {
+    const USER_KEY = "aaaaaabbbbbcccccdddd";
 
-    const userKey = "aaaaaabbbbbcccccdddd";
+    const URL_BASIC = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/";
 
-     private $searchData = [
-        'jestWojPowGmn' => true,
-        'pParametryWyszukiwania' => [
-            'AdsSymbolGminy' => null,
-            'AdsSymbolMiejscowosci' => null,
-            'AdsSymbolPowiatu' => null,
-            'AdsSymbolUlicy' => null,
-            'AdsSymbolWojewodztwa' => null,
-            'Dzialalnosci' => null,
-            'FormaPrawna' => null,
-            'Krs' => null,
-            'Krsy' => null,
-            'NazwaPodmiotu' => null,
-            'Nip' => null,
-            'Nipy' => null,
-            'NumerwRejestrzeLubEwidencji' => null,
-            'OrganRejestrowy' => null,
-            'PrzewazajacePKD' => false,
-            'Regon' => null,
-            'Regony14zn' => null,
-            'Regony9zn' => null,
-            'RodzajRejestru' => null
-        ]
-     ];
+    const URL_LOGIN = "Zaloguj";
 
-    private $responseType;
+    const URL_GET_CAPTCHA = "PobierzCaptcha";
 
-    private $loginUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/Zaloguj';
+    const URL_CHECK_CAPTCHA = "SprawdzCaptcha";
 
-    private $getCaptchaUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/PobierzCaptcha';
+    const URL_SEARCH = "daneSzukaj";
 
-    private $checkCaptchaUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/SprawdzCaptcha';
+    const URL_FULL_REPORT = "DanePobierzPelnyRaport";
 
-    private $searchDataUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/daneSzukaj';
+    /**
+     * @var Curl
+     */
+    private $curl;
 
-    private $getComplexDataUrl = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/DanePobierzPelnyRaport';
-
-    public function __construct($assoc = false)
+    public function __construct()
     {
-        $this->responseType = $assoc;
+        $this->curl = new Curl();
+        $this->curl->setHeader('Content-Type', 'application/json');
+    }
+
+    public function __destruct()
+    {
+        $this->curl->close();
     }
 
     /**
-     * Login user to regon server
+     * Login in to regin server
      *
      * @return string session id
+     * @throws CurlException
      */
     public function login()
     {
-        $curl = new Curl();
-        $curl->setHeader('Content-Type', 'application/json');
+        $this->preparePostData(self::URL_LOGIN, ["pKluczUzytkownika" => self::USER_KEY]);
+        $sid = $this->getResponse();
 
-        $curl->post($this->loginUrl, json_encode(["pKluczUzytkownika" => self::userKey]));
-
-        if(empty($curl->response->d)){
+        if (empty($sid)) {
             throw new InvalidUserKeyException("Invalid user key!");
         }
 
-        $curl->close();
-
-        return $curl->response->d;
+        return $sid;
     }
 
     /**
-     * Return base64 encode value of captcha file
+     * Get captcha base64 encoding image
      *
-     * @param string $sid session id
-     * @return string base64 encode value of captcha file
+     * @param string $sid
+     * @return string base64 encoding image
+     * @throws CurlException
      */
     public function getCaptcha($sid)
     {
-        $curl = new Curl();
-        $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $sid );
-        $curl->post($this->getCaptchaUrl,'');
-
-        $curl->close();
-
-        return $curl->response->d;
+        $this->preparePostData(self::URL_GET_CAPTCHA, [], $sid);
+        return $this->getResponse();
     }
 
     /**
-     * Check captcha value
+     * Check captcha
      *
-     * @param string $sid session id
-     * @param string $captcha value
-     * @return bool captcha status
+     * @param string $sid
+     * @param string $captcha
+     * @return bool
+     * @throws CurlException
      */
     public function checkCaptcha($sid, $captcha)
     {
-        $curl = new Curl();
-        $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $sid);
-        $curl->post($this->checkCaptchaUrl, json_encode(array('pCaptcha'=>$captcha)));
-        $curl->close();
-
-        return (bool)$curl->response->d;
+        $this->preparePostData(self::URL_CHECK_CAPTCHA, ['pCaptcha' => $captcha], $sid);
+        return (bool)$this->getResponse();
     }
 
-    public function getInfoByNip($sid, $nip, $types = 'DaneRaportPrawnaPubl')
+    /**
+     *Get report data from nip
+     *
+     * @param string $sid
+     * @param string $nip
+     * @return SearchReport
+     */
+    public function getByNip($sid, $nip)
     {
-
-        $info = $this->search($sid, [
+        return $this->search($sid, [
             'pParametryWyszukiwania' => [
                 'Nip' => $nip
             ]
         ]);
-
-        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-    public function getInfoByRegon($sid, $regon, $types = 'DaneRaportPrawnaPubl')
+    /**
+     * Get report data from regon
+     *
+     * @param string $sid
+     * @param string $regon
+     * @return SearchReport
+     */
+    public function getByRegon($sid, $regon)
     {
-        $info = $this->search($sid, [
+        return $this->search($sid, [
             'pParametryWyszukiwania' => [
                 'Regon' => $regon
             ]
         ]);
-
-        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-    public function getInfoByKrs($sid, $krs, $types = 'DaneRaportPrawnaPubl')
+    /**
+     * Search by krs
+     *
+     * @param $sid
+     * @param $krs
+     * @return SearchReport
+     */
+    public function getByKrs($sid, $krs)
     {
-        $info = $this->search($sid, [
+        return $this->search($sid, [
             'pParametryWyszukiwania' => [
                 'Krs' => $krs
             ]
         ]);
-
-        return $this->getComplexData($sid, $info[0]->Regon, $types);
     }
 
-
-    private function getComplexData($sid, $regon, $types)
+    /**
+     * Get complex data by regon number
+     *
+     * @param string $sid
+     * @param string $regon
+     * @param string $type
+     * @return mixed
+     * @throws CurlException
+     */
+    public function getFullData($sid, $regon, $type = ReportType::BASIC)
     {
         $searchData = [
-            'pNazwaRaportu'=>$types,
+            'pNazwaRaportu'=>$type,
             'pRegon' => $regon,
             'pSilosID' => 0
         ];
 
-        $curl = new Curl();
-        $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $sid);
-        $curl->post($this->getComplexDataUrl, json_encode($searchData));
-        $curl->close();
+        $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
+        $response = json_decode($this->getResponse());
 
-        $response = json_decode($curl->response->d, $this->responseType);
         return $response[0];
     }
 
+    /**
+     * Get url address
+     *
+     * @param string $address
+     * @return string server url
+     */
+    private function getUrl($address)
+    {
+        return self::URL_BASIC.$address;
+    }
+
+    /**
+     * Prepare send data
+     *
+     * @param array $data
+     * @return string json data
+     */
+    private function prepare(array $data)
+    {
+        return json_encode($data);
+    }
+
+    /**
+     * Prepare post data
+     *
+     * @param string $address
+     * @param array $data
+     * @param null $sid
+     */
+    private function preparePostData($address, array $data, $sid = null)
+    {
+        if (!is_null($sid)) {
+            $this->curl->setHeader('sid', $sid);
+        }
+        $this->curl->post($this->getUrl($address), $this->prepare($data));
+    }
+
+    /**
+     * Return response server data
+     *
+     * @return mixed
+     * @throws CurlException
+     */
+    private function getResponse()
+    {
+        if ($this->curl->error) {
+            throw new CurlException($this->curl->error_message);
+        }
+
+        return $this->curl->response->d;
+    }
+
+    /**
+     * Search data
+     *
+     * @param string $sid
+     * @param array $searchData
+     * @return SearchReport
+     * @throws CurlException
+     */
     private function search($sid, array $searchData)
     {
-        $curl = new Curl();
-        $curl->setHeader('Content-Type', 'application/json');
-        $curl->setHeader('sid', $sid);
-        $curl->post($this->searchDataUrl, json_encode($searchData));
-        $curl->close();
+        $this->preparePostData(self::URL_SEARCH, $searchData, $sid);
+        $response = json_decode($this->getResponse());
 
-        return json_decode($curl->response->d);
+        return new SearchReport($response[0]);
     }
 }

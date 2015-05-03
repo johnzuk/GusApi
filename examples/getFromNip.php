@@ -13,6 +13,10 @@ if(!isset($_SESSION['sid'])){
     $_SESSION['sid'] = $gus->login();
 }
 
+if (isset($_GET['reset'])) {
+    $_SESSION = [];
+}
+
 if(isset($_GET['captcha']))
 {
     $image = fopen("captcha.jpeg",'w+');
@@ -35,7 +39,7 @@ if(isset($_POST['captcha'])){
 }
 
 if(isset($_POST['nip'])){
-    var_dump($gus->getInfoByNip($_SESSION['sid'], '5250010976'));
+    var_dump($gus->searchByNip($_SESSION['sid'], '5250010976'));
 }
 
 
