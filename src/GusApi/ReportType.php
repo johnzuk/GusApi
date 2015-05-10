@@ -3,7 +3,7 @@ namespace GusApi;
 
 class ReportType
 {
-    const BASIC = 'DaneRaportPrawnaPubl';
+    const BASIC = 'DaneRaportFizycznaPubl';
     const ACTION = 'DaneRaportDzialalnosciPrawnejPubl';
     const LISTS = 'DaneRaportLokalnePrawnejPubl';
 }

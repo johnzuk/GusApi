@@ -14,7 +14,7 @@ use GusApi\ReportType;
  */
 class GusApi
 {
-    const USER_KEY = "aaaaaabbbbbcccccdddd";
+    private $userKey = "aaaaaabbbbbcccccdddd";
 
     const URL_BASIC = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/";
 
@@ -33,10 +33,11 @@ class GusApi
      */
     private $curl;
 
-    public function __construct()
+    public function __construct($userKey)
     {
         $this->curl = new Curl();
         $this->curl->setHeader('Content-Type', 'application/json');
+        $this->userKey = $userKey;
     }
 
     public function __destruct()
@@ -52,7 +53,7 @@ class GusApi
      */
     public function login()
     {
-        $this->preparePostData(self::URL_LOGIN, ["pKluczUzytkownika" => self::USER_KEY]);
+        $this->preparePostData(self::URL_LOGIN, ["pKluczUzytkownika" => $this->userKey]);
         $sid = $this->getResponse();
 
         if (empty($sid)) {
@@ -157,7 +158,19 @@ class GusApi
         $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
         $response = json_decode($this->getResponse());
 
-        return $response[0];
+        switch ($type) {
+            case ReportType::BASIC :
+                return $response[0];
+                break;
+            case ReportType::ACTION:
+                return new ActionReport($response[0]);
+                break;
+            case ReportType::LISTS:
+                return new ListsReport($response[0]);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

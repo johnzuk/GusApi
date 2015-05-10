@@ -3,13 +3,13 @@
 require_once '../vendor/autoload.php';
 
 use GusApi\GusApi;
-use GusApi\ReportTypes;
+use GusApi\ReportType;
 
 session_start();
 
-$gus = new GusApi();
+$gus = new GusApi("aaaaaabbbbbcccccdddd");
 
-if(!isset($_SESSION['sid'])){
+if (!isset($_SESSION['sid'])) {
     $_SESSION['sid'] = $gus->login();
 }
 
@@ -17,8 +17,7 @@ if (isset($_GET['reset'])) {
     $_SESSION = [];
 }
 
-if(isset($_GET['captcha']))
-{
+if (isset($_GET['captcha'])) {
     $image = fopen("captcha.jpeg",'w+');
 
     $captcha = $gus->getCaptcha($_SESSION['sid']);
@@ -27,8 +26,8 @@ if(isset($_GET['captcha']))
     fclose($image);
 }
 
-if(isset($_POST['captcha'])){
-    if($gus->checkCaptcha($_SESSION['sid'], $_POST['captcha'])){
+if (isset($_POST['captcha'])) {
+    if ($gus->checkCaptcha($_SESSION['sid'], $_POST['captcha'])) {
 
         echo '<form action="" method="POST">';
         echo '<input type="text" name="nip" >';
@@ -38,8 +37,10 @@ if(isset($_POST['captcha'])){
     }
 }
 
-if(isset($_POST['nip'])){
-    var_dump($gus->searchByNip($_SESSION['sid'], '5250010976'));
+if (isset($_POST['nip'])) {
+    $gusReport = $gus->getByNip($_SESSION['sid'], '5250010976');
+
+    var_dump($gus->getFullData($_SESSION['sid'], $gusReport->getRegon(), ReportType::BASIC));
 }
 
 
