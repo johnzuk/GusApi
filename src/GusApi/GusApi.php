@@ -173,6 +173,21 @@ class GusApi
         }
     }
 
+    public function getFullReport($sid, SearchReport $searchReport)
+    {
+
+        $searchData = [
+            'pNazwaRaportu'=>$searchReport->getType(),
+            'pRegon' => $searchReport->getRegon14(),
+            'pSilosID' => $searchReport->getSilo()
+        ];
+
+        $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
+        $response = json_decode($this->getResponse());
+
+        var_dump($response);
+    }
+
     /**
      * Get url address
      *
