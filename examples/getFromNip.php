@@ -38,9 +38,10 @@ if (isset($_POST['captcha'])) {
 }
 
 if (isset($_POST['nip'])) {
-    //$gusReport = $gus->getByNip($_SESSION['sid'], '5250010976');
-    $gusReport = $gus->getByNip($_SESSION['sid'], '9372557086');
-    $gus->getFullReport($_SESSION['sid'], $gusReport);
+    //$nip = '5250010976';
+    $nip = '9372557086';
+    $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
+    var_dump($gus->getFullReport($_SESSION['sid'], $gusReport));
     var_dump($gusReport);
 
     //DaneRaportPrawnaPubl

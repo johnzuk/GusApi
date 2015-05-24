@@ -2,6 +2,7 @@
 namespace GusApi;
 
 use Curl\Curl;
+use GusApi\Exception\InvalidTypeException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\CurlException;
 use GusApi\ReportType;
@@ -138,16 +139,8 @@ class GusApi
         ]);
     }
 
-    /**
-     * Get complex data by regon number
-     *
-     * @param string $sid
-     * @param string $regon
-     * @param string $type
-     * @return mixed
-     * @throws CurlException
-     */
-    public function getFullData($sid, $regon, $type = ReportType::BASIC)
+
+    public function getFullData($sid, $regon, $type = ReportType::BASIC_PUBLIC)
     {
         $searchData = [
             'pNazwaRaportu'=>$type,
@@ -159,20 +152,27 @@ class GusApi
         $response = json_decode($this->getResponse());
 
         switch ($type) {
-            case ReportType::BASIC :
+            case ReportType::BASIC_PUBLIC :
                 return $response[0];
                 break;
-            case ReportType::ACTION:
+            case ReportType::PUBLIC_ACTIVITY:
                 return new ActionReport($response[0]);
                 break;
-            case ReportType::LISTS:
+            case ReportType::PUBLIC_LOCALS:
                 return new ListsReport($response[0]);
                 break;
             default:
+                throw new InvalidTypeException(sprintf("Invalid report type: %s", $type));
                 break;
         }
     }
 
+    /**
+     * @param $sid
+     * @param SearchReport $searchReport
+     * @return mixed
+     * @throws CurlException
+     */
     public function getFullReport($sid, SearchReport $searchReport)
     {
 
@@ -185,7 +185,7 @@ class GusApi
         $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
         $response = json_decode($this->getResponse());
 
-        var_dump($response);
+        return $response[0];
     }
 
     /**
@@ -208,6 +208,17 @@ class GusApi
     private function prepare(array $data)
     {
         return json_encode($data);
+    }
+
+    /**
+     * Prepare response to json format
+     *
+     * @param $response
+     * @return string
+     */
+    private function prepareResponse($response)
+    {
+        return json_decode($response);
     }
 
     /**
