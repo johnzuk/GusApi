@@ -29,6 +29,8 @@ class GusApi
 
     const URL_FULL_REPORT = "DanePobierzPelnyRaport";
 
+    const BASIC_HEADER_PARAMETER = 'pParametryWyszukiwania';
+
     /**
      * @var Curl
      */
@@ -186,6 +188,23 @@ class GusApi
         $response = json_decode($this->getResponse());
 
         return $response[0];
+    }
+
+    private function basicSearch($sid, $param, $value)
+    {
+        return $this->search($sid, $this->getBasicSearchHeader($param, $value));
+    }
+
+    /**
+     * @param $param
+     * @param $value
+     * @return array
+     */
+    private function getBasicSearchHeader($param, $value)
+    {
+        return [self::BASIC_HEADER_PARAMETER => [
+            $param => $value
+        ]];
     }
 
     /**
