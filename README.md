@@ -4,3 +4,7 @@ PHP GUS API is an object-oriented library to get information from [Regon site](h
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/johnzuk/gusapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/johnzuk/gusapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
