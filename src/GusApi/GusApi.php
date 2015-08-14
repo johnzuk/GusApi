@@ -5,6 +5,7 @@ use Curl\Curl;
 use GusApi\Exception\InvalidTypeException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\CurlException;
+use GusApi\Exception\NotFoundException;
 use GusApi\ReportType;
 
 /**
@@ -271,17 +272,20 @@ class GusApi
     }
 
     /**
-     * Search data
-     *
-     * @param string $sid
+     * @param $sid
      * @param array $searchData
      * @return SearchReport
      * @throws CurlException
+     * @throws NotFountException
      */
     private function search($sid, array $searchData)
     {
         $this->preparePostData(self::URL_SEARCH, $searchData, $sid);
         $response = json_decode($this->getResponse());
+
+        if ($response === null) {
+            throw new NotFoundException(sprintf("Not found subject"));
+        }
 
         return new SearchReport($response[0]);
     }

@@ -48,11 +48,20 @@ if (!$_SESSION['checked']) {
 }
 
 if (isset($_POST['nip'])) {
-    $nip = '5250010976';
+    //$nip = '5250010976';
     //$nip = '9372557086';
-    $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
-    var_dump($gus->getFullReport($_SESSION['sid'], $gusReport));
-    var_dump($gusReport);
+    $nip = $_POST['nip'];
+
+    try {
+        $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
+        var_dump($gus->getFullReport($_SESSION['sid'], $gusReport));
+        var_dump($gusReport);
+
+    } catch (\GusApi\Exception\NotFoundException $e) {
+        echo 'Brak danych';
+    }
+
+
 
     //DaneRaportPrawnaPubl
     //
