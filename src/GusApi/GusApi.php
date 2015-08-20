@@ -147,8 +147,8 @@ class GusApi
     {
         $searchData = [
             'pNazwaRaportu'=>$type,
-            'pRegon' => $regon,
-            'pSilosID' => 0
+            'pRegon' => $regon . '00000',
+            'pSilosID' => 1
         ];
 
         $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
