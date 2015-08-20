@@ -1,9 +1,12 @@
 <?php
 namespace GusApi;
 
+use GusApi\Exception\InvalidTypeException;
+
 class SearchReport
 {
     private $regon;
+    private $regon14;
     private $name;
     private $province;
     private $district;
@@ -12,6 +15,7 @@ class SearchReport
     private $zipCode;
     private $street;
     private $type;
+    private $silo;
 
     function __construct($data)
     {
@@ -23,7 +27,9 @@ class SearchReport
         $this->city = $data->Miejscowosc;
         $this->zipCode = $data->KodPocztowy;
         $this->street = $data->Ulica;
-        $this->type = $data->Typ;
+        $this->type = $this->makeType($data->Typ);
+        $this->regon14 = $this->makeRegon14($this->regon);
+        $this->silo = $data->SilosID;
     }
 
     /**
@@ -96,5 +102,40 @@ class SearchReport
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegon14()
+    {
+        return $this->regon14;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSilo()
+    {
+        return $this->silo;
+    }
+
+    private function makeRegon14($regon)
+    {
+        return str_pad($regon, 14, "0");
+    }
+
+    private function makeType($type)
+    {
+        $type = trim(strtolower($type));
+
+        if ($type == 'p') {
+            return 'DaneRaportPrawnaPubl';
+        } else if ($type == 'f') {
+            return 'DaneRaportFizycznaPubl';
+        } else {
+            throw new InvalidTypeException(sprintf("Invalid report type: %s", $type));
+        }
+
     }
 }

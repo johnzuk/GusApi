@@ -2,8 +2,10 @@
 namespace GusApi;
 
 use Curl\Curl;
+use GusApi\Exception\InvalidTypeException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\CurlException;
+use GusApi\Exception\NotFoundException;
 use GusApi\ReportType;
 
 /**
@@ -27,6 +29,8 @@ class GusApi
     const URL_SEARCH = "daneSzukaj";
 
     const URL_FULL_REPORT = "DanePobierzPelnyRaport";
+
+    const BASIC_HEADER_PARAMETER = 'pParametryWyszukiwania';
 
     /**
      * @var Curl
@@ -138,16 +142,8 @@ class GusApi
         ]);
     }
 
-    /**
-     * Get complex data by regon number
-     *
-     * @param string $sid
-     * @param string $regon
-     * @param string $type
-     * @return mixed
-     * @throws CurlException
-     */
-    public function getFullData($sid, $regon, $type = ReportType::BASIC)
+
+    public function getFullData($sid, $regon, $type = ReportType::BASIC_PUBLIC)
     {
         $searchData = [
             'pNazwaRaportu'=>$type,
@@ -159,18 +155,57 @@ class GusApi
         $response = json_decode($this->getResponse());
 
         switch ($type) {
-            case ReportType::BASIC :
+            case ReportType::BASIC_PUBLIC :
                 return $response[0];
                 break;
-            case ReportType::ACTION:
+            case ReportType::PUBLIC_ACTIVITY:
                 return new ActionReport($response[0]);
                 break;
-            case ReportType::LISTS:
+            case ReportType::PUBLIC_LOCALS:
                 return new ListsReport($response[0]);
                 break;
             default:
+                throw new InvalidTypeException(sprintf("Invalid report type: %s", $type));
                 break;
         }
+    }
+
+    /**
+     * @param $sid
+     * @param SearchReport $searchReport
+     * @return mixed
+     * @throws CurlException
+     */
+    public function getFullReport($sid, SearchReport $searchReport)
+    {
+
+        $searchData = [
+            'pNazwaRaportu'=>$searchReport->getType(),
+            'pRegon' => $searchReport->getRegon14(),
+            'pSilosID' => $searchReport->getSilo()
+        ];
+
+        $this->preparePostData(self::URL_FULL_REPORT, $searchData, $sid);
+        $response = json_decode($this->getResponse());
+
+        return $response[0];
+    }
+
+    private function basicSearch($sid, $param, $value)
+    {
+        return $this->search($sid, $this->getBasicSearchHeader($param, $value));
+    }
+
+    /**
+     * @param $param
+     * @param $value
+     * @return array
+     */
+    private function getBasicSearchHeader($param, $value)
+    {
+        return [self::BASIC_HEADER_PARAMETER => [
+            $param => $value
+        ]];
     }
 
     /**
@@ -193,6 +228,17 @@ class GusApi
     private function prepare(array $data)
     {
         return json_encode($data);
+    }
+
+    /**
+     * Prepare response to json format
+     *
+     * @param $response
+     * @return string
+     */
+    private function prepareResponse($response)
+    {
+        return json_decode($response);
     }
 
     /**
@@ -226,17 +272,20 @@ class GusApi
     }
 
     /**
-     * Search data
-     *
-     * @param string $sid
+     * @param $sid
      * @param array $searchData
      * @return SearchReport
      * @throws CurlException
+     * @throws NotFountException
      */
     private function search($sid, array $searchData)
     {
         $this->preparePostData(self::URL_SEARCH, $searchData, $sid);
         $response = json_decode($this->getResponse());
+
+        if ($response === null) {
+            throw new NotFoundException(sprintf("Not found subject"));
+        }
 
         return new SearchReport($response[0]);
     }

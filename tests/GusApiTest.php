@@ -17,4 +17,13 @@ class GusApiTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotEquals(-1, $gus->getCaptcha($sid));
     }
+
+    /**
+     * @expectedException GusApi\Exception\InvalidUserKeyException
+     */
+    public function testLoginInvalidKay()
+    {
+        $gus = new GusApi("abcdefghijklmnno");
+        $sid = $gus->login();
+    }
 }
