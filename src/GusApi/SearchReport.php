@@ -1,8 +1,10 @@
 <?php
 namespace GusApi;
 
-use GusApi\Exception\InvalidTypeException;
-
+/**
+ * Class SearchReport
+ * @package GusApi
+ */
 class SearchReport
 {
     private $regon;
@@ -33,7 +35,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get REGON number
+     *
+     * @return string REGON number
      */
     public function getRegon()
     {
@@ -41,7 +45,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get subject name
+     *
+     * @return string name
      */
     public function getName()
     {
@@ -49,7 +55,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get province name
+     *
+     * @return string province name
      */
     public function getProvince()
     {
@@ -57,7 +65,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get distinct name
+     *
+     * @return string distinct name
      */
     public function getDistrict()
     {
@@ -65,7 +75,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get community name
+     *
+     * @return string community name
      */
     public function getCommunity()
     {
@@ -73,7 +85,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get city
+     *
+     * @return string city name
      */
     public function getCity()
     {
@@ -81,7 +95,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get zip code
+     *
+     * @return string zip code
      */
     public function getZipCode()
     {
@@ -89,7 +105,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get street name
+     *
+     * @return string street name
      */
     public function getStreet()
     {
@@ -97,7 +115,9 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * Get type name
+     *
+     * @return string type name
      */
     public function getType()
     {
@@ -127,15 +147,6 @@ class SearchReport
 
     private function makeType($type)
     {
-        $type = trim(strtolower($type));
-
-        if ($type == 'p') {
-            return 'DaneRaportPrawnaPubl';
-        } else if ($type == 'f') {
-            return 'DaneRaportFizycznaPubl';
-        } else {
-            throw new InvalidTypeException(sprintf("Invalid report type: %s", $type));
-        }
-
+        return trim(strtolower($type));
     }
 }

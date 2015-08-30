@@ -1,70 +1,102 @@
 <?php
-
 require_once '../vendor/autoload.php';
-
-use GusApi\GusApi;
-use GusApi\Exception\InvalidUserKeyException;
-
 session_start();
 
-$gus = new GusApi("aaaaaabbbbbcccccdddd");
+use GusApi\GusApi;
+use GusApi\RegonConstantsInterface;
+use GusApi\Exception\InvalidUserKeyException;
+use GusApi\ReportTypes;
+
+$gus = new GusApi(
+    'aaaaaabbbbbcccccdddd', // <--- your user key / twój klucz użytkownika
+    new \GusApi\Adapter\Soap\SoapAdapter(
+        RegonConstantsInterface::BASE_WSDL_URL,
+        RegonConstantsInterface::BASE_WSDL_ADDRESS //<--- production server / serwer produkcyjny
+        //for test serwer use RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+        //w przypadku serwera testowego użyj: RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+    )
+);
 
 if (isset($_GET['reset'])) {
     $_SESSION = [];
     $_SESSION['checked'] = false;
 }
 
-if (!isset($_SESSION['sid'])) {
+if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
+
     try {
-        $_SESSION['sid'] = $gus->login();
+
+        if (!isset($_SESSION['sid']) || !$gus->isLogged($_SESSION['sid'])) {
+            $_SESSION['sid'] = $gus->login();
+            $_SESSION['checked'] = false;
+        }
+
+        if (isset($_POST['captcha'])) {
+            $_SESSION['checked'] = $gus->checkCaptcha($_SESSION['sid'], $_POST['captcha']);
+        }
+
+        if (!$_SESSION['checked']) {
+            $image = fopen("captcha.jpeg",'w+');
+            $captcha = $gus->getCaptcha($_SESSION['sid']);
+            fwrite($image, base64_decode($captcha));
+            fclose($image);
+
+            printCaptchaForm();
+
+        } else {
+            printNipForm();
+        }
+
+        if (isset($_POST['nip'])) {
+
+            $nip = $_POST['nip'];
+            try {
+                $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
+                var_dump($gusReport);
+                var_dump(
+                    $gus->getFullReport(
+                        $_SESSION['sid'],
+                        $gusReport,
+                        ReportTypes::REPORT_ACTIVITY_LAW_PUBLIC
+                    )
+                );
+
+            } catch (\GusApi\Exception\NotFoundException $e) {
+                echo 'Brak danych';
+            }
+        }
+
     } catch (InvalidUserKeyException $e) {
-        echo $e->getMessage();
+        echo 'Bad user key!';
     }
 
-    $_SESSION['checked'] = false;
+} else if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_UNAVAILABLE) {
+
+    echo 'Server is unavailable now. Please try again later <br>';
+    echo 'For more information read server message belowe: <br>';
+    echo $gus->serviceMessage();
+
+} else {
+
+    echo 'Server technical break. Please try again later <br>';
+    echo 'For more information read server message belowe: <br>';
+    echo $gus->serviceMessage();
+
 }
 
-if (isset($_POST['captcha'])) {
-    $_SESSION['checked'] = $gus->checkCaptcha($_SESSION['sid'], $_POST['captcha']);
-}
-
-if (!$_SESSION['checked']) {
-    $image = fopen("captcha.jpeg",'w+');
-    $captcha = $gus->getCaptcha($_SESSION['sid']);
-    fwrite($image, base64_decode($captcha));
-    fclose($image);
-
+function printCaptchaForm()
+{
     echo '<img src="captcha.jpeg?'.time().'">';
     echo '<form action="" method="POST">';
     echo '<input type="text" name="captcha" >';
     echo '<input type="submit" value="check">';
     echo '</form>';
+}
 
-} else {
+function printNipForm()
+{
     echo '<form action="" method="POST">';
     echo '<input type="text" name="nip" >';
     echo '<input type="submit" value="check">';
     echo '</form>';
-}
-
-if (isset($_POST['nip'])) {
-    //$nip = '5250010976';
-    //$nip = '9372557086';
-    $nip = $_POST['nip'];
-
-    try {
-        $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
-        var_dump($gus->getFullReport($_SESSION['sid'], $gusReport));
-        var_dump($gusReport);
-
-    } catch (\GusApi\Exception\NotFoundException $e) {
-        echo 'Brak danych';
-    }
-
-
-
-    //DaneRaportPrawnaPubl
-    //
-
-    //var_dump($gus->getFullData($_SESSION['sid'], $gusReport->getRegon(), ReportType::BASIC));
 }
