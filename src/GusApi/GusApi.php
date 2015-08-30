@@ -98,7 +98,7 @@ class GusApi
      */
     public function serviceStatus()
     {
-        return $this->adapter->getValue(null, RegonConstantsInterface::PARAM_SERVICE_STATUS);
+        return (int) $this->adapter->getValue(null, RegonConstantsInterface::PARAM_SERVICE_STATUS);
     }
 
     /**

@@ -1,6 +1,10 @@
 <?php
 namespace GusApi\Adapter;
 
+/**
+ * Interface AdapterInterface interface of GUS api adapter
+ * @package GusApi\Adapter\
+ */
 interface AdapterInterface
 {
     /**

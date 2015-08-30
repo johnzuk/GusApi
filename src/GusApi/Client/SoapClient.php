@@ -1,15 +1,21 @@
 <?php
 namespace GusApi\Client;
 
+/**
+ * Class SoapClient provide a cient for a GUS server
+ * @package GusApi\Client
+ */
 class SoapClient extends \SoapClient
 {
     protected $context;
+    protected $location;
 
     /**
      * @inheritdoc
      */
-    public function __construct($wsdl, array $options = null)
+    public function __construct($wsdl, $location, array $options = null)
     {
+        $this->setLocation($location);
         $this->context = $this->createContext();
         $options['stream_context'] = $this->context;
 
@@ -26,6 +32,7 @@ class SoapClient extends \SoapClient
      * @return string response
      */
     public function __doRequest($request, $location, $action, $version = SOAP_1_2) {
+        $location = $this->location;
         $response = parent::__doRequest($request, $location, $action, $version);
         $response = stristr(stristr($response, "<s:"), "</s:Envelope>", true) . "</s:Envelope>";
         return $response;
@@ -41,6 +48,24 @@ class SoapClient extends \SoapClient
         $this->setContextOption([
             'http' => $header
         ]);
+    }
+
+    /**
+     * Set location
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Get location
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
     /**

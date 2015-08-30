@@ -6,8 +6,8 @@ interface RegonConstantsInterface
     const BASE_WSDL_URL_TEST = 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl.xsd';
     const BASE_WSDL_ADDRESS_TEST =  'https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
 
-    const BASE_WSDL_URL = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl.xsd';
-    const BASE_WSDL_ADDRESS =  'https://Wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
+    const BASE_WSDL_URL = 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl.xsd';
+    const BASE_WSDL_ADDRESS =  'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
 
     const PARAM_USER_KEY = 'pKluczUzytkownika';
     const PARAM_SESSION_ID = 'pIdentyfikatorSesji';

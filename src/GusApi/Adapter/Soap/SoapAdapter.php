@@ -6,7 +6,7 @@ use GusApi\Client\SoapClient;
 use GusApi\RegonConstantsInterface;
 
 /**
- * Class SoapAdapter
+ * Class SoapAdapter SoapAdapter for
  * @package GusApi\Adapter\Soap
  */
 class SoapAdapter implements AdapterInterface
@@ -37,7 +37,7 @@ class SoapAdapter implements AdapterInterface
         $this->baseUrl = $baseUrl;
         $this->address = $address;
 
-        $this->client = new SoapClient($this->baseUrl, [
+        $this->client = new SoapClient($this->baseUrl, $address, [
             'soap_version' => SOAP_1_2,
             'trace' => true,
             'style' => SOAP_DOCUMENT

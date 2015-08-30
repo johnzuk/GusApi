@@ -1,8 +1,10 @@
 <?php
 namespace GusApi;
 
-use GusApi\Exception\InvalidTypeException;
-
+/**
+ * Class SearchReport
+ * @package GusApi
+ */
 class SearchReport
 {
     private $regon;
