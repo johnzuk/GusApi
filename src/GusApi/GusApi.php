@@ -27,6 +27,10 @@ class GusApi
      */
     protected $adapter;
 
+    /**
+     * @param $userKey
+     * @param AdapterInterface|null $adapter
+     */
     public function __construct($userKey, AdapterInterface $adapter = null)
     {
         $this->userKey = $userKey;
@@ -180,6 +184,12 @@ class GusApi
         ]);
     }
 
+    /**
+     * @param $sid
+     * @param SearchReport $searchReport
+     * @param $reportType
+     * @return mixed|\SimpleXMLElement
+     */
     public function getFullReport($sid, SearchReport $searchReport, $reportType)
     {
         $result = $this->adapter->getFullData($sid, $searchReport->getRegon14(), $reportType);
@@ -187,11 +197,22 @@ class GusApi
         return $result;
     }
 
+    /**
+     * Get get message about search if you don't get data
+     *
+     * @return string
+     */
     public function getResultSearchMessage()
     {
         return $this->adapter->getMessage();
     }
 
+    /**
+     * @param $sid
+     * @param array $searchData
+     * @return SearchReport
+     * @throws NotFoundException
+     */
     private function search($sid, array $searchData)
     {
         try{
