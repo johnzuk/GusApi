@@ -7,7 +7,14 @@ namespace GusApi\Client;
  */
 class SoapClient extends \SoapClient
 {
+    /**
+     * @var resource
+     */
     protected $context;
+
+    /**
+     * @var string location
+     */
     protected $location;
 
     /**

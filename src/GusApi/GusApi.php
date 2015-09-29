@@ -2,6 +2,7 @@
 namespace GusApi;
 
 use GusApi\Adapter\AdapterInterface;
+use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Adapter\Soap\SoapAdapter;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
@@ -26,6 +27,10 @@ class GusApi
      */
     protected $adapter;
 
+    /**
+     * @param $userKey
+     * @param AdapterInterface|null $adapter
+     */
     public function __construct($userKey, AdapterInterface $adapter = null)
     {
         $this->userKey = $userKey;
@@ -179,18 +184,40 @@ class GusApi
         ]);
     }
 
+    /**
+     * @param $sid
+     * @param SearchReport $searchReport
+     * @param $reportType
+     * @return mixed|\SimpleXMLElement
+     */
     public function getFullReport($sid, SearchReport $searchReport, $reportType)
     {
         $result = $this->adapter->getFullData($sid, $searchReport->getRegon14(), $reportType);
 
-        return $result[0];
+        return $result;
     }
 
+    /**
+     * Get get message about search if you don't get data
+     *
+     * @return string
+     */
+    public function getResultSearchMessage()
+    {
+        return $this->adapter->getMessage();
+    }
+
+    /**
+     * @param $sid
+     * @param array $searchData
+     * @return SearchReport
+     * @throws NotFoundException
+     */
     private function search($sid, array $searchData)
     {
-        $response = $this->adapter->search($sid, $searchData);
-
-        if ($response === null) {
+        try{
+            $response = $this->adapter->search($sid, $searchData);
+        } catch (NoDataException $e) {
             throw new NotFoundException(sprintf("Not found subject"));
         }
 
