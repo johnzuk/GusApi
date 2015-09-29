@@ -8,8 +8,11 @@ use GusApi\RegonConstantsInterface;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\ReportTypes;
 
+
+$key = ''; // <--- your user key / twój klucz użytkownika
+
 $gus = new GusApi(
-    'aaaaaabbbbbcccccdddd', // <--- your user key / twój klucz użytkownika
+    $key,
     new \GusApi\Adapter\Soap\SoapAdapter(
         RegonConstantsInterface::BASE_WSDL_URL,
         RegonConstantsInterface::BASE_WSDL_ADDRESS //<--- production server / serwer produkcyjny
@@ -61,9 +64,12 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
                         ReportTypes::REPORT_ACTIVITY_LAW_PUBLIC
                     )
                 );
+                echo $gusReport->getName();
 
             } catch (\GusApi\Exception\NotFoundException $e) {
-                echo 'Brak danych';
+                echo 'No data found <br>';
+                echo 'For more information read server message belowe: <br>';
+                echo $gus->getResultSearchMessage();
             }
         }
 

@@ -2,6 +2,7 @@
 namespace GusApi\Adapter\Soap;
 
 use GusApi\Adapter\AdapterInterface;
+use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Client\SoapClient;
 use GusApi\RegonConstantsInterface;
 
@@ -105,8 +106,13 @@ class SoapAdapter implements AdapterInterface
             RegonConstantsInterface::PARAM_SEARCH => $parameters
         ]);
 
-        $result = json_decode($result->DaneSzukajResult);
-        return $result;
+        try {
+            $result = $this->decodeResponse($result->DaneSzukajResult);
+        } catch (\Exception $e) {
+            throw new NoDataException("No data found for");
+        }
+
+        return $result->dane;
     }
 
     /**
@@ -120,7 +126,12 @@ class SoapAdapter implements AdapterInterface
             RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
         ]);
 
-        $result = json_decode($result->DanePobierzPelnyRaportResult);
+        try {
+            $result = $this->decodeResponse($result->DanePobierzPelnyRaportResult);
+        } catch (\Exception $e) {
+            throw new NoDataException("No data found");
+        }
+
         return $result;
     }
 
@@ -189,5 +200,14 @@ class SoapAdapter implements AdapterInterface
     protected function setHeader($namespace, $name, $data = null, $mustUnderstand = false)
     {
         return new \SoapHeader($namespace, $name, $data, $mustUnderstand);
+    }
+
+    /**
+     * @param string $response xml string
+     * @return \SimpleXMLElement
+     */
+    protected function decodeResponse($response)
+    {
+        return new \SimpleXMLElement($response);
     }
 }
