@@ -16,8 +16,8 @@ $gus = new GusApi(
     new \GusApi\Adapter\Soap\SoapAdapter(
         RegonConstantsInterface::BASE_WSDL_URL,
         RegonConstantsInterface::BASE_WSDL_ADDRESS //<--- production server / serwer produkcyjny
-        //for test serwer use RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
-        //w przypadku serwera testowego użyj: RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+    //for test serwer use RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+    //w przypadku serwera testowego użyj: RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
     )
 );
 
