@@ -74,9 +74,12 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
+     * @deprecated No longer required - see api changes on 19.08.2016
      */
     public function getCaptcha($sid)
     {
+        return null;
+
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/PobierzCaptcha', $this->address, $sid);
         $result = $this->client->PobierzCaptcha();
 
@@ -85,9 +88,11 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
+     * @deprecated No longer required - see api changes on 19.08.2016
      */
     public function checkCaptcha($sid, $captcha)
     {
+        return true;
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/SprawdzCaptcha', $this->address, $sid);
         $result = $this->client->SprawdzCaptcha([
             RegonConstantsInterface::PARAM_CAPTCHA => $captcha
