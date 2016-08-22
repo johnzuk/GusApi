@@ -119,24 +119,28 @@ class GusApi
     /**
      * Return base64 encoding captcha image
      *
+     * @deprecated No longer required - see api changes on 19.08.2016
      * @param string $sid session id
      * @return string base64 encoding image
      */
     public function getCaptcha($sid)
     {
-        return $this->adapter->getCaptcha($sid);
+        return null;
+        //return $this->adapter->getCaptcha($sid);
     }
 
     /**
      * Check captcha value
      *
+     * @deprecated No longer required - see api changes on 19.08.2016
      * @param string $sid session id
      * @param string $captcha captcha value
      * @return bool checl status
      */
     public function checkCaptcha($sid, $captcha)
     {
-        return $this->adapter->checkCaptcha($sid, $captcha);
+        return true;
+        //return $this->adapter->checkCaptcha($sid, $captcha);
     }
 
     /**
@@ -200,11 +204,18 @@ class GusApi
     /**
      * Get get message about search if you don't get data
      *
+     * @param sid
      * @return string
      */
-    public function getResultSearchMessage()
+    public function getResultSearchMessage($sid)
     {
-        return $this->adapter->getMessage();
+        //return $this->adapter->getMessage();
+
+        return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
+            $this->adapter->getValue($sid, 'StatusSesji'),
+            $this->adapter->getValue($sid, 'KomunikatKod'),
+            $this->adapter->getValue($sid, 'KomunikatTresc')
+        );
     }
 
     /**
