@@ -63,7 +63,7 @@ interface AdapterInterface
      * Get value
      *
      * @param string $sid session id
-     * @param $param
+     * @param $param - available param names: ["StatusSesji", "KomunikatKod", "KomunikatTresc"]
      * @return mixed
      */
     public function getValue($sid, $param);

@@ -204,11 +204,18 @@ class GusApi
     /**
      * Get get message about search if you don't get data
      *
+     * @param sid
      * @return string
      */
-    public function getResultSearchMessage()
+    public function getResultSearchMessage($sid)
     {
-        return $this->adapter->getMessage();
+        //return $this->adapter->getMessage();
+
+        return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
+            $this->adapter->getValue($sid, 'StatusSesji'),
+            $this->adapter->getValue($sid, 'KomunikatKod'),
+            $this->adapter->getValue($sid, 'KomunikatTresc')
+        );
     }
 
     /**
