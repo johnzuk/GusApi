@@ -74,35 +74,6 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
-     * @deprecated No longer required - see api changes on 19.08.2016
-     */
-    public function getCaptcha($sid)
-    {
-        return null;
-
-        $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/PobierzCaptcha', $this->address, $sid);
-        $result = $this->client->PobierzCaptcha();
-
-        return $result->PobierzCaptchaResult;
-    }
-
-    /**
-     * @inheritdoc
-     * @deprecated No longer required - see api changes on 19.08.2016
-     */
-    public function checkCaptcha($sid, $captcha)
-    {
-        return true;
-        $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/SprawdzCaptcha', $this->address, $sid);
-        $result = $this->client->SprawdzCaptcha([
-            RegonConstantsInterface::PARAM_CAPTCHA => $captcha
-        ]);
-
-        return $result->SprawdzCaptchaResult;
-    }
-
-    /**
-     * @inheritdoc
      */
     public function search($sid, array $parameters)
     {
@@ -152,21 +123,6 @@ class SoapAdapter implements AdapterInterface
         ]);
 
         return $result->GetValueResult;
-    }
-
-    /**
-     * @inheritdoc
-     * @deprecated No longer required - see api changes on 19.08.2016
-     */
-    public function getMessage()
-    {
-        return null;
-        /*
-        $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneKomunikat', $this->address);
-        $result = $this->client->DaneKomunikat();
-
-        return $result->DaneKomunikatResult;
-        */
     }
 
     /**

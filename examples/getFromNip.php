@@ -32,24 +32,9 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
 
         if (!isset($_SESSION['sid']) || !$gus->isLogged($_SESSION['sid'])) {
             $_SESSION['sid'] = $gus->login();
-            $_SESSION['checked'] = false;
         }
 
-        if (isset($_POST['captcha'])) {
-            $_SESSION['checked'] = $gus->checkCaptcha($_SESSION['sid'], $_POST['captcha']);
-        }
-
-        if (!$_SESSION['checked']) {
-            $image = fopen("captcha.jpeg",'w+');
-            $captcha = $gus->getCaptcha($_SESSION['sid']);
-            fwrite($image, base64_decode($captcha));
-            fclose($image);
-
-            printCaptchaForm();
-
-        } else {
-            printNipForm();
-        }
+        printNipForm();
 
         if (isset($_POST['nip'])) {
 
@@ -90,15 +75,6 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
     echo 'For more information read server message belowe: <br>';
     echo $gus->serviceMessage();
 
-}
-
-function printCaptchaForm()
-{
-    echo '<img src="captcha.jpeg?'.time().'">';
-    echo '<form action="" method="POST">';
-    echo '<input type="text" name="captcha" >';
-    echo '<input type="submit" value="check">';
-    echo '</form>';
 }
 
 function printNipForm()

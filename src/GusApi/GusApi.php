@@ -77,7 +77,7 @@ class GusApi
      */
     public function isLogged($sid)
     {
-        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_SESSION_STATUS);
+        return (bool)$this->sessionStatus($sid);
     }
 
     /**
@@ -114,33 +114,6 @@ class GusApi
     public function serviceMessage()
     {
         return $this->adapter->getValue(null, RegonConstantsInterface::PARAM_SERVICE_MESSAGE);
-    }
-
-    /**
-     * Return base64 encoding captcha image
-     *
-     * @deprecated No longer required - see api changes on 19.08.2016
-     * @param string $sid session id
-     * @return string base64 encoding image
-     */
-    public function getCaptcha($sid)
-    {
-        return null;
-        //return $this->adapter->getCaptcha($sid);
-    }
-
-    /**
-     * Check captcha value
-     *
-     * @deprecated No longer required - see api changes on 19.08.2016
-     * @param string $sid session id
-     * @param string $captcha captcha value
-     * @return bool checl status
-     */
-    public function checkCaptcha($sid, $captcha)
-    {
-        return true;
-        //return $this->adapter->checkCaptcha($sid, $captcha);
     }
 
     /**
@@ -209,13 +182,40 @@ class GusApi
      */
     public function getResultSearchMessage($sid)
     {
-        //return $this->adapter->getMessage();
-
         return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
-            $this->adapter->getValue($sid, 'StatusSesji'),
-            $this->adapter->getValue($sid, 'KomunikatKod'),
-            $this->adapter->getValue($sid, 'KomunikatTresc')
+            $this->sessionStatus($sid),
+            $this->getMessageCode($sid),
+            $this->getMessage($sid)
         );
+    }
+
+    /**
+     * Return message code if search not found record
+     * @param $sid
+     * @return int
+     */
+    public function getMessageCode($sid)
+    {
+        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_MESSAGE_CODE);
+    }
+
+    /**
+     * Return message text id search not found record
+     * @param $sid
+     * @return string
+     */
+    public function getMessage($sid)
+    {
+        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_MESSAGE);
+    }
+
+    /**
+     * Return session status
+     * @return int
+     */
+    public function sessionStatus($sid)
+    {
+        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_SESSION_STATUS);
     }
 
     /**
