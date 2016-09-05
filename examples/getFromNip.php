@@ -69,7 +69,8 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
             } catch (\GusApi\Exception\NotFoundException $e) {
                 echo 'No data found <br>';
                 echo 'For more information read server message belowe: <br>';
-                echo $gus->getResultSearchMessage();
+                echo $gus->getResultSearchMessage($_SESSION['sid']);
+
             }
         }
 

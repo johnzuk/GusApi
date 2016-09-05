@@ -74,9 +74,12 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
+     * @deprecated No longer required - see api changes on 19.08.2016
      */
     public function getCaptcha($sid)
     {
+        return null;
+
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/PobierzCaptcha', $this->address, $sid);
         $result = $this->client->PobierzCaptcha();
 
@@ -85,9 +88,11 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
+     * @deprecated No longer required - see api changes on 19.08.2016
      */
     public function checkCaptcha($sid, $captcha)
     {
+        return true;
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/SprawdzCaptcha', $this->address, $sid);
         $result = $this->client->SprawdzCaptcha([
             RegonConstantsInterface::PARAM_CAPTCHA => $captcha
@@ -102,6 +107,7 @@ class SoapAdapter implements AdapterInterface
     public function search($sid, array $parameters)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
+
         $result = $this->client->DaneSzukaj([
             RegonConstantsInterface::PARAM_SEARCH => $parameters
         ]);
@@ -150,13 +156,17 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @inheritdoc
+     * @deprecated No longer required - see api changes on 19.08.2016
      */
     public function getMessage()
     {
+        return null;
+        /*
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneKomunikat', $this->address);
         $result = $this->client->DaneKomunikat();
 
         return $result->DaneKomunikatResult;
+        */
     }
 
     /**
