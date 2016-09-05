@@ -14,7 +14,7 @@ use GusApi\Exception\InvalidUserKeyException;
 use GusApi\ReportTypes;
 
 $gus = new GusApi(
-    'aaaaaabbbbbcccccdddd', // <--- your user key / twój klucz użytkownika
+    'abcde12345abcde12345', // <--- your user key / twój klucz użytkownika
     new \GusApi\Adapter\Soap\SoapAdapter(
         RegonConstantsInterface::BASE_WSDL_URL,
         RegonConstantsInterface::BASE_WSDL_ADDRESS //<--- production server / serwer produkcyjny
