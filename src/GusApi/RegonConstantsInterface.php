@@ -31,4 +31,10 @@ interface RegonConstantsInterface
     const SERVICE_UNAVAILABLE = 0;
     const SERVICE_AVAILABLE = 1;
     const SERVICE_TECHNICAL_BREAK = 2;
+
+    const NEED_TO_CHECK_CAPTCHA = 1;
+    const TO_FEW_IDENTIFIERS = 2;
+    const NOT_FOUND = 4;
+    const NO_ACCESS_TO_REPORT = 5;
+    const SESSION_ERROR = 7;
 }

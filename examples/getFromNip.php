@@ -10,6 +10,7 @@ use GusApi\ReportTypes;
 
 
 $key = 'abcde12345abcde12345'; // <--- your user key / twój klucz użytkownika
+$key = 'c8a1601d10ea4702a72c'; // <--- your user key / twój klucz użytkownika
 
 $gus = new GusApi(
     $key,
@@ -45,11 +46,11 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
                 var_dump(
                     $gus->getFullReport(
                         $_SESSION['sid'],
-                        $gusReport,
+                        $gusReport[0],
                         ReportTypes::REPORT_ACTIVITY_LAW_PUBLIC
                     )
                 );
-                echo $gusReport->getName();
+                echo $gusReport[0]->getName();
 
             } catch (\GusApi\Exception\NotFoundException $e) {
                 echo 'No data found <br>';

@@ -121,7 +121,7 @@ class GusApi
      *
      * @param string $sid session id
      * @param string $nip NIP number
-     * @return SearchReport search subject information object
+     * @return SearchReport[] search subject information object
      * @throws NotFoundException
      */
     public function getByNip($sid, $nip)
@@ -136,7 +136,7 @@ class GusApi
      *
      * @param $sid
      * @param $regon
-     * @return SearchReport search subject information object
+     * @return SearchReport[] search subject information object
      * @throws NotFoundException
      */
     public function getByRegon($sid, $regon)
@@ -151,7 +151,7 @@ class GusApi
      *
      * @param $sid
      * @param $krs
-     * @return SearchReport search subject information object
+     * @return SearchReport[] search subject information object
      * @throws NotFoundException
      */
     public function getByKrs($sid, $krs)
@@ -221,17 +221,21 @@ class GusApi
     /**
      * @param $sid
      * @param array $searchData
-     * @return SearchReport
+     * @return SearchReport[]
      * @throws NotFoundException
      */
     private function search($sid, array $searchData)
     {
+        $result = [];
         try{
             $response = $this->adapter->search($sid, $searchData);
         } catch (NoDataException $e) {
             throw new NotFoundException(sprintf("Not found subject"));
         }
+        foreach ($response as $report) {
+            $result[] = new SearchReport($report);
+        }
 
-        return new SearchReport($response[0]);
+        return $result;
     }
 }
