@@ -10,7 +10,6 @@ use GusApi\ReportTypes;
 
 
 $key = 'abcde12345abcde12345'; // <--- your user key / twój klucz użytkownika
-$key = 'c8a1601d10ea4702a72c'; // <--- your user key / twój klucz użytkownika
 
 $gus = new GusApi(
     $key,
