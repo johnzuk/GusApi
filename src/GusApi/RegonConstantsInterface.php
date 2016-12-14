@@ -31,5 +31,4 @@ interface RegonConstantsInterface
     const SERVICE_UNAVAILABLE = 0;
     const SERVICE_AVAILABLE = 1;
     const SERVICE_TECHNICAL_BREAK = 2;
-
 }
