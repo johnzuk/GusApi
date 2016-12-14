@@ -18,7 +18,10 @@ class SoapClient extends \SoapClient
     protected $location;
 
     /**
-     * @inheritdoc
+     * SoapClient constructor.
+     * @param string $wsdl
+     * @param string $location
+     * @param array|null $options
      */
     public function __construct($wsdl, $location, array $options = null)
     {
