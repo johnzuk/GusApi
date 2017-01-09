@@ -31,7 +31,7 @@ try {
 
 ```
 
-PHP GUS API is an object-oriented library to get information from [Regon site](https://wyszukiwarkaregon.stat.gov.pl/appBIR/index.aspx)
+PHP GUS API is an object-oriented library to get information from [Regon site](https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/johnzuk/gusapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
