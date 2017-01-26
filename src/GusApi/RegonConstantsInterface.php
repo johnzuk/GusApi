@@ -13,7 +13,7 @@ interface RegonConstantsInterface
     const PARAM_SESSION_ID = 'pIdentyfikatorSesji';
     const PARAM_CAPTCHA = 'pCaptcha';
     const PARAM_SEARCH = 'pParametryWyszukiwania';
-    const PARAM_REGOM = 'pRegon';
+    const PARAM_REGON = 'pRegon';
     const PARAM_REPORT_NAME = 'pNazwaRaportu';
     const PARAM_PARAM_NAME = 'pNazwaParametru';
 
