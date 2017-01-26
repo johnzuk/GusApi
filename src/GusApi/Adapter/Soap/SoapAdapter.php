@@ -99,7 +99,7 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', $this->address, $sid);
         $result = $this->client->DanePobierzPelnyRaport([
-            RegonConstantsInterface::PARAM_REGOM => $regon,
+            RegonConstantsInterface::PARAM_REGON => $regon,
             RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
         ]);
 
