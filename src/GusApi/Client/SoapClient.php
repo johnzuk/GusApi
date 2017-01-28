@@ -39,6 +39,10 @@ class SoapClient extends \SoapClient
      * @param string $location location
      * @param string $action action
      * @param int $version version
+     * @param int $one_way [optional] <p>
+     * If one_way is set to 1, this method returns nothing.
+     * Use this where a response is not expected.
+     * </p>
      * @return string response
      */
     public function __doRequest($request, $location, $action, $version = SOAP_1_2, $one_way = NULL) {
