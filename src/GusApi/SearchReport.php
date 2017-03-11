@@ -7,31 +7,78 @@ namespace GusApi;
  */
 class SearchReport
 {
+    /**
+     * @var string
+     */
     private $regon;
+
+    /**
+     * @var string
+     */
     private $regon14;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $province;
+
+    /**
+     * @var string
+     */
     private $district;
+
+    /**
+     * @var string
+     */
     private $community;
+
+    /**
+     * @var string
+     */
     private $city;
+
+    /**
+     * @var string
+     */
     private $zipCode;
+
+    /**
+     * @var string
+     */
     private $street;
+
+    /**
+     * @var string
+     */
     private $type;
+
+    /**
+     * @var int
+     */
     private $silo;
 
+    /**
+     * SearchReport constructor.
+     * @param $data
+     */
     function __construct($data)
     {
-        $this->regon = $data->Regon;
-        $this->name = $data->Nazwa;
-        $this->province = $data->Wojewodztwo;
-        $this->district = $data->Powiat;
-        $this->community = $data->Gmina;
-        $this->city = $data->Miejscowosc;
-        $this->zipCode = $data->KodPocztowy;
-        $this->street = $data->Ulica;
-        $this->type = $this->makeType($data->Typ);
+        $this->regon = (string)$data->Regon;
+        $this->name = (string)$data->Nazwa;
+        $this->province = (string)$data->Wojewodztwo;
+        $this->district = (string)$data->Powiat;
+        $this->community = (string)$data->Gmina;
+        $this->city = (string)$data->Miejscowosc;
+        $this->zipCode = (string)$data->KodPocztowy;
+        $this->street = (string)$data->Ulica;
+        $this->type = $this->makeType((string)$data->Typ);
         $this->regon14 = $this->makeRegon14($this->regon);
-        $this->silo = $data->SilosID;
+        $this->silo = (int)$data->SilosID;
     }
 
     /**
@@ -133,18 +180,26 @@ class SearchReport
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getSilo()
     {
         return $this->silo;
     }
 
+    /**
+     * @param string $regon
+     * @return string
+     */
     private function makeRegon14($regon)
     {
         return str_pad($regon, 14, "0");
     }
 
+    /**
+     * @param string $type
+     * @return string
+     */
     private function makeType($type)
     {
         return trim(strtolower($type));
