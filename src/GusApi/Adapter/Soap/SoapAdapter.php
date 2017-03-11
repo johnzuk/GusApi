@@ -46,6 +46,14 @@ class SoapAdapter implements AdapterInterface
     }
 
     /**
+     * @return SoapClient
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
      * @inheritdoc
      */
     public function login($userKey)
@@ -160,7 +168,7 @@ class SoapAdapter implements AdapterInterface
      * @param $namespace
      * @param $name
      * @param null $data
-     * @param bool|false $mustUnderstand
+     * @param bool $mustUnderstand
      * @return \SoapHeader
      */
     protected function setHeader($namespace, $name, $data = null, $mustUnderstand = false)

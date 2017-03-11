@@ -43,6 +43,22 @@ class GusApi
     }
 
     /**
+     * @return string
+     */
+    public function getUserKey()
+    {
+        return $this->userKey;
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+    /**
      * Login in to regon server
      *
      * @return string session id value
