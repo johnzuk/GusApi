@@ -9,6 +9,11 @@ namespace GusApi;
 final class ReportTypes
 {
     const REPORT_ACTIVITY_PHYSIC_PERSON = 'PublDaneRaportFizycznaOsoba';
+    const REPORT_ACTIVITY_PHYSIC_CEIDG = 'PublDaneRaportDzialalnoscFizycznejCeidg';
+    
+    /**
+     * @deprecated Use ReportTypes::REPORT_ACTIVITY_PHYSIC_CEIDG instead.
+     */
     const REPORT_ACTIVITY_PHYSIC_CEGID = 'PublDaneRaportDzialalnoscFizycznejCeidg';
     const REPORT_ACTIVITY_PHYSIC_AGRO = 'PublDaneRaportDzialalnoscFizycznejRolnicza';
     const REPORT_ACTIVITY_PHYSIC_OTHER_PUBLIC = 'PublDaneRaportDzialalnoscFizycznejPozostala';
