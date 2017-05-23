@@ -2,7 +2,7 @@
 namespace GusApi\Client;
 
 /**
- * Class SoapClient provide a cient for a GUS server
+ * Class SoapClient provides a client for the GUS server
  * @package GusApi\Client
  */
 class SoapClient extends \SoapClient
