@@ -1,6 +1,7 @@
 PHP GUS API library
 ===================
 PHP GUS API library based on **official** REGON SOAP api.
+Official GUS docs [here](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/)
 
 Example
 ======================
@@ -30,6 +31,7 @@ try {
 }
 
 ```
+or see file: getFromNip.php in examples directory.
 
 PHP GUS API is an object-oriented library to get information from [Regon site](https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc)
 
