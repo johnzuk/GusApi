@@ -7,6 +7,14 @@ namespace GusApi;
  */
 class SearchReport
 {
+    const TYPE_JURIDICAL_PERSON = 'p';
+
+    const TYPE_NATURAL_PERSON = 'f';
+
+    const TYPE_LOCAL_ENTITY_JURIDICAL_PERSON = 'lp';
+
+    const TYPE_LOCAL_ENTITY_NATURAL_PERSON = 'lf';
+
     /**
      * @var string
      */

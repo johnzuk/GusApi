@@ -40,16 +40,21 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
 
             $nip = $_POST['nip'];
             try {
-                $gusReport = $gus->getByNip($_SESSION['sid'], $nip);
-                var_dump($gusReport);
-                var_dump(
-                    $gus->getFullReport(
+                $gusReports = $gus->getByNip($_SESSION['sid'], $nip);
+                var_dump($gusReports);
+                $mapper = new \GusApi\ReportTypeMapper();
+
+                foreach ($gusReports as $gusReport) {
+                    $reportType = $mapper->getReportType($gusReport);
+
+                    var_dump($gus->getFullReport(
                         $_SESSION['sid'],
-                        $gusReport[0],
-                        ReportTypes::REPORT_ACTIVITY_LAW_PUBLIC
-                    )
-                );
-                echo $gusReport[0]->getName();
+                        $gusReport,
+                        $reportType
+                    ));
+
+                    echo $gusReport->getName();
+                }
 
             } catch (\GusApi\Exception\NotFoundException $e) {
                 echo 'No data found <br>';
