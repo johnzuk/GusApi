@@ -13,6 +13,7 @@ use GusApi\GusApi;
 use GusApi\RegonConstantsInterface;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\ReportTypes;
+use GusApi\ReportTypeMapper;
 
 $gus = new GusApi(
     'abcde12345abcde12345', // <--- your user key / twój klucz użytkownika
@@ -24,10 +25,32 @@ $gus = new GusApi(
     )
 );
 
+$mapper = new ReportTypeMapper();
+
 try {
-    $gus->login();
+    $nipToCheck = 'xxxxxxxxxx'; //change to valid nip value
+    $sessionId = $gus->login();
+    
+    $gusReports = $gus->getByNip($sessionId, $nipToCheck);
+    
+    foreach ($gusReports as $gusReport) {
+        $reportType = $mapper->getReportType($gusReport);
+
+        var_dump($gus->getFullReport(
+            $sessionId,
+            $gusReport,
+            $reportType
+        ));
+
+        echo $gusReport->getName();
+    }
+    
 } catch (InvalidUserKeyException $e) {
     echo 'Bad user key';
+} catch (\GusApi\Exception\NotFoundException $e) {
+    echo 'No data found <br>';
+    echo 'For more information read server message belowe: <br>';
+    echo $gus->getResultSearchMessage($sessionId);
 }
 
 ```
