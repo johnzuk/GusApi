@@ -22,11 +22,12 @@ class SoapClient extends \SoapClient
      * @param string $wsdl
      * @param string $location
      * @param array|null $options
+     * @param array|null $contextOptions
      */
-    public function __construct($wsdl, $location, array $options = null)
+    public function __construct($wsdl, $location, array $options = null, array $contextOptions = null)
     {
         $this->setLocation($location);
-        $this->context = $this->createContext();
+        $this->context = $this->createContext($contextOptions);
         $options['stream_context'] = $this->context;
 
         parent::__construct($wsdl, $options);
@@ -85,11 +86,12 @@ class SoapClient extends \SoapClient
     /**
      * Create http context
      *
+     * @param array|null $contextOptions
      * @return resource
      */
-    private function createContext()
+    private function createContext(array $contextOptions = null)
     {
-        return stream_context_create();
+        return stream_context_create($contextOptions);
     }
 
     /**

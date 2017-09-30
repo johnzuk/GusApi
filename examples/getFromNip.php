@@ -6,7 +6,6 @@ session_start();
 use GusApi\GusApi;
 use GusApi\RegonConstantsInterface;
 use GusApi\Exception\InvalidUserKeyException;
-use GusApi\ReportTypes;
 
 
 $key = 'abcde12345abcde12345'; // <--- your user key / twój klucz użytkownika
