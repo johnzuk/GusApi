@@ -32,8 +32,9 @@ class SoapAdapter implements AdapterInterface
      *
      * @param string $baseUrl
      * @param string $address
+     * @param array $contextOptions
      */
-    public function __construct($baseUrl, $address)
+    public function __construct($baseUrl, $address, array $contextOptions = null)
     {
         $this->baseUrl = $baseUrl;
         $this->address = $address;
@@ -42,7 +43,7 @@ class SoapAdapter implements AdapterInterface
             'soap_version' => SOAP_1_2,
             'trace' => true,
             'style' => SOAP_DOCUMENT
-        ]);
+        ], $contextOptions);
     }
 
     /**
