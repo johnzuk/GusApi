@@ -6,16 +6,8 @@ class GusApiTest extends PHPUnit_Framework_TestCase
 {
     public function testLoginGus()
     {
-        $gus = new GusApi("aaaaaabbbbbcccccdddd");
+        $gus = new GusApi("abcde12345abcde12345");
         $this->assertTrue(is_string($gus->login()));
-    }
-
-    public function testGetCaptcha()
-    {
-        $gus = new GusApi("aaaaaabbbbbcccccdddd");
-        $sid = $gus->login();
-
-        $this->assertNotEquals(-1, $gus->getCaptcha($sid));
     }
 
     /**
