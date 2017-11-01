@@ -49,8 +49,8 @@ class SoapClient extends \SoapClient
     public function __doRequest($request, $location, $action, $version = SOAP_1_2, $one_way = NULL) {
         $location = $this->location;
         $response = parent::__doRequest($request, $location, $action, $version, $one_way);
-        $response = stristr(stristr($response, "<s:"), "</s:Envelope>", true) . "</s:Envelope>";
-        return $response;
+
+        return RequestDecoder::decode($response);
     }
 
     /**
