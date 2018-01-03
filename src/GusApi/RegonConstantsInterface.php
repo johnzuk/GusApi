@@ -21,6 +21,11 @@ interface RegonConstantsInterface
     const SEARCH_TYPE_KRS  = 'Krs';
     const SEARCH_TYPE_REGON = 'Regon';
 
+    const SEARCH_TYPE_NIPS  = 'Nipy';
+    const SEARCH_TYPE_KRSES = 'Krsy';
+    const SEARCH_TYPE_REGONS_9  = 'Regony9zn';
+    const SEARCH_TYPE_REGONS_14  = 'Regony14zn';
+
     const PARAM_STATUS_DATE_STATE = 'StanDanych';
     const PARAM_MESSAGE_CODE = 'KomunikatKod';
     const PARAM_MESSAGE = 'KomunikatTresc';

@@ -179,6 +179,78 @@ class GusApi
 
     /**
      * @param $sid
+     * @param array $nips
+     * @return SearchReport[]
+     * @throws NotFoundException
+     */
+    public function getByNips($sid, array $nips)
+    {
+        if (count($nips) > 20) {
+            throw new \InvalidArgumentException("To few NIP numbers. Maximum quantity is 20");
+        }
+        $nips = implode(',', $nips);
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_NIPS => $nips
+        ]);
+    }
+
+    /**
+     * @param $sid
+     * @param array $krses
+     * @return SearchReport[]
+     * @throws NotFoundException
+     */
+    public function getByKrses($sid, array $krses)
+    {
+        if (count($krses) > 20) {
+            throw new \InvalidArgumentException("To few KRS numbers. Maximum quantity is 20");
+        }
+        $krses = implode(',', $krses);
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_KRSES => $krses
+        ]);
+    }
+
+    /**
+     * @param $sid
+     * @param array $regons
+     * @return SearchReport[]
+     * @throws NotFoundException
+     */
+    public function getByRegons9($sid, array $regons)
+    {
+        if (count($regons) > 20) {
+            throw new \InvalidArgumentException("To few REGONS numbers. Maximum quantity is 20");
+        }
+        $regons = implode(',', $regons);
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_REGONS_9 => $regons
+        ]);
+    }
+
+    /**
+     * @param $sid
+     * @param array $regons
+     * @return SearchReport[]
+     * @throws NotFoundException
+     */
+    public function getByregons14($sid, array $regons)
+    {
+        if (count($regons) > 20) {
+            throw new \InvalidArgumentException("To few REGONS numbers. Maximum quantity is 20");
+        }
+        $regons = implode(',', $regons);
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_REGONS_14 => $regons
+        ]);
+    }
+
+    /**
+     * @param $sid
      * @param SearchReport $searchReport
      * @param $reportType
      * @return mixed|\SimpleXMLElement
@@ -193,7 +265,7 @@ class GusApi
     /**
      * Get get message about search if you don't get data
      *
-     * @param sid
+     * @param $sid
      * @return string
      */
     public function getResultSearchMessage($sid)
