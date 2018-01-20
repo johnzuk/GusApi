@@ -179,14 +179,14 @@ class GusApi
 
     /**
      * @param $sid
-     * @param array $nips
+     * @param array $nips Maxium quantity is 20.
      * @return SearchReport[]
      * @throws NotFoundException
      */
     public function getByNips($sid, array $nips)
     {
         if (count($nips) > 20) {
-            throw new \InvalidArgumentException("To few NIP numbers. Maximum quantity is 20");
+            throw new \InvalidArgumentException("Too many NIP numbers. Maximum quantity is 20.");
         }
         $nips = implode(',', $nips);
 
@@ -197,14 +197,14 @@ class GusApi
 
     /**
      * @param $sid
-     * @param array $krses
+     * @param array $krses Maxium quantity is 20.
      * @return SearchReport[]
      * @throws NotFoundException
      */
     public function getByKrses($sid, array $krses)
     {
         if (count($krses) > 20) {
-            throw new \InvalidArgumentException("To few KRS numbers. Maximum quantity is 20");
+            throw new \InvalidArgumentException("Too many KRS numbers. Maximum quantity is 20.");
         }
         $krses = implode(',', $krses);
 
@@ -215,14 +215,14 @@ class GusApi
 
     /**
      * @param $sid
-     * @param array $regons
+     * @param array $regons Maxium quantity is 20.
      * @return SearchReport[]
      * @throws NotFoundException
      */
     public function getByRegons9($sid, array $regons)
     {
         if (count($regons) > 20) {
-            throw new \InvalidArgumentException("To few REGONS numbers. Maximum quantity is 20");
+            throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
         }
         $regons = implode(',', $regons);
 
@@ -233,14 +233,14 @@ class GusApi
 
     /**
      * @param $sid
-     * @param array $regons
+     * @param array $regons Maxium quantity is 20.
      * @return SearchReport[]
      * @throws NotFoundException
      */
     public function getByregons14($sid, array $regons)
     {
         if (count($regons) > 20) {
-            throw new \InvalidArgumentException("To few REGONS numbers. Maximum quantity is 20");
+            throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
         }
         $regons = implode(',', $regons);
 
