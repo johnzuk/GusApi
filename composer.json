@@ -2,7 +2,7 @@
   "name": "gusapi/gusapi",
   "description": "Gus Api Library for PHP",
   "type" : "library",
-  "license": "LGPL-2.1",
+  "license": "LGPL-2.1-or-later",
   "keywords":["nip","regon","krs","api", "soap", "library", "GUS", "CEGID"],
   "authors": [
     {
