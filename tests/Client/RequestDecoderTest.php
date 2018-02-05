@@ -11,7 +11,7 @@ class RequestDecoderTest extends \PHPUnit_Framework_TestCase
 
     public function testDecodeValidSOAPResponse()
     {
-        $content = file_get_contents('../resources/validSOAPResponse.xsd');
+        $content = file_get_contents(__DIR__.'/../resources/validSOAPResponse.xsd');
 
         $result = RequestDecoder::decode($content);
         $this->assertEquals(trim($content), $result);
@@ -19,8 +19,8 @@ class RequestDecoderTest extends \PHPUnit_Framework_TestCase
 
     public function testDecodeRawSOAPResponse()
     {
-        $content = file_get_contents('../resources/rawSOAPResponse.xsd');
-        $valid = file_get_contents('../resources/validSOAPResponse.xsd');
+        $content = file_get_contents(__DIR__.'/../resources/rawSOAPResponse.xsd');
+        $valid = file_get_contents(__DIR__.'/../resources/validSOAPResponse.xsd');
 
         $result = RequestDecoder::decode($content);
         $this->assertEquals(trim($valid), $result);
