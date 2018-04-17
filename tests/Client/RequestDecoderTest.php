@@ -1,7 +1,11 @@
 <?php
-namespace GusApi\Client;
 
-class RequestDecoderTest extends \PHPUnit_Framework_TestCase
+namespace GusApi\Tests\Client;
+
+use GusApi\Client\RequestDecoder;
+use PHPUnit\Framework\TestCase;
+
+class RequestDecoderTest extends TestCase
 {
     public function testDecodeRawRandomString()
     {

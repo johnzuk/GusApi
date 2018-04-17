@@ -1,21 +1,24 @@
 <?php
 
-use GusApi\GusApi;
+namespace GusApi\Tests;
 
-class GusApiTest extends PHPUnit_Framework_TestCase
+use GusApi\GusApi;
+use PHPUnit\Framework\TestCase;
+
+class GusApiTest extends TestCase
 {
     public function testLoginGus()
     {
-        $gus = new GusApi("abcde12345abcde12345");
-        $this->assertTrue(is_string($gus->login()));
+        $gus = new GusApi('abcde12345abcde12345');
+        $this->assertInternalType('string', $gus->login());
     }
 
     /**
-     * @expectedException GusApi\Exception\InvalidUserKeyException
+     * @expectedException \GusApi\Exception\InvalidUserKeyException
      */
-    public function testLoginInvalidKay()
+    public function testLoginInvalidKey()
     {
-        $gus = new GusApi("abcdefghijklmnno");
-        $sid = $gus->login();
+        $gus = new GusApi('abcdefghijklmnno');
+        $gus->login();
     }
 }
