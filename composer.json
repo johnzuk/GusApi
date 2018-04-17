@@ -23,6 +23,8 @@
     }
   },
   "autoload-dev": {
-    "psr-4": { "GusApi\\Tests\\": "tests/" }
-  },
+    "psr-4": {
+      "GusApi\\Tests\\": "tests/"
+    }
+  }
 }
