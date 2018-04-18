@@ -1,5 +1,6 @@
 <?php
 namespace GusApi;
+
 use GusApi\Exception\InvalidReportTypeException;
 use GusApi\Exception\InvalidSidException;
 use GusApi\Exception\InvalidSiloTypeException;

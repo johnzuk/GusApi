@@ -74,7 +74,7 @@ class SearchReport implements \JsonSerializable
      * SearchReport constructor.
      * @param $data
      */
-    function __construct($data)
+    public function __construct($data)
     {
         $this->regon = (string)$data->Regon;
         $this->name = (string)$data->Nazwa;

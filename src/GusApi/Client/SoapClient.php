@@ -46,7 +46,8 @@ class SoapClient extends \SoapClient
      * </p>
      * @return string response
      */
-    public function __doRequest($request, $location, $action, $version = SOAP_1_2, $one_way = NULL) {
+    public function __doRequest($request, $location, $action, $version = SOAP_1_2, $one_way = null)
+    {
         $location = $this->location;
         $response = parent::__doRequest($request, $location, $action, $version, $one_way);
 

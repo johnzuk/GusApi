@@ -36,7 +36,10 @@ class GusApi
         $this->userKey = $userKey;
 
         if ($adapter === null) {
-            $adapter = new SoapAdapter(RegonConstantsInterface::BASE_WSDL_URL_TEST, RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST);
+            $adapter = new SoapAdapter(
+                RegonConstantsInterface::BASE_WSDL_URL_TEST,
+                RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+            );
         }
 
         $this->adapter = $adapter;
@@ -270,7 +273,8 @@ class GusApi
      */
     public function getResultSearchMessage($sid)
     {
-        return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
+        return sprintf(
+            "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
             $this->sessionStatus($sid),
             $this->getMessageCode($sid),
             $this->getMessage($sid)
@@ -315,7 +319,7 @@ class GusApi
     private function search($sid, array $searchData)
     {
         $result = [];
-        try{
+        try {
             $response = $this->adapter->search($sid, $searchData);
         } catch (NoDataException $e) {
             throw new NotFoundException(sprintf("Not found subject"));

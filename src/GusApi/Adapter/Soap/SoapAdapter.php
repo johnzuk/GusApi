@@ -107,7 +107,11 @@ class SoapAdapter implements AdapterInterface
      */
     public function getFullData($sid, $regon, $reportType)
     {
-        $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', $this->address, $sid);
+        $this->prepareSoapHeader(
+            'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport',
+            $this->address,
+            $sid
+        );
         $result = $this->client->DanePobierzPelnyRaport([
             RegonConstantsInterface::PARAM_REGON => $regon,
             RegonConstantsInterface::PARAM_REPORT_NAME => $reportType

@@ -2,6 +2,7 @@
 
 namespace GusApi\Exception;
 
-class InvalidSidException extends \InvalidArgumentException{
+class InvalidSidException extends \InvalidArgumentException
+{
 
 }

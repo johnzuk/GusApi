@@ -2,6 +2,7 @@
 
 namespace GusApi\Exception;
 
-class InvalidUserKeyException extends \InvalidArgumentException{
+class InvalidUserKeyException extends \InvalidArgumentException
+{
 
 }
