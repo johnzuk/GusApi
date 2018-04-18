@@ -129,7 +129,7 @@ class SoapAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function getValue(string $sid, string $param)
+    public function getValue(?string $sid, string $param)
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
         $result = $this->client->GetValue([
