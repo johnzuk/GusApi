@@ -17,7 +17,7 @@ class ReportTypeMapper
      * @throws InvalidSiloTypeException
      * @return string
      */
-    public function getReportType(SearchReport $report)
+    public function getReportType(SearchReport $report): string
     {
         $method = 'type'.ucfirst($report->getType());
 
@@ -25,23 +25,23 @@ class ReportTypeMapper
             throw new InvalidReportTypeException(sprintf("Invalid report type: %s", $report->getType()));
         }
 
-        return call_user_func([$this, $method], $report->getSilo());
+        return $this->$method($report->getSilo());
     }
 
     /**
      * @param int $silo
      * @return string
      */
-    protected function typeP($silo)
+    protected function typeP(int $silo): string
     {
         return ReportTypes::REPORT_PUBLIC_LAW;
     }
 
     /**
      * @param int $silo
-     * @return mixed
+     * @return string
      */
-    protected function typeF($silo)
+    protected function typeF(int $silo): string
     {
         $siloMapper = [
             1 => ReportTypes::REPORT_ACTIVITY_PHYSIC_CEIDG,
@@ -50,7 +50,7 @@ class ReportTypeMapper
             4 => ReportTypes::REPORT_ACTIVITY_LOCAL_PHYSIC_WKR_PUBLIC,
         ];
 
-        if (!key_exists($silo, $siloMapper)) {
+        if (!array_key_exists($silo, $siloMapper)) {
             throw new InvalidSidException(sprintf("Invalid silo type: %s", $silo));
         }
 
@@ -61,16 +61,16 @@ class ReportTypeMapper
      * @param int $silo
      * @return string
      */
-    protected function typeLp($silo)
+    protected function typeLp(int $silo): string
     {
         return ReportTypes::REPORT_LOCAL_LAW_PUBLIC;
     }
 
     /**
-     * @param $silo
+     * @param int $silo
      * @return string
      */
-    protected function typeLf($silo)
+    protected function typeLf(int $silo): string
     {
         return ReportTypes::REPORT_LOCAL_PHYSIC_PUBLIC;
     }
