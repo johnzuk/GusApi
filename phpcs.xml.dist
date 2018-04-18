@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset>
+    <arg name="colors"/>
+    <arg value="sp"/>
+    <rule ref="PSR2"/>
+</ruleset>
