@@ -22,7 +22,7 @@ class ReportTypeMapper
         $method = 'type'.ucfirst($report->getType());
 
         if (!method_exists($this, $method)) {
-            throw new InvalidReportTypeException(sprintf("Invalid report type: %s"), $report->getType());
+            throw new InvalidReportTypeException(sprintf("Invalid report type: %s", $report->getType()));
         }
 
         return call_user_func([$this, $method], $report->getSilo());
