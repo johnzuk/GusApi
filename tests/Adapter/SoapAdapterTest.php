@@ -1,20 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 30.10.17
- * Time: 13:16
- */
 
-class SoapAdapterTest extends PHPUnit_Framework_TestCase
+namespace GusApi\Tests\Adapter;
+
+use GusApi\Adapter\Soap\SoapAdapter;
+use GusApi\RegonConstantsInterface;
+use PHPUnit\Framework\TestCase;
+
+class SoapAdapterTest extends TestCase
 {
     public function testLogin()
     {
         $key = 'abcde12345abcde12345';
 
-        $gus = new \GusApi\Adapter\Soap\SoapAdapter(
-            \GusApi\RegonConstantsInterface::BASE_WSDL_URL_TEST,
-            \GusApi\RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
+        $gus = new SoapAdapter(
+            RegonConstantsInterface::BASE_WSDL_URL_TEST,
+            RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
         );
+
+        $this->assertInternalType('string', $gus->login($key));
     }
 }

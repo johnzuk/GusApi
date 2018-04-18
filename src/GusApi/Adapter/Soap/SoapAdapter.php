@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Adapter\Soap;
 
 use GusApi\Adapter\AdapterInterface;
