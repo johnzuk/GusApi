@@ -2,5 +2,4 @@ vendor/
 build/
 examples/captcha.jpeg
 .idea
-composer.lock
 phpunit.xml
