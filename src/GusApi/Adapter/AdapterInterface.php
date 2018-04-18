@@ -13,7 +13,7 @@ interface AdapterInterface
      * @param string $userKey twenty-character user key eg. <b>abcde12345abcde12345</b>
      * @return string session id - used in other actions
      */
-    public function login($userKey);
+    public function login(string $userKey): string;
 
     /**
      * Logout from regon server
@@ -21,7 +21,7 @@ interface AdapterInterface
      * @param string $sid session id
      * @return bool logout status
      */
-    public function logout($sid);
+    public function logout(string $sid): bool;
 
     /**
      * Search data in regon server
@@ -30,7 +30,7 @@ interface AdapterInterface
      * @param array $parameters search parameters
      * @return mixed
      */
-    public function search($sid, array $parameters);
+    public function search(string $sid, array $parameters);
 
     /**
      * Get full report data from regon server
@@ -40,7 +40,7 @@ interface AdapterInterface
      * @param $reportType
      * @return mixed
      */
-    public function getFullData($sid, $regon, $reportType);
+    public function getFullData(string $sid, string $regon, string $reportType);
 
     /**
      * Get value
@@ -49,5 +49,5 @@ interface AdapterInterface
      * @param $param - available param names: ["StatusSesji", "KomunikatKod", "KomunikatTresc"]
      * @return mixed
      */
-    public function getValue($sid, $param);
+    public function getValue(string $sid, string $param);
 }

@@ -58,7 +58,7 @@ class SoapAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function login($userKey)
+    public function login(string $userKey): string
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', $this->address);
         $result = $this->client->Zaloguj([
@@ -72,20 +72,20 @@ class SoapAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function logout($sid)
+    public function logout(string $sid): bool
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', $this->address);
         $result = $this->client->Wyloguj([
             RegonConstantsInterface::PARAM_SESSION_ID => $sid
         ]);
 
-        return $result->WylogujResult;
+        return (bool)$result->WylogujResult;
     }
 
     /**
      * @inheritdoc
      */
-    public function search($sid, array $parameters)
+    public function search(string $sid, array $parameters)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
 
@@ -105,7 +105,7 @@ class SoapAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function getFullData($sid, $regon, $reportType)
+    public function getFullData(string $sid, string $regon, string $reportType)
     {
         $this->prepareSoapHeader(
             'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport',
@@ -129,7 +129,7 @@ class SoapAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function getValue($sid, $param)
+    public function getValue(string $sid, string $param)
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
         $result = $this->client->GetValue([
