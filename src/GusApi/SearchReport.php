@@ -1,8 +1,10 @@
 <?php
+
 namespace GusApi;
 
 /**
  * Class SearchReport
+ *
  * @package GusApi
  */
 class SearchReport implements \JsonSerializable
@@ -72,21 +74,22 @@ class SearchReport implements \JsonSerializable
 
     /**
      * SearchReport constructor.
+     *
      * @param $data
      */
     public function __construct($data)
     {
-        $this->regon = (string)$data->Regon;
-        $this->name = (string)$data->Nazwa;
-        $this->province = (string)$data->Wojewodztwo;
-        $this->district = (string)$data->Powiat;
-        $this->community = (string)$data->Gmina;
-        $this->city = (string)$data->Miejscowosc;
-        $this->zipCode = (string)$data->KodPocztowy;
-        $this->street = (string)$data->Ulica;
-        $this->type = $this->makeType((string)$data->Typ);
+        $this->regon = (string) $data->Regon;
+        $this->name = (string) $data->Nazwa;
+        $this->province = (string) $data->Wojewodztwo;
+        $this->district = (string) $data->Powiat;
+        $this->community = (string) $data->Gmina;
+        $this->city = (string) $data->Miejscowosc;
+        $this->zipCode = (string) $data->KodPocztowy;
+        $this->street = (string) $data->Ulica;
+        $this->type = $this->makeType((string) $data->Typ);
         $this->regon14 = $this->makeRegon14($this->regon);
-        $this->silo = (int)$data->SilosID;
+        $this->silo = (int) $data->SilosID;
     }
 
     /**
@@ -197,29 +200,31 @@ class SearchReport implements \JsonSerializable
 
     /**
      * @param string $regon
+     *
      * @return string
      */
     private function makeRegon14($regon)
     {
-        return str_pad($regon, 14, "0");
+        return str_pad($regon, 14, '0');
     }
 
     /**
      * @param string $type
+     *
      * @return string
      */
     private function makeType($type)
     {
         return trim(strtolower($type));
     }
-    
+
     /**
      * @return array
      */
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);
-    
+
         return $vars;
     }
 }

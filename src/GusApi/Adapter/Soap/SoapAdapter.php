@@ -3,12 +3,14 @@
 namespace GusApi\Adapter\Soap;
 
 use GusApi\Adapter\AdapterInterface;
-use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Client\SoapClient;
+use GusApi\Exception\NotFoundException;
 use GusApi\RegonConstantsInterface;
+use SimpleXMLElement;
 
 /**
  * Class SoapAdapter SoapAdapter for
+ *
  * @package GusApi\Adapter\Soap
  */
 class SoapAdapter implements AdapterInterface
@@ -33,9 +35,9 @@ class SoapAdapter implements AdapterInterface
      *
      * @param string $baseUrl
      * @param string $address
-     * @param array $contextOptions
+     * @param array  $contextOptions
      */
-    public function __construct($baseUrl, $address, array $contextOptions = null)
+    public function __construct(string $baseUrl, string $address, array $contextOptions = null)
     {
         $this->baseUrl = $baseUrl;
         $this->address = $address;
@@ -43,67 +45,68 @@ class SoapAdapter implements AdapterInterface
         $this->client = new SoapClient($this->baseUrl, $address, [
             'soap_version' => SOAP_1_2,
             'trace' => true,
-            'style' => SOAP_DOCUMENT
+            'style' => SOAP_DOCUMENT,
         ], $contextOptions);
     }
 
     /**
      * @return SoapClient
      */
-    public function getClient()
+    public function getClient(): SoapClient
     {
         return $this->client;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function login(string $userKey): string
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', $this->address);
         $result = $this->client->Zaloguj([
-            RegonConstantsInterface::PARAM_USER_KEY => $userKey
+            RegonConstantsInterface::PARAM_USER_KEY => $userKey,
         ]);
 
         $sid = $result->ZalogujResult;
+
         return $sid;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logout(string $sid): bool
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', $this->address);
         $result = $this->client->Wyloguj([
-            RegonConstantsInterface::PARAM_SESSION_ID => $sid
+            RegonConstantsInterface::PARAM_SESSION_ID => $sid,
         ]);
 
-        return (bool)$result->WylogujResult;
+        return (bool) $result->WylogujResult;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function search(string $sid, array $parameters)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
 
         $result = $this->client->DaneSzukaj([
-            RegonConstantsInterface::PARAM_SEARCH => $parameters
+            RegonConstantsInterface::PARAM_SEARCH => $parameters,
         ]);
 
         try {
             $result = $this->decodeResponse($result->DaneSzukajResult);
         } catch (\Exception $e) {
-            throw new NoDataException("No data found for");
+            throw new NotFoundException('No data found');
         }
 
         return $result->dane;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFullData(string $sid, string $regon, string $reportType)
     {
@@ -114,26 +117,26 @@ class SoapAdapter implements AdapterInterface
         );
         $result = $this->client->DanePobierzPelnyRaport([
             RegonConstantsInterface::PARAM_REGON => $regon,
-            RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
+            RegonConstantsInterface::PARAM_REPORT_NAME => $reportType,
         ]);
 
         try {
             $result = $this->decodeResponse($result->DanePobierzPelnyRaportResult);
         } catch (\Exception $e) {
-            throw new NoDataException("No data found");
+            throw new NotFoundException('No data found');
         }
 
         return $result;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getValue(?string $sid, string $param)
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
         $result = $this->client->GetValue([
-            RegonConstantsInterface::PARAM_PARAM_NAME => $param
+            RegonConstantsInterface::PARAM_PARAM_NAME => $param,
         ]);
 
         return $result->GetValueResult;
@@ -142,20 +145,20 @@ class SoapAdapter implements AdapterInterface
     /**
      * Prepare soap necessary header
      *
-     * @param string $action
-     * @param string $to
-     * @param null|string $sid session id
+     * @param string      $action
+     * @param string      $to
+     * @param null|string $sid    session id
      */
-    protected function prepareSoapHeader($action, $to, $sid = null)
+    protected function prepareSoapHeader(string $action, string $to, ?string $sid = null)
     {
         $this->clearHeader();
         $header[] = $this->setHeader('http://www.w3.org/2005/08/addressing', 'Action', $action);
         $header[] = $this->setHeader('http://www.w3.org/2005/08/addressing', 'To', $to);
         $this->client->__setSoapHeaders($header);
 
-        if ($sid !== null) {
+        if (null !== $sid) {
             $this->client->__setHttpHeader([
-                'header' => 'sid: '.$sid
+                'header' => 'sid: '.$sid,
             ]);
         }
     }
@@ -163,31 +166,33 @@ class SoapAdapter implements AdapterInterface
     /**
      * Clear soap header
      */
-    protected function clearHeader()
+    protected function clearHeader(): bool
     {
-        $this->client->__setSoapHeaders(null);
+        return $this->client->__setSoapHeaders(null);
     }
 
     /**
      * Set soap header
      *
-     * @param $namespace
-     * @param $name
-     * @param null $data
-     * @param bool $mustUnderstand
+     * @param string $namespace
+     * @param string $name
+     * @param mixed  $data
+     * @param bool   $mustUnderstand
+     *
      * @return \SoapHeader
      */
-    protected function setHeader($namespace, $name, $data = null, $mustUnderstand = false)
+    protected function setHeader(string $namespace, string $name, $data = null, bool $mustUnderstand = false)
     {
         return new \SoapHeader($namespace, $name, $data, $mustUnderstand);
     }
 
     /**
      * @param string $response xml string
-     * @return \SimpleXMLElement
+     *
+     * @return SimpleXMLElement
      */
-    protected function decodeResponse($response)
+    protected function decodeResponse(string $response): SimpleXMLElement
     {
-        return new \SimpleXMLElement($response);
+        return new SimpleXMLElement($response);
     }
 }

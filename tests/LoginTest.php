@@ -5,7 +5,7 @@ namespace GusApi\Tests;
 use GusApi\GusApi;
 use PHPUnit\Framework\TestCase;
 
-class GusApiTest extends TestCase
+class LoginTest extends TestCase
 {
     public function testLoginGus()
     {
