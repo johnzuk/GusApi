@@ -2,43 +2,46 @@
 
 namespace GusApi\Type;
 
+/**
+ * Class ParametryWyszukiwania
+ * @package GusApi\Type
+ */
 class ParametryWyszukiwania
 {
+    /**
+     * @var string $Krs
+     */
+    protected $Krs = null;
 
     /**
-     * @var string
+     * @var string $Krsy
      */
-    private $Krs;
+    protected $Krsy = null;
 
     /**
-     * @var string
+     * @var string $Nip
      */
-    private $Krsy;
+    protected $Nip = null;
 
     /**
-     * @var string
+     * @var string $Nipy
      */
-    private $Nip;
+    protected $Nipy = null;
 
     /**
-     * @var string
+     * @var string $Regon
      */
-    private $Nipy;
+    protected $Regon = null;
 
     /**
-     * @var string
+     * @var string $Regony14zn
      */
-    private $Regon;
+    protected $Regony14zn = null;
 
     /**
-     * @var string
+     * @var string $Regony9zn
      */
-    private $Regony14zn;
-
-    /**
-     * @var string
-     */
-    private $Regony9zn;
+    protected $Regony9zn = null;
 
     /**
      * @return string
@@ -52,12 +55,10 @@ class ParametryWyszukiwania
      * @param string $Krs
      * @return ParametryWyszukiwania
      */
-    public function withKrs($Krs)
+    public function setKrs($Krs)
     {
-        $new = clone $this;
-        $new->Krs = $Krs;
-
-        return $new;
+        $this->Krs = $Krs;
+        return $this;
     }
 
     /**
@@ -72,12 +73,10 @@ class ParametryWyszukiwania
      * @param string $Krsy
      * @return ParametryWyszukiwania
      */
-    public function withKrsy($Krsy)
+    public function setKrsy($Krsy)
     {
-        $new = clone $this;
-        $new->Krsy = $Krsy;
-
-        return $new;
+        $this->Krsy = $Krsy;
+        return $this;
     }
 
     /**
@@ -92,12 +91,10 @@ class ParametryWyszukiwania
      * @param string $Nip
      * @return ParametryWyszukiwania
      */
-    public function withNip($Nip)
+    public function setNip($Nip)
     {
-        $new = clone $this;
-        $new->Nip = $Nip;
-
-        return $new;
+        $this->Nip = $Nip;
+        return $this;
     }
 
     /**
@@ -112,12 +109,10 @@ class ParametryWyszukiwania
      * @param string $Nipy
      * @return ParametryWyszukiwania
      */
-    public function withNipy($Nipy)
+    public function setNipy($Nipy)
     {
-        $new = clone $this;
-        $new->Nipy = $Nipy;
-
-        return $new;
+        $this->Nipy = $Nipy;
+        return $this;
     }
 
     /**
@@ -132,12 +127,10 @@ class ParametryWyszukiwania
      * @param string $Regon
      * @return ParametryWyszukiwania
      */
-    public function withRegon($Regon)
+    public function setRegon($Regon)
     {
-        $new = clone $this;
-        $new->Regon = $Regon;
-
-        return $new;
+        $this->Regon = $Regon;
+        return $this;
     }
 
     /**
@@ -152,12 +145,10 @@ class ParametryWyszukiwania
      * @param string $Regony14zn
      * @return ParametryWyszukiwania
      */
-    public function withRegony14zn($Regony14zn)
+    public function setRegony14zn($Regony14zn)
     {
-        $new = clone $this;
-        $new->Regony14zn = $Regony14zn;
-
-        return $new;
+        $this->Regony14zn = $Regony14zn;
+        return $this;
     }
 
     /**
@@ -172,14 +163,9 @@ class ParametryWyszukiwania
      * @param string $Regony9zn
      * @return ParametryWyszukiwania
      */
-    public function withRegony9zn($Regony9zn)
+    public function setRegony9zn($Regony9zn)
     {
-        $new = clone $this;
-        $new->Regony9zn = $Regony9zn;
-
-        return $new;
+        $this->Regony9zn = $Regony9zn;
+        return $this;
     }
-
-
 }
-

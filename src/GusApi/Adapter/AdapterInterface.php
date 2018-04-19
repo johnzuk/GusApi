@@ -49,5 +49,5 @@ interface AdapterInterface
      * @param $param - available param names: ["StatusSesji", "KomunikatKod", "KomunikatTresc"]
      * @return mixed
      */
-    public function getValue(string $sid, string $param);
+    public function getValue(?string $sid, string $param);
 }
