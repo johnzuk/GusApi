@@ -16,7 +16,7 @@ class SearchDataResponse
     /**
      * @param SearchResponseCompanyData[] $DaneSzukajResult
      */
-    public function __construct(array $DaneSzukajResult)
+    public function __construct(array $DaneSzukajResult = [])
     {
         $this->DaneSzukajResult = $DaneSzukajResult;
     }
