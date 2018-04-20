@@ -1,5 +1,6 @@
 <?php
 namespace GusApi;
+
 use GusApi\Type\SearchResponseCompanyData;
 
 /**

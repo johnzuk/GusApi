@@ -1,5 +1,6 @@
 <?php
 namespace GusApi\Client;
+
 use GusApi\Exception\InvalidActionNameException;
 
 /**
