@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+  <xs:schema elementFormDefault="qualified" targetNamespace="http://CIS/BIR/PUBL/2014/07" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://CIS/BIR/PUBL/2014/07">
+  <xs:import schemaLocation="https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl_xsd3.xsd" namespace="http://CIS/BIR/PUBL/2014/07/DataContract" /> 
+  <xs:element name="Zaloguj">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pKluczUzytkownika" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="ZalogujResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="ZalogujResult" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="Wyloguj">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pIdentyfikatorSesji" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="WylogujResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="WylogujResult" type="xs:boolean" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DaneSzukaj">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pParametryWyszukiwania" nillable="true" type="q1:ParametryWyszukiwania" xmlns:q1="http://CIS/BIR/PUBL/2014/07/DataContract" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DaneSzukajResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="DaneSzukajResult" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DanePobierzPelnyRaport">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pRegon" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="pNazwaRaportu" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DanePobierzPelnyRaportResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="DanePobierzPelnyRaportResult" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DaneKomunikat">
+  <xs:complexType>
+  <xs:sequence /> 
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="DaneKomunikatResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="DaneKomunikatResult" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  </xs:schema>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+  <xs:schema elementFormDefault="qualified" targetNamespace="http://CIS/BIR/PUBL/2014/07/DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://CIS/BIR/PUBL/2014/07/DataContract">
+  <xs:complexType name="ParametryWyszukiwania">
+  <xs:sequence>
+  <xs:element minOccurs="0" name="Krs" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Krsy" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Nip" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Nipy" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Regon" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Regony14zn" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="Regony9zn" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  
+  </xs:schema>

@@ -5,7 +5,7 @@ namespace GusApi\Tests\Client;
 use GusApi\Client\RequestDecoder;
 use PHPUnit\Framework\TestCase;
 
-class RequestDecoderTest extends TestCase
+final class RequestDecoderTest extends TestCase
 {
     public function testDecodeRawRandomString()
     {
@@ -28,5 +28,11 @@ class RequestDecoderTest extends TestCase
 
         $result = RequestDecoder::decode($content);
         $this->assertEquals(trim($valid), $result);
+    }
+
+    public function testDecodeRawEnvelopeString()
+    {
+        $result = RequestDecoder::decode('<s:Envelope>Test</s:Envelope>');
+        $this->assertEquals('<s:Envelope>Test</s:Envelope>', $result);
     }
 }
