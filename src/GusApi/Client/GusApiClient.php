@@ -206,11 +206,11 @@ class GusApiClient
      */
     protected function getRequestHeaders(string $action, string $to): array
     {
-        $header = [];
-        $header[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action);
-        $header[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to);
+        $headers = [];
+        $headers[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action);
+        $headers[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to);
 
-        return $header;
+        return $headers;
     }
 
     /**
