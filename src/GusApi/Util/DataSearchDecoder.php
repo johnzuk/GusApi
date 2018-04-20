@@ -18,14 +18,17 @@ class DataSearchDecoder
     public static function decode(SearchResponseRaw $searchResponseRaw): SearchDataResponse
     {
         $elements = [];
-        $xmlElementsResponse = new \SimpleXMLElement($searchResponseRaw->getDaneSzukajResult());
+        try {
+            $xmlElementsResponse = new \SimpleXMLElement($searchResponseRaw->getDaneSzukajResult());
 
-        foreach ($xmlElementsResponse->dane as $resultData) {
-            $element = new SearchResponseCompanyData();
-            foreach ($resultData as $key => $item) {
-                $element->$key = (string)$item;
+            foreach ($xmlElementsResponse->dane as $resultData) {
+                $element = new SearchResponseCompanyData();
+                foreach ($resultData as $key => $item) {
+                    $element->$key = (string)$item;
+                }
+                $elements[] = $element;
             }
-            $elements[] = $element;
+        } catch (\Exception $e) {
         }
 
         return new SearchDataResponse($elements);

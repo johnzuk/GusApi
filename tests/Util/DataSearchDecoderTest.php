@@ -40,4 +40,14 @@ class DataSearchDecoderTest extends TestCase
 
         $this->assertEquals($expected, $decodedResponse);
     }
+
+    public function testDecodeWithInvalidStringStructure()
+    {
+        $content = 'Invalid XML structure';
+        $rawResponse = new SearchResponseRaw($content);
+        $decodedResponse = DataSearchDecoder::decode($rawResponse);
+        $expected = new SearchDataResponse([]);
+
+        $this->assertEquals($expected, $decodedResponse);
+    }
 }
