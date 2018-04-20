@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 20.04.18
- * Time: 16:16
- */
-
 namespace GusApi\Util;
-
 
 use GusApi\Type\GetFullReportResponse;
 use GusApi\Type\GetFullReportResponseRaw;
