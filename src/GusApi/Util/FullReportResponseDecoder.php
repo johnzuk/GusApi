@@ -16,7 +16,7 @@ class FullReportResponseDecoder
             $xmlElementsResponse = new \SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
             $data = $xmlElementsResponse->dane;
         } catch (\Exception $e) {
-            $data = new \SimpleXMLElement('');
+            $data = new \SimpleXMLElement('<data></data>');
         }
 
         return new GetFullReportResponse($data);
