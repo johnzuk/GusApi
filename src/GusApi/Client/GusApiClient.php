@@ -3,15 +3,15 @@ namespace GusApi\Client;
 
 use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Type\DanePobierzPelnyRaport;
-use GusApi\Type\DaneSzukaj;
-use GusApi\Type\DaneSzukajResponse;
-use GusApi\Type\DaneSzukajResponseRaw;
+use GusApi\Type\SearchData;
+use GusApi\Type\SearchDataResponse;
+use GusApi\Type\SearchResponseRaw;
 use GusApi\Type\GetValue;
 use GusApi\Type\GetValueResponse;
-use GusApi\Type\Wyloguj;
-use GusApi\Type\WylogujResponse;
-use GusApi\Type\Zaloguj;
-use GusApi\Type\ZalogujResponse;
+use GusApi\Type\Logout;
+use GusApi\Type\LogoutResponse;
+use GusApi\Type\Login;
+use GusApi\Type\LoginResponse;
 use GusApi\Util\DataSearchDecoder;
 
 /**
@@ -50,53 +50,54 @@ class GusApiClient
     }
 
     /**
-     * @param Zaloguj $zaloguj
-     * @return ZalogujResponse
+     * @param Login $login
+     * @return LoginResponse
      */
-    public function Zaloguj(Zaloguj $zaloguj): ZalogujResponse
+    public function login(Login $login): LoginResponse
     {
         return $this->call('Zaloguj', [
-            $zaloguj
+            $login
         ]);
     }
 
     /**
-     * @param Wyloguj $wyloguj
-     * @return WylogujResponse
+     * @param Logout $logout
+     * @return LogoutResponse
      */
-    public function Wyloguj(Wyloguj $wyloguj): WylogujResponse
+    public function logout(Logout $logout): LogoutResponse
     {
         return $this->call('Wyloguj', [
-            $wyloguj
+            $logout
         ]);
     }
 
     /**
      * @param GetValue $getValue
-     * @param null|string $sid
+     * @param null|string $sessionId
      * @return GetValueResponse
      */
-    public function GetValue(GetValue $getValue, ?string $sid = null): GetValueResponse
+    public function getValue(GetValue $getValue, ?string $sessionId = null): GetValueResponse
     {
         return $this->call('GetValue', [
             $getValue
-        ], $sid);
+        ], $sessionId);
     }
 
     /**
-     * @param DaneSzukaj $daneSzukaj
-     * @param string $sid
-     * @return DaneSzukajResponse
+     * @param SearchData $searchData
+     * @param string $sessionId
+     * @return SearchDataResponse
      * @throws NoDataException
      */
-    public function DaneSzukaj(DaneSzukaj $daneSzukaj, string $sid): DaneSzukajResponse
+    public function searchData(SearchData $searchData, string $sessionId): SearchDataResponse
     {
         /**
-         * @var DaneSzukajResponseRaw $result
+         * @var SearchResponseRaw $result
          */
         $result = $this->call('DaneSzukaj', [
-            $daneSzukaj
-        ], $sid);
+            $searchData
+        ], $sessionId);
+
         if ($result->getDaneSzukajResult() === '') {
             throw new NoDataException('No data found');
         }

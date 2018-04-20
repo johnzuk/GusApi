@@ -6,7 +6,7 @@ namespace GusApi\Type;
  * Class DaneSzukaj
  * @package GusApi\Type
  */
-class DaneSzukaj
+class SearchData
 {
     /**
      * @var ParametryWyszukiwania $pParametryWyszukiwania
@@ -31,7 +31,7 @@ class DaneSzukaj
 
     /**
      * @param ParametryWyszukiwania $pParametryWyszukiwania
-     * @return DaneSzukaj
+     * @return SearchData
      */
     public function setPParametryWyszukiwania(ParametryWyszukiwania $pParametryWyszukiwania)
     {

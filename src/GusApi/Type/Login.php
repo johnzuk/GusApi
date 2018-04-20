@@ -5,7 +5,7 @@ namespace GusApi\Type;
  * Class Zaloguj
  * @package GusApi\Type
  */
-class Zaloguj
+class Login
 {
     /**
      * @var string $pKluczUzytkownika
@@ -30,7 +30,7 @@ class Zaloguj
 
     /**
      * @param string $pKluczUzytkownika
-     * @return Zaloguj
+     * @return Login
      */
     public function setPKluczUzytkownika(string $pKluczUzytkownika)
     {

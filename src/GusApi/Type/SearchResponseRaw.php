@@ -5,7 +5,7 @@ namespace GusApi\Type;
  * Class DaneSzukajResponseRaw
  * @package GusApi\Type
  */
-class DaneSzukajResponseRaw
+class SearchResponseRaw
 {
     /**
      * @var string $DaneSzukajResult
@@ -30,7 +30,7 @@ class DaneSzukajResponseRaw
 
     /**
      * @param string $DaneSzukajResult
-     * @return DaneSzukajResponseRaw
+     * @return SearchResponseRaw
      */
     public function setDaneSzukajResult(string $DaneSzukajResult)
     {

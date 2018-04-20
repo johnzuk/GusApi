@@ -6,7 +6,7 @@ namespace GusApi\Type;
  * Class Wyloguj
  * @package GusApi\Type
  */
-class Wyloguj
+class Logout
 {
     /**
      * @var string $pIdentyfikatorSesji
@@ -31,7 +31,7 @@ class Wyloguj
 
     /**
      * @param string $pIdentyfikatorSesji
-     * @return Wyloguj
+     * @return Logout
      */
     public function setPIdentyfikatorSesji(string $pIdentyfikatorSesji)
     {

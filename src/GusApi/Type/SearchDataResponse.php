@@ -6,15 +6,15 @@ namespace GusApi\Type;
  * Class DaneSzukajResponse
  * @package GusApi\Type
  */
-class DaneSzukajResponse
+class SearchDataResponse
 {
     /**
-     * @var DaneSzukajResponseElement[] $DaneSzukajResult
+     * @var SearchResponseCompanyData[] $DaneSzukajResult
      */
     public $DaneSzukajResult = [];
 
     /**
-     * @param DaneSzukajResponseElement[] $DaneSzukajResult
+     * @param SearchResponseCompanyData[] $DaneSzukajResult
      */
     public function __construct(array $DaneSzukajResult)
     {
@@ -30,8 +30,8 @@ class DaneSzukajResponse
     }
 
     /**
-     * @param DaneSzukajResponseElement[] $DaneSzukajResult
-     * @return DaneSzukajResponse
+     * @param SearchResponseCompanyData[] $DaneSzukajResult
+     * @return SearchDataResponse
      */
     public function setDaneSzukajResult(array $DaneSzukajResult)
     {

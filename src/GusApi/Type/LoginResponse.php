@@ -5,7 +5,7 @@ namespace GusApi\Type;
  * Class ZalogujResponse
  * @package GusApi\Type
  */
-class ZalogujResponse
+class LoginResponse
 {
     /**
      * @var string $ZalogujResult
@@ -30,7 +30,7 @@ class ZalogujResponse
 
     /**
      * @param string $ZalogujResult
-     * @return ZalogujResponse
+     * @return LoginResponse
      */
     public function setZalogujResult(string $ZalogujResult)
     {

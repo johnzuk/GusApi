@@ -6,7 +6,7 @@ namespace GusApi\Type;
  * Class WylogujResponse
  * @package GusApi\Type
  */
-class WylogujResponse
+class LogoutResponse
 {
     /**
      * @var boolean $WylogujResult
@@ -31,7 +31,7 @@ class WylogujResponse
 
     /**
      * @param boolean $WylogujResult
-     * @return WylogujResponse
+     * @return LogoutResponse
      */
     public function setWylogujResult(bool $WylogujResult)
     {

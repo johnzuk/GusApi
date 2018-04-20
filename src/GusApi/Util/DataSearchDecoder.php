@@ -1,9 +1,9 @@
 <?php
 namespace GusApi\Util;
 
-use GusApi\Type\DaneSzukajResponse;
-use GusApi\Type\DaneSzukajResponseElement;
-use GusApi\Type\DaneSzukajResponseRaw;
+use GusApi\Type\SearchDataResponse;
+use GusApi\Type\SearchResponseCompanyData;
+use GusApi\Type\SearchResponseRaw;
 
 /**
  * Class DataSearchDecoder
@@ -12,22 +12,22 @@ use GusApi\Type\DaneSzukajResponseRaw;
 class DataSearchDecoder
 {
     /**
-     * @param DaneSzukajResponseRaw $daneSzukajResponseRaw
-     * @return DaneSzukajResponse
+     * @param SearchResponseRaw $searchResponseRaw
+     * @return SearchDataResponse
      */
-    public static function decode(DaneSzukajResponseRaw $daneSzukajResponseRaw): DaneSzukajResponse
+    public static function decode(SearchResponseRaw $searchResponseRaw): SearchDataResponse
     {
         $elements = [];
-        $xmlElementsResponse = new \SimpleXMLElement($daneSzukajResponseRaw->getDaneSzukajResult());
+        $xmlElementsResponse = new \SimpleXMLElement($searchResponseRaw->getDaneSzukajResult());
 
         foreach ($xmlElementsResponse->dane as $resultData) {
-            $element = new DaneSzukajResponseElement();
+            $element = new SearchResponseCompanyData();
             foreach ($resultData as $key => $item) {
                 $element->$key = (string)$item;
             }
             $elements[] = $element;
         }
 
-        return new DaneSzukajResponse($elements);
+        return new SearchDataResponse($elements);
     }
 }

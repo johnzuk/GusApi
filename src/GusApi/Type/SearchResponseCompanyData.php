@@ -1,7 +1,7 @@
 <?php
 namespace GusApi\Type;
 
-class DaneSzukajResponseElement
+class SearchResponseCompanyData
 {
     /**
      * @var string
