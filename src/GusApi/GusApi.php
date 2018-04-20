@@ -45,6 +45,16 @@ class GusApi
         $this->adapter = $adapter;
     }
 
+    public static function create()
+    {
+
+    }
+
+    public static function createWithSoapClient()
+    {
+
+    }
+
     /**
      * @return string
      */
