@@ -2,7 +2,9 @@
 namespace GusApi\Client;
 
 use GusApi\Adapter\Soap\Exception\NoDataException;
-use GusApi\Type\DanePobierzPelnyRaport;
+use GusApi\Context\ContextInterface;
+use GusApi\Type\GetFullReport;
+use GusApi\Type\GetFullReportResponse;
 use GusApi\Type\SearchData;
 use GusApi\Type\SearchDataResponse;
 use GusApi\Type\SearchResponseRaw;
@@ -13,6 +15,7 @@ use GusApi\Type\LogoutResponse;
 use GusApi\Type\Login;
 use GusApi\Type\LoginResponse;
 use GusApi\Util\DataSearchDecoder;
+use GusApi\Util\FullReportResponseDecoder;
 
 /**
  * Class GusApiClient
@@ -26,7 +29,7 @@ class GusApiClient
     protected $soapClient;
 
     /**
-     * @var resource
+     * @var ContextInterface
      */
     protected $streamContext;
 
@@ -39,13 +42,12 @@ class GusApiClient
      * GusApiClient constructor.
      * @param \SoapClient $soapClient
      * @param string $location
-     * @param resource $streamContext
+     * @param ContextInterface $streamContext
      */
-    public function __construct(\SoapClient $soapClient, string $location, $streamContext)
+    public function __construct(\SoapClient $soapClient, string $location, ContextInterface $streamContext)
     {
         $this->soapClient = $soapClient;
         $this->streamContext = $streamContext;
-        $this->location = $location;
         $this->setLocation($location);
     }
 
@@ -105,11 +107,18 @@ class GusApiClient
         return DataSearchDecoder::decode($result);
     }
 
-    public function DanePobierzPelnyRaport(DanePobierzPelnyRaport $danePobierzPelnyRaport, string $sid)
+    /**
+     * @param GetFullReport $getFullReport
+     * @param string $sessionId
+     * @return GetFullReportResponse
+     */
+    public function getFullReport(GetFullReport $getFullReport, string $sessionId): GetFullReportResponse
     {
-        return $this->call('DanePobierzPelnyRaport', [
-            $danePobierzPelnyRaport
-        ], $sid);
+        $rawResponse = $this->call('DanePobierzPelnyRaport', [
+            $getFullReport
+        ], $sessionId);
+
+        return FullReportResponseDecoder::decode($rawResponse);
     }
 
     /**
@@ -117,6 +126,7 @@ class GusApiClient
      */
     public function setLocation(string $location): void
     {
+        $this->location = $location;
         $this->soapClient->__setLocation($location);
     }
 
@@ -133,7 +143,7 @@ class GusApiClient
      */
     public function setHttpOptions(array $options): void
     {
-        $this->setContextOption([
+        $this->streamContext->setOptions([
             'http' => $options
         ]);
     }
@@ -141,35 +151,26 @@ class GusApiClient
     protected function call(string $functionName, $arguments, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
-        $this->createRequestHeaders($action, $this->location);
-        if ($sid !== null) {
-            $this->setHttpOptions([
-                'header' => 'sid: '.$sid
-            ]);
-        }
+        $soapHeaders = $this->getRequestHeaders($action, $this->location);
+        $this->setHttpOptions([
+            'header' => 'sid: '.$sid."\r\n".'User-agent: PHP GusApi',
+        ]);
 
-        return $this->soapClient->__soapCall($functionName, $arguments);
-    }
-
-    /**
-     * @param array $options
-     */
-    private function setContextOption(array $options): void
-    {
-        stream_context_set_option($this->streamContext, $options);
+        return $this->soapClient->__soapCall($functionName, $arguments, null, $soapHeaders);
     }
 
     /**
      * @param string $action
      * @param string $to
+     * @return \SoapHeader[]
      */
-    protected function createRequestHeaders(string $action, string $to): void
+    protected function getRequestHeaders(string $action, string $to): array
     {
-        $this->clearHeader();
-
+        $header = [];
         $header[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action);
         $header[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to);
-        $this->soapClient->__setSoapHeaders($header);
+
+        return $header;
     }
 
     /**
