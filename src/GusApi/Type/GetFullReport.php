@@ -6,7 +6,7 @@ namespace GusApi\Type;
  * Class DanePobierzPelnyRaport
  * @package GusApi\Type
  */
-class DanePobierzPelnyRaport
+class GetFullReport
 {
     /**
      * @var string $pRegon
@@ -38,7 +38,7 @@ class DanePobierzPelnyRaport
 
     /**
      * @param string $pRegon
-     * @return DanePobierzPelnyRaport
+     * @return GetFullReport
      */
     public function setPRegon(string $pRegon)
     {
@@ -56,7 +56,7 @@ class DanePobierzPelnyRaport
 
     /**
      * @param string $pNazwaRaportu
-     * @return DanePobierzPelnyRaport
+     * @return GetFullReport
      */
     public function setPNazwaRaportu(string $pNazwaRaportu)
     {

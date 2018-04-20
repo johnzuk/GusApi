@@ -6,7 +6,7 @@ namespace GusApi\Type;
  * Class ParametryWyszukiwania
  * @package GusApi\Type
  */
-class ParametryWyszukiwania
+class SearchParameters
 {
     /**
      * @var string $Krs
@@ -53,7 +53,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Krs
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setKrs($Krs)
     {
@@ -71,7 +71,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Krsy
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setKrsy($Krsy)
     {
@@ -89,7 +89,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Nip
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setNip($Nip)
     {
@@ -107,7 +107,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Nipy
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setNipy($Nipy)
     {
@@ -125,7 +125,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Regon
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setRegon($Regon)
     {
@@ -143,7 +143,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Regony14zn
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setRegony14zn($Regony14zn)
     {
@@ -161,7 +161,7 @@ class ParametryWyszukiwania
 
     /**
      * @param string $Regony9zn
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
     public function setRegony9zn($Regony9zn)
     {

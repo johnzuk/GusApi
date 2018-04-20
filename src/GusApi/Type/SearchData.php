@@ -9,31 +9,31 @@ namespace GusApi\Type;
 class SearchData
 {
     /**
-     * @var ParametryWyszukiwania $pParametryWyszukiwania
+     * @var SearchParameters $pParametryWyszukiwania
      */
     protected $pParametryWyszukiwania = null;
 
     /**
-     * @param ParametryWyszukiwania $pParametryWyszukiwania
+     * @param SearchParameters $pParametryWyszukiwania
      */
-    public function __construct(ParametryWyszukiwania $pParametryWyszukiwania)
+    public function __construct(SearchParameters $pParametryWyszukiwania)
     {
         $this->pParametryWyszukiwania = $pParametryWyszukiwania;
     }
 
     /**
-     * @return ParametryWyszukiwania
+     * @return SearchParameters
      */
-    public function getPParametryWyszukiwania(): ParametryWyszukiwania
+    public function getPParametryWyszukiwania(): SearchParameters
     {
         return $this->pParametryWyszukiwania;
     }
 
     /**
-     * @param ParametryWyszukiwania $pParametryWyszukiwania
+     * @param SearchParameters $pParametryWyszukiwania
      * @return SearchData
      */
-    public function setPParametryWyszukiwania(ParametryWyszukiwania $pParametryWyszukiwania)
+    public function setPParametryWyszukiwania(SearchParameters $pParametryWyszukiwania)
     {
         $this->pParametryWyszukiwania = $pParametryWyszukiwania;
         return $this;
