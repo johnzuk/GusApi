@@ -1,5 +1,6 @@
 <?php
 namespace GusApi;
+use GusApi\Type\SearchResponseCompanyData;
 
 /**
  * Class SearchReport
@@ -74,7 +75,7 @@ class SearchReport implements \JsonSerializable
      * SearchReport constructor.
      * @param $data
      */
-    public function __construct($data)
+    public function __construct(SearchResponseCompanyData $data)
     {
         $this->regon = (string)$data->Regon;
         $this->name = (string)$data->Nazwa;

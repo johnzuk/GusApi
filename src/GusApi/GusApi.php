@@ -4,8 +4,20 @@ namespace GusApi;
 use GusApi\Adapter\AdapterInterface;
 use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Adapter\Soap\SoapAdapter;
+use GusApi\Client\Builder;
+use GusApi\Client\BuilderInterface;
+use GusApi\Client\GusApiClient;
+use GusApi\Environment\EnvironmentFactory;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
+use GusApi\Type\GetFullReport;
+use GusApi\Type\GetValue;
+use GusApi\Type\GetValueResponse;
+use GusApi\Type\Login;
+use GusApi\Type\Logout;
+use GusApi\Type\SearchData;
+use GusApi\Type\SearchDataResponse;
+use GusApi\Type\SearchParameters;
 
 /**
  * Class GusApi
@@ -16,59 +28,58 @@ use GusApi\Exception\NotFoundException;
  */
 class GusApi
 {
-
     /**
      * @var string user key
      */
     protected $userKey;
 
     /**
-     * @var AdapterInterface connection adapter
+     * @var GusApiClient
      */
-    protected $adapter;
+    protected $apiClient;
 
     /**
-     * @param $userKey
-     * @param AdapterInterface|null $adapter
+     * @var string
      */
-    public function __construct($userKey, AdapterInterface $adapter = null)
+    protected $sessionId;
+
+    public function __construct(string $userKey, string $env = 'dev', ?BuilderInterface $builder = null)
     {
+        $builder = $builder ?: new Builder($env);
+        $this->apiClient = $builder->build();
         $this->userKey = $userKey;
-
-        if ($adapter === null) {
-            $adapter = new SoapAdapter(
-                RegonConstantsInterface::BASE_WSDL_URL_TEST,
-                RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
-            );
-        }
-
-        $this->adapter = $adapter;
-    }
-
-    public static function create()
-    {
-
-    }
-
-    public static function createWithSoapClient()
-    {
-
     }
 
     /**
      * @return string
      */
-    public function getUserKey()
+    public function getUserKey(): string
     {
         return $this->userKey;
     }
 
     /**
-     * @return AdapterInterface
+     * @param string $userKey
      */
-    public function getAdapter()
+    public function setUserKey(string $userKey): void
     {
-        return $this->adapter;
+        $this->userKey = $userKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionId(): string
+    {
+        return $this->sessionId;
+    }
+
+    /**
+     * @param string $sessionId
+     */
+    public function setSessionId(string $sessionId): void
+    {
+        $this->sessionId = $sessionId;
     }
 
     /**
@@ -76,48 +87,47 @@ class GusApi
      *
      * @return string session id value
      */
-    public function login()
+    public function login(): string
     {
-        $sid = $this->adapter->login($this->userKey);
+        $result = $this->apiClient->login(new Login($this->userKey));
 
-        if (empty($sid)) {
+        if (empty($result->getZalogujResult())) {
             throw new InvalidUserKeyException(sprintf("User key '%s' is invalid", $this->userKey));
         }
 
-        return $sid;
+        $this->sessionId = $result->getZalogujResult();
+        return $this->sessionId;
     }
 
     /**
-     * Logout from regon server
-     *
-     * @param string $sid session id
-     * @return bool logout status
+     * @return bool
      */
-    public function logout($sid)
+    public function logout(): bool
     {
-        return $this->adapter->logout($sid);
+        $response = $this->apiClient->logout(new Logout($this->sessionId));
+
+        return $response->getWylogujResult();
     }
 
     /**
-     * Tells whether the your status is login
-     *
-     * @param string $sid session id
-     * @return bool login status
+     * @return bool
      */
-    public function isLogged($sid)
+    public function isLogged(): bool
     {
-        return (bool)$this->sessionStatus($sid);
+        return (bool)$this->getSessionStatus();
     }
 
     /**
-     * Get actual data status
-     *
-     * @param string $sid session id
-     * @return \DateTime data status date time value
+     * @return \DateTime
      */
-    public function dataStatus($sid)
+    public function dataStatus(): \DateTime
     {
-        return new \DateTime($this->adapter->getValue($sid, RegonConstantsInterface::PARAM_STATUS_DATE_STATE));
+        $result = $this->apiClient->getValue(
+            new GetValue(RegonConstantsInterface::PARAM_STATUS_DATE_STATE),
+            $this->sessionId
+        );
+
+        return new \DateTime($result->getGetValueResult());
     }
 
     /**
@@ -130,9 +140,11 @@ class GusApi
      *
      * @return int actual service status
      */
-    public function serviceStatus()
+    public function serviceStatus(): int
     {
-        return (int) $this->adapter->getValue(null, RegonConstantsInterface::PARAM_SERVICE_STATUS);
+        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_SERVICE_STATUS));
+
+        return (int)$result->getGetValueResult();
     }
 
     /**
@@ -140,204 +152,189 @@ class GusApi
      *
      * @return string service message
      */
-    public function serviceMessage()
+    public function serviceMessage(): string
     {
-        return $this->adapter->getValue(null, RegonConstantsInterface::PARAM_SERVICE_MESSAGE);
+        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_SERVICE_MESSAGE));
+
+        return $result->getGetValueResult();
     }
 
     /**
-     * Get basic information by NIP number
-     *
-     * @param string $sid session id
-     * @param string $nip NIP number
-     * @return SearchReport[] search subject information object
-     * @throws NotFoundException
-     */
-    public function getByNip($sid, $nip)
-    {
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_NIP => $nip
-        ]);
-    }
-
-    /**
-     * Get basic information by REGON number
-     *
-     * @param $sid
-     * @param $regon
-     * @return SearchReport[] search subject information object
-     * @throws NotFoundException
-     */
-    public function getByRegon($sid, $regon)
-    {
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_REGON => $regon
-        ]);
-    }
-
-    /**
-     * Get basic information by KRS number
-     *
-     * @param $sid
-     * @param $krs
-     * @return SearchReport[] search subject information object
-     * @throws NotFoundException
-     */
-    public function getByKrs($sid, $krs)
-    {
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_KRS => $krs
-        ]);
-    }
-
-    /**
-     * @param $sid
-     * @param array $nips Maxium quantity is 20.
+     * @param string $nip
      * @return SearchReport[]
-     * @throws NotFoundException
+     * @throws NoDataException
      */
-    public function getByNips($sid, array $nips)
+    public function getByNip(string $nip): array
+    {
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_NIP, $nip);
+    }
+
+    /**
+     * @param string $regon
+     * @return array|SearchReport[]
+     * @throws NoDataException
+     */
+    public function getByRegon(string $regon)
+    {
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGON, $regon);
+    }
+
+    /**
+     * @param string $krs
+     * @return array|SearchReport[]
+     * @throws NoDataException
+     */
+    public function getByKrs(string $krs)
+    {
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_KRS, $krs);
+    }
+
+    /**
+     * @param array $nips
+     * @return array|SearchReport[]
+     * @throws NoDataException
+     */
+    public function getByNips(array $nips)
     {
         if (count($nips) > 20) {
             throw new \InvalidArgumentException("Too many NIP numbers. Maximum quantity is 20.");
         }
         $nips = implode(',', $nips);
 
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_NIPS => $nips
-        ]);
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_NIPS, $nips);
     }
 
     /**
-     * @param $sid
-     * @param array $krses Maxium quantity is 20.
-     * @return SearchReport[]
-     * @throws NotFoundException
+     * @param array $krses
+     * @return array|SearchReport[]
+     * @throws NoDataException
      */
-    public function getByKrses($sid, array $krses)
+    public function getByKrses(array $krses)
     {
         if (count($krses) > 20) {
             throw new \InvalidArgumentException("Too many KRS numbers. Maximum quantity is 20.");
         }
         $krses = implode(',', $krses);
 
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_KRSES => $krses
-        ]);
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_KRSES, $krses);
     }
 
     /**
-     * @param $sid
-     * @param array $regons Maxium quantity is 20.
-     * @return SearchReport[]
-     * @throws NotFoundException
+     * @param array $regons
+     * @return array|SearchReport[]
+     * @throws NoDataException
      */
-    public function getByRegons9($sid, array $regons)
+    public function getByRegons9(array $regons)
     {
         if (count($regons) > 20) {
             throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_REGONS_9 => $regons
-        ]);
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGONS_9, $regons);
     }
 
     /**
-     * @param $sid
-     * @param array $regons Maxium quantity is 20.
-     * @return SearchReport[]
-     * @throws NotFoundException
+     * @param array $regons
+     * @return array|SearchReport[]
+     * @throws NoDataException
      */
-    public function getByregons14($sid, array $regons)
+    public function getByregons14(array $regons)
     {
         if (count($regons) > 20) {
             throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
-            RegonConstantsInterface::SEARCH_TYPE_REGONS_14 => $regons
-        ]);
+        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGONS_14, $regons);
     }
 
     /**
-     * @param $sid
      * @param SearchReport $searchReport
-     * @param $reportType
-     * @return mixed|\SimpleXMLElement
+     * @param string $reportType
+     * @return \SimpleXMLElement
      */
-    public function getFullReport($sid, SearchReport $searchReport, $reportType)
+    public function getFullReport(SearchReport $searchReport, string $reportType): \SimpleXMLElement
     {
-        $result = $this->adapter->getFullData($sid, $searchReport->getRegon14(), $reportType);
+        $result = $this->apiClient->getFullReport(
+            new GetFullReport($searchReport->getRegon14(), $reportType),
+            $this->sessionId
+        );
 
-        return $result;
+        return $result->getReport();
     }
 
     /**
-     * Get get message about search if you don't get data
+     * Get message about search if you don't get data
      *
-     * @param $sid
      * @return string
      */
-    public function getResultSearchMessage($sid)
+    public function getResultSearchMessage(): string
     {
         return sprintf(
             "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
-            $this->sessionStatus($sid),
-            $this->getMessageCode($sid),
-            $this->getMessage($sid)
+            $this->getSessionStatus(),
+            $this->getMessageCode(),
+            $this->getMessage()
         );
     }
 
     /**
      * Return message code if search not found record
-     * @param $sid
      * @return int
      */
-    public function getMessageCode($sid)
+    public function getMessageCode(): int
     {
-        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_MESSAGE_CODE);
+        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_MESSAGE_CODE), $this->sessionId);
+
+        return (int)$result->getGetValueResult();
     }
 
     /**
      * Return message text id search not found record
-     * @param $sid
      * @return string
      */
-    public function getMessage($sid)
+    public function getMessage()
     {
-        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_MESSAGE);
+        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_MESSAGE), $this->sessionId);
+
+        return $result->getGetValueResult();
     }
 
     /**
-     * Return session status
+     * @param string $sid
      * @return int
      */
-    public function sessionStatus($sid)
+    public function getSessionStatus(): int
     {
-        return $this->adapter->getValue($sid, RegonConstantsInterface::PARAM_SESSION_STATUS);
+        $response = $this->apiClient->getValue(
+            new GetValue(RegonConstantsInterface::PARAM_SESSION_STATUS),
+            $this->sessionId
+        );
+
+        return (int)$response->getGetValueResult();
     }
 
     /**
-     * @param $sid
-     * @param array $searchData
+     * @param string $searchType
+     * @param string $parameters
      * @return SearchReport[]
-     * @throws NotFoundException
+     * @throws NoDataException
      */
-    private function search($sid, array $searchData)
+    private function search(string $searchType, string $parameters): array
     {
-        $result = [];
-        try {
-            $response = $this->adapter->search($sid, $searchData);
-        } catch (NoDataException $e) {
-            throw new NotFoundException(sprintf("Not found subject"));
-        }
-        foreach ($response as $report) {
-            $result[] = new SearchReport($report);
+        $method = 'set'.$searchType;
+        $searchParameters = new SearchParameters();
+        $searchParameters->$method($parameters);
+
+        $result = $this->apiClient->searchData(new SearchData($searchParameters), $this->sessionId);
+
+        $response = [];
+
+        foreach ($result->getDaneSzukajResult() as $company) {
+            $response[] = new SearchReport($company);
         }
 
-        return $result;
+        return $response;
     }
 }

@@ -52,6 +52,55 @@ class GusApiClient
     }
 
     /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
+        $this->soapClient->__setLocation($location);
+    }
+
+    /**
+     * @return \SoapClient
+     */
+    public function getSoapClient(): \SoapClient
+    {
+        return $this->soapClient;
+    }
+
+    /**
+     * @param \SoapClient $soapClient
+     */
+    public function setSoapClient(\SoapClient $soapClient): void
+    {
+        $this->soapClient = $soapClient;
+    }
+
+    /**
+     * @return ContextInterface
+     */
+    public function getStreamContext(): ContextInterface
+    {
+        return $this->streamContext;
+    }
+
+    /**
+     * @param ContextInterface $streamContext
+     */
+    public function setStreamContext(ContextInterface $streamContext): void
+    {
+        $this->streamContext = $streamContext;
+    }
+
+    /**
      * @param Login $login
      * @return LoginResponse
      */
@@ -119,15 +168,6 @@ class GusApiClient
         ], $sessionId);
 
         return FullReportResponseDecoder::decode($rawResponse);
-    }
-
-    /**
-     * @param string $location
-     */
-    public function setLocation(string $location): void
-    {
-        $this->location = $location;
-        $this->soapClient->__setLocation($location);
     }
 
     /**
