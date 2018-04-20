@@ -34,7 +34,7 @@ class SearchResponseRaw
      */
     public function setDaneSzukajResult(string $DaneSzukajResult)
     {
-        $this->DaneSzukajReslt = $DaneSzukajResult;
+        $this->DaneSzukajResult = $DaneSzukajResult;
         return $this;
     }
 }

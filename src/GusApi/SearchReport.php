@@ -74,21 +74,21 @@ class SearchReport implements \JsonSerializable
 
     /**
      * SearchReport constructor.
-     * @param $data
+     * @param SearchResponseCompanyData $data
      */
     public function __construct(SearchResponseCompanyData $data)
     {
-        $this->regon = (string)$data->Regon;
-        $this->name = (string)$data->Nazwa;
-        $this->province = (string)$data->Wojewodztwo;
-        $this->district = (string)$data->Powiat;
-        $this->community = (string)$data->Gmina;
-        $this->city = (string)$data->Miejscowosc;
-        $this->zipCode = (string)$data->KodPocztowy;
-        $this->street = (string)$data->Ulica;
-        $this->type = $this->makeType((string)$data->Typ);
+        $this->regon = $data->Regon;
+        $this->name = $data->Nazwa;
+        $this->province = $data->Wojewodztwo;
+        $this->district = $data->Powiat;
+        $this->community = $data->Gmina;
+        $this->city = $data->Miejscowosc;
+        $this->zipCode = $data->KodPocztowy;
+        $this->street = $data->Ulica;
+        $this->type = $this->makeType($data->Typ);
         $this->regon14 = $this->makeRegon14($this->regon);
-        $this->silo = (int)$data->SilosID;
+        $this->silo = $data->SilosID;
     }
 
     /**

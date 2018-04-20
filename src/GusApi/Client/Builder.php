@@ -18,7 +18,6 @@ class Builder implements BuilderInterface
     /**
      * Builder constructor.
      * @param string $environment
-     * @param array $options
      */
     public function __construct(string $environment)
     {

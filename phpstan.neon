@@ -1,0 +1,4 @@
+parameters:
+	ignoreErrors:
+		- '#stream_context_set_option invoked with 2 parameters, 4#'
+		- '#GusApi\\Client\\SoapClient does not have a constructor#'

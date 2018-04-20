@@ -8,6 +8,11 @@
 
 namespace GusApi\Client;
 
+/**
+ * Class SoapClient
+ * @package GusApi\Client
+ * @ignoreErrors
+ */
 class SoapClient extends \SoapClient
 {
     public function __doRequest($request, $location, $action, $version, $one_way = 0)

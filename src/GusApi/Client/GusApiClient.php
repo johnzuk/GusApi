@@ -1,8 +1,8 @@
 <?php
 namespace GusApi\Client;
 
-use GusApi\Adapter\Soap\Exception\NoDataException;
 use GusApi\Context\ContextInterface;
+use GusApi\Exception\NotFoundException;
 use GusApi\Type\GetFullReport;
 use GusApi\Type\GetFullReportResponse;
 use GusApi\Type\SearchData;
@@ -138,7 +138,7 @@ class GusApiClient
      * @param SearchData $searchData
      * @param string $sessionId
      * @return SearchDataResponse
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function searchData(SearchData $searchData, string $sessionId): SearchDataResponse
     {
@@ -150,7 +150,7 @@ class GusApiClient
         ], $sessionId);
 
         if ($result->getDaneSzukajResult() === '') {
-            throw new NoDataException('No data found');
+            throw new NotFoundException('No data found');
         }
 
         return DataSearchDecoder::decode($result);

@@ -1,22 +1,16 @@
 <?php
 namespace GusApi;
 
-use GusApi\Adapter\AdapterInterface;
-use GusApi\Adapter\Soap\Exception\NoDataException;
-use GusApi\Adapter\Soap\SoapAdapter;
 use GusApi\Client\Builder;
 use GusApi\Client\BuilderInterface;
 use GusApi\Client\GusApiClient;
-use GusApi\Environment\EnvironmentFactory;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
 use GusApi\Type\GetFullReport;
 use GusApi\Type\GetValue;
-use GusApi\Type\GetValueResponse;
 use GusApi\Type\Login;
 use GusApi\Type\Logout;
 use GusApi\Type\SearchData;
-use GusApi\Type\SearchDataResponse;
 use GusApi\Type\SearchParameters;
 
 /**
@@ -162,7 +156,7 @@ class GusApi
     /**
      * @param string $nip
      * @return SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByNip(string $nip): array
     {
@@ -172,7 +166,7 @@ class GusApi
     /**
      * @param string $regon
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByRegon(string $regon)
     {
@@ -182,7 +176,7 @@ class GusApi
     /**
      * @param string $krs
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByKrs(string $krs)
     {
@@ -192,7 +186,7 @@ class GusApi
     /**
      * @param array $nips
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByNips(array $nips)
     {
@@ -207,7 +201,7 @@ class GusApi
     /**
      * @param array $krses
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByKrses(array $krses)
     {
@@ -222,7 +216,7 @@ class GusApi
     /**
      * @param array $regons
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByRegons9(array $regons)
     {
@@ -237,7 +231,7 @@ class GusApi
     /**
      * @param array $regons
      * @return array|SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     public function getByregons14(array $regons)
     {
@@ -302,7 +296,6 @@ class GusApi
     }
 
     /**
-     * @param string $sid
      * @return int
      */
     public function getSessionStatus(): int
@@ -319,7 +312,7 @@ class GusApi
      * @param string $searchType
      * @param string $parameters
      * @return SearchReport[]
-     * @throws NoDataException
+     * @throws NotFoundException
      */
     private function search(string $searchType, string $parameters): array
     {
