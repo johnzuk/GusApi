@@ -4,12 +4,13 @@ namespace GusApi\Type;
 
 /**
  * Class DaneSzukajResponse
+ *
  * @package GusApi\Type
  */
 class SearchDataResponse
 {
     /**
-     * @var SearchResponseCompanyData[] $DaneSzukajResult
+     * @var SearchResponseCompanyData[]
      */
     public $DaneSzukajResult = [];
 
@@ -31,11 +32,13 @@ class SearchDataResponse
 
     /**
      * @param SearchResponseCompanyData[] $DaneSzukajResult
+     *
      * @return SearchDataResponse
      */
     public function setDaneSzukajResult(array $DaneSzukajResult)
     {
         $this->DaneSzukajResult = $DaneSzukajResult;
+
         return $this;
     }
 }

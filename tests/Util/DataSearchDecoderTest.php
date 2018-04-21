@@ -17,7 +17,7 @@ class DataSearchDecoderTest extends TestCase
 {
     public function testDecode()
     {
-        $content = file_get_contents(__DIR__ . '/../resources/response/searchDataResponseResult.xsd');
+        $content = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResult.xsd');
         $rawResponse = new SearchResponseRaw($content);
         $decodedResponse = DataSearchDecoder::decode($rawResponse);
 
@@ -35,7 +35,7 @@ class DataSearchDecoderTest extends TestCase
         $companyData->SilosID = '6';
 
         $expected = new SearchDataResponse([
-            $companyData
+            $companyData,
         ]);
 
         $this->assertEquals($expected, $decodedResponse);

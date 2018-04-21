@@ -4,17 +4,18 @@ namespace GusApi\Type;
 
 /**
  * Class DanePobierzPelnyRaport
+ *
  * @package GusApi\Type
  */
 class GetFullReport
 {
     /**
-     * @var string $pRegon
+     * @var string
      */
     protected $pRegon;
 
     /**
-     * @var string $pNazwaRaportu
+     * @var string
      */
     protected $pNazwaRaportu;
 
@@ -38,11 +39,13 @@ class GetFullReport
 
     /**
      * @param string $pRegon
+     *
      * @return GetFullReport
      */
     public function setPRegon(string $pRegon)
     {
         $this->pRegon = $pRegon;
+
         return $this;
     }
 
@@ -56,11 +59,13 @@ class GetFullReport
 
     /**
      * @param string $pNazwaRaportu
+     *
      * @return GetFullReport
      */
     public function setPNazwaRaportu(string $pNazwaRaportu)
     {
         $this->pNazwaRaportu = $pNazwaRaportu;
+
         return $this;
     }
 }

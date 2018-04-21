@@ -1,10 +1,12 @@
 <?php
+
 namespace GusApi;
 
 use GusApi\Type\SearchResponseCompanyData;
 
 /**
  * Class SearchReport
+ *
  * @package GusApi
  */
 class SearchReport implements \JsonSerializable
@@ -74,6 +76,7 @@ class SearchReport implements \JsonSerializable
 
     /**
      * SearchReport constructor.
+     *
      * @param SearchResponseCompanyData $data
      */
     public function __construct(SearchResponseCompanyData $data)
@@ -199,29 +202,31 @@ class SearchReport implements \JsonSerializable
 
     /**
      * @param string $regon
+     *
      * @return string
      */
     private function makeRegon14($regon)
     {
-        return str_pad($regon, 14, "0");
+        return str_pad($regon, 14, '0');
     }
 
     /**
      * @param string $type
+     *
      * @return string
      */
     private function makeType($type)
     {
         return trim(strtolower($type));
     }
-    
+
     /**
      * @return array
      */
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);
-    
+
         return $vars;
     }
 }

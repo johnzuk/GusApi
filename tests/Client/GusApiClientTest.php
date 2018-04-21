@@ -96,7 +96,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('Zaloguj'),
                 $this->equalTo([
-                    new Login('1234567890')
+                    new Login('1234567890'),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -118,7 +118,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('Wyloguj'),
                 $this->equalTo([
-                    new Logout('1234567890')
+                    new Logout('1234567890'),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -140,7 +140,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('GetValue'),
                 $this->equalTo([
-                    new GetValue('StanDanych')
+                    new GetValue('StanDanych'),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -163,7 +163,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('DaneSzukaj'),
                 $this->equalTo([
-                    new SearchData((new SearchParameters())->setNip('0011223344'))
+                    new SearchData((new SearchParameters())->setNip('0011223344')),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -184,7 +184,7 @@ class GusApiClientTest extends TestCase
         $companyData->SilosID = 6;
 
         $expected = new SearchDataResponse([
-            $companyData
+            $companyData,
         ]);
         $this->assertEquals(
             $expected,
@@ -207,7 +207,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('DaneSzukaj'),
                 $this->equalTo([
-                    new SearchData((new SearchParameters())->setNip('0011223344'))
+                    new SearchData((new SearchParameters())->setNip('0011223344')),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -234,7 +234,7 @@ class GusApiClientTest extends TestCase
             ->with(
                 $this->equalTo('DanePobierzPelnyRaport'),
                 $this->equalTo([
-                    new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki')
+                    new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki'),
                 ]),
                 $this->isNull(),
                 $this->equalTo($headers)
@@ -256,7 +256,7 @@ class GusApiClientTest extends TestCase
             ->expects($this->once())
             ->method('__setSoapHeaders')
             ->with($this->equalTo([
-                new \SoapHeader('TestNamespace', 'TestName', 'TestData')
+                new \SoapHeader('TestNamespace', 'TestName', 'TestData'),
             ]))->willReturn(true);
 
         $this->assertTrue($this->gusApiClient->setSoapHeaders([
@@ -279,7 +279,7 @@ class GusApiClientTest extends TestCase
     {
         return [
             new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action),
-            new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to)
+            new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to),
         ];
     }
 }

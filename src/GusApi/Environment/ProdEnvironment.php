@@ -1,8 +1,10 @@
 <?php
+
 namespace GusApi\Environment;
 
 /**
  * Class ProdEnvironment
+ *
  * @package GusApi\Environment
  */
 class ProdEnvironment implements EnvironmentInterface

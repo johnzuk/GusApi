@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Util;
 
 use GusApi\Type\GetFullReportResponse;
@@ -8,6 +9,7 @@ class FullReportResponseDecoder
 {
     /**
      * @param GetFullReportResponseRaw $fullReportResponseRaw
+     *
      * @return GetFullReportResponse
      */
     public static function decode(GetFullReportResponseRaw $fullReportResponseRaw): GetFullReportResponse

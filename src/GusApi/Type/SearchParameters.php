@@ -4,42 +4,43 @@ namespace GusApi\Type;
 
 /**
  * Class ParametryWyszukiwania
+ *
  * @package GusApi\Type
  */
 class SearchParameters
 {
     /**
-     * @var string $Krs
+     * @var string
      */
     protected $Krs = null;
 
     /**
-     * @var string $Krsy
+     * @var string
      */
     protected $Krsy = null;
 
     /**
-     * @var string $Nip
+     * @var string
      */
     protected $Nip = null;
 
     /**
-     * @var string $Nipy
+     * @var string
      */
     protected $Nipy = null;
 
     /**
-     * @var string $Regon
+     * @var string
      */
     protected $Regon = null;
 
     /**
-     * @var string $Regony14zn
+     * @var string
      */
     protected $Regony14zn = null;
 
     /**
-     * @var string $Regony9zn
+     * @var string
      */
     protected $Regony9zn = null;
 
@@ -53,11 +54,13 @@ class SearchParameters
 
     /**
      * @param string $Krs
+     *
      * @return SearchParameters
      */
     public function setKrs($Krs)
     {
         $this->Krs = $Krs;
+
         return $this;
     }
 
@@ -71,11 +74,13 @@ class SearchParameters
 
     /**
      * @param string $Krsy
+     *
      * @return SearchParameters
      */
     public function setKrsy($Krsy)
     {
         $this->Krsy = $Krsy;
+
         return $this;
     }
 
@@ -89,11 +94,13 @@ class SearchParameters
 
     /**
      * @param string $Nip
+     *
      * @return SearchParameters
      */
     public function setNip($Nip)
     {
         $this->Nip = $Nip;
+
         return $this;
     }
 
@@ -107,11 +114,13 @@ class SearchParameters
 
     /**
      * @param string $Nipy
+     *
      * @return SearchParameters
      */
     public function setNipy($Nipy)
     {
         $this->Nipy = $Nipy;
+
         return $this;
     }
 
@@ -125,11 +134,13 @@ class SearchParameters
 
     /**
      * @param string $Regon
+     *
      * @return SearchParameters
      */
     public function setRegon($Regon)
     {
         $this->Regon = $Regon;
+
         return $this;
     }
 
@@ -143,11 +154,13 @@ class SearchParameters
 
     /**
      * @param string $Regony14zn
+     *
      * @return SearchParameters
      */
     public function setRegony14zn($Regony14zn)
     {
         $this->Regony14zn = $Regony14zn;
+
         return $this;
     }
 
@@ -161,11 +174,13 @@ class SearchParameters
 
     /**
      * @param string $Regony9zn
+     *
      * @return SearchParameters
      */
     public function setRegony9zn($Regony9zn)
     {
         $this->Regony9zn = $Regony9zn;
+
         return $this;
     }
 }

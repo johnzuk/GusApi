@@ -4,12 +4,13 @@ namespace GusApi\Type;
 
 /**
  * Class GetValue
+ *
  * @package GusApi\Type
  */
 class GetValue
 {
     /**
-     * @var string $pNazwaParametru
+     * @var string
      */
     protected $pNazwaParametru;
 
@@ -31,11 +32,13 @@ class GetValue
 
     /**
      * @param string $pNazwaParametru
+     *
      * @return GetValue
      */
     public function setPNazwaParametru(string $pNazwaParametru)
     {
         $this->pNazwaParametru = $pNazwaParametru;
+
         return $this;
     }
 }

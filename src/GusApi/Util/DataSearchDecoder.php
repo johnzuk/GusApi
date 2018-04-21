@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Util;
 
 use GusApi\Type\SearchDataResponse;
@@ -7,12 +8,14 @@ use GusApi\Type\SearchResponseRaw;
 
 /**
  * Class DataSearchDecoder
+ *
  * @package GusApi\Util
  */
 class DataSearchDecoder
 {
     /**
      * @param SearchResponseRaw $searchResponseRaw
+     *
      * @return SearchDataResponse
      */
     public static function decode(SearchResponseRaw $searchResponseRaw): SearchDataResponse
@@ -24,7 +27,7 @@ class DataSearchDecoder
             foreach ($xmlElementsResponse->dane as $resultData) {
                 $element = new SearchResponseCompanyData();
                 foreach ($resultData as $key => $item) {
-                    $element->$key = (string)$item;
+                    $element->$key = (string) $item;
                 }
                 $elements[] = $element;
             }

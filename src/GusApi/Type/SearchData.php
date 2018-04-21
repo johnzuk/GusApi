@@ -4,12 +4,13 @@ namespace GusApi\Type;
 
 /**
  * Class DaneSzukaj
+ *
  * @package GusApi\Type
  */
 class SearchData
 {
     /**
-     * @var SearchParameters $pParametryWyszukiwania
+     * @var SearchParameters
      */
     protected $pParametryWyszukiwania = null;
 
@@ -31,11 +32,13 @@ class SearchData
 
     /**
      * @param SearchParameters $pParametryWyszukiwania
+     *
      * @return SearchData
      */
     public function setPParametryWyszukiwania(SearchParameters $pParametryWyszukiwania)
     {
         $this->pParametryWyszukiwania = $pParametryWyszukiwania;
+
         return $this;
     }
 }

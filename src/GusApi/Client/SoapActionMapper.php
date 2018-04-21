@@ -1,10 +1,12 @@
 <?php
+
 namespace GusApi\Client;
 
 use GusApi\Exception\InvalidActionNameException;
 
 /**
  * Class SoapActionMapper
+ *
  * @package GusApi\Client
  */
 class SoapActionMapper
@@ -26,8 +28,10 @@ class SoapActionMapper
 
     /**
      * @param string $functionName
-     * @return string
+     *
      * @throws InvalidActionNameException
+     *
+     * @return string
      */
     public static function getAction(string $functionName): string
     {

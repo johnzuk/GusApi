@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Client;
 
 use GusApi\Context\ContextInterface;
@@ -20,6 +21,7 @@ use GusApi\Util\FullReportResponseDecoder;
 
 /**
  * Class GusApiClient
+ *
  * @package GusApi\Client
  */
 class GusApiClient
@@ -41,8 +43,9 @@ class GusApiClient
 
     /**
      * GusApiClient constructor.
-     * @param \SoapClient $soapClient
-     * @param string $location
+     *
+     * @param \SoapClient      $soapClient
+     * @param string           $location
      * @param ContextInterface $streamContext
      */
     public function __construct(\SoapClient $soapClient, string $location, ContextInterface $streamContext)
@@ -103,54 +106,59 @@ class GusApiClient
 
     /**
      * @param Login $login
+     *
      * @return LoginResponse
      */
     public function login(Login $login): LoginResponse
     {
         return $this->call('Zaloguj', [
-            $login
+            $login,
         ]);
     }
 
     /**
      * @param Logout $logout
+     *
      * @return LogoutResponse
      */
     public function logout(Logout $logout): LogoutResponse
     {
         return $this->call('Wyloguj', [
-            $logout
+            $logout,
         ]);
     }
 
     /**
-     * @param GetValue $getValue
+     * @param GetValue    $getValue
      * @param null|string $sessionId
+     *
      * @return GetValueResponse
      */
     public function getValue(GetValue $getValue, ?string $sessionId = null): GetValueResponse
     {
         return $this->call('GetValue', [
-            $getValue
+            $getValue,
         ], $sessionId);
     }
 
     /**
      * @param SearchData $searchData
-     * @param string $sessionId
-     * @return SearchDataResponse
+     * @param string     $sessionId
+     *
      * @throws NotFoundException
+     *
+     * @return SearchDataResponse
      */
     public function searchData(SearchData $searchData, string $sessionId): SearchDataResponse
     {
         /**
-         * @var SearchResponseRaw $result
+         * @var SearchResponseRaw
          */
         $result = $this->call('DaneSzukaj', [
-            $searchData
+            $searchData,
         ], $sessionId);
 
-        if ($result->getDaneSzukajResult() === '') {
+        if ('' === $result->getDaneSzukajResult()) {
             throw new NotFoundException('No data found');
         }
 
@@ -159,13 +167,14 @@ class GusApiClient
 
     /**
      * @param GetFullReport $getFullReport
-     * @param string $sessionId
+     * @param string        $sessionId
+     *
      * @return GetFullReportResponse
      */
     public function getFullReport(GetFullReport $getFullReport, string $sessionId): GetFullReportResponse
     {
         $rawResponse = $this->call('DanePobierzPelnyRaport', [
-            $getFullReport
+            $getFullReport,
         ], $sessionId);
 
         return FullReportResponseDecoder::decode($rawResponse);
@@ -173,6 +182,7 @@ class GusApiClient
 
     /**
      * @param \SoapHeader[] $headers
+     *
      * @return bool
      */
     public function setSoapHeaders(array $headers): bool
@@ -186,7 +196,7 @@ class GusApiClient
     public function setHttpOptions(array $options): void
     {
         $this->streamContext->setOptions([
-            'http' => $options
+            'http' => $options,
         ]);
     }
 
@@ -204,18 +214,20 @@ class GusApiClient
     /**
      * @param string $action
      * @param string $to
+     *
      * @return \SoapHeader[]
      */
     public static function getRequestHeaders(string $action, string $to): array
     {
         return [
             new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'Action', $action),
-            new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'To', $to)
+            new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'To', $to),
         ];
     }
 
     /**
      * Clear soap header
+     *
      * @return bool
      */
     public function clearHeader(): bool

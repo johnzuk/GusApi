@@ -1,14 +1,16 @@
 <?php
+
 namespace GusApi\Type;
 
 /**
  * Class ZalogujResponse
+ *
  * @package GusApi\Type
  */
 class LoginResponse
 {
     /**
-     * @var string $ZalogujResult
+     * @var string
      */
     public $ZalogujResult = '';
 
@@ -30,11 +32,13 @@ class LoginResponse
 
     /**
      * @param string $ZalogujResult
+     *
      * @return LoginResponse
      */
     public function setZalogujResult(string $ZalogujResult)
     {
         $this->ZalogujResult = $ZalogujResult;
+
         return $this;
     }
 }

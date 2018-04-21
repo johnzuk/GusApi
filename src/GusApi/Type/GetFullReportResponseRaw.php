@@ -4,6 +4,7 @@ namespace GusApi\Type;
 
 /**
  * Class GetFullReportResponseRaw
+ *
  * @package GusApi\Type
  */
 class GetFullReportResponseRaw
@@ -15,6 +16,7 @@ class GetFullReportResponseRaw
 
     /**
      * GetFullReportResponseRaw constructor.
+     *
      * @param string $DanePobierzPelnyRaportResult
      */
     public function __construct(string $DanePobierzPelnyRaportResult)

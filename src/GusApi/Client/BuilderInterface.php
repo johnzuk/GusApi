@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Client;
 
 interface BuilderInterface

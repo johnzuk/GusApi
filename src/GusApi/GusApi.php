@@ -18,6 +18,7 @@ use GusApi\Type\SearchParameters;
  * Class GusApi
  *
  * @package GusApi
+ *
  * @author Janusz Żukowicz <john_zuk@wp.pl>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
@@ -40,8 +41,9 @@ class GusApi
 
     /**
      * GusApi constructor.
-     * @param string $userKey
-     * @param string $env
+     *
+     * @param string                $userKey
+     * @param string                $env
      * @param BuilderInterface|null $builder
      */
     public function __construct(string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
@@ -52,8 +54,9 @@ class GusApi
     }
 
     /**
-     * @param string $userKey
+     * @param string       $userKey
      * @param GusApiClient $apiClient
+     *
      * @return GusApi
      */
     public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
@@ -94,8 +97,9 @@ class GusApi
     }
 
     /**
-     * @return string
      * @throws InvalidUserKeyException
+     *
+     * @return string
      */
     public function login(): string
     {
@@ -106,6 +110,7 @@ class GusApi
         }
 
         $this->sessionId = $result->getZalogujResult();
+
         return $this->sessionId;
     }
 
@@ -124,7 +129,7 @@ class GusApi
      */
     public function isLogged(): bool
     {
-        return (bool)$this->getSessionStatus();
+        return (bool) $this->getSessionStatus();
     }
 
     /**
@@ -154,7 +159,7 @@ class GusApi
     {
         $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_SERVICE_STATUS));
 
-        return (int)$result->getGetValueResult();
+        return (int) $result->getGetValueResult();
     }
 
     /**
@@ -171,8 +176,10 @@ class GusApi
 
     /**
      * @param string $nip
-     * @return SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return SearchReport[]
      */
     public function getByNip(string $nip): array
     {
@@ -181,8 +188,10 @@ class GusApi
 
     /**
      * @param string $regon
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByRegon(string $regon): array
     {
@@ -191,8 +200,10 @@ class GusApi
 
     /**
      * @param string $krs
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByKrs(string $krs): array
     {
@@ -201,13 +212,15 @@ class GusApi
 
     /**
      * @param array $nips
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByNips(array $nips): array
     {
         if (count($nips) > 20) {
-            throw new \InvalidArgumentException("Too many NIP numbers. Maximum quantity is 20.");
+            throw new \InvalidArgumentException('Too many NIP numbers. Maximum quantity is 20.');
         }
         $nips = implode(',', $nips);
 
@@ -216,13 +229,15 @@ class GusApi
 
     /**
      * @param array $krses
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByKrses(array $krses): array
     {
         if (count($krses) > 20) {
-            throw new \InvalidArgumentException("Too many KRS numbers. Maximum quantity is 20.");
+            throw new \InvalidArgumentException('Too many KRS numbers. Maximum quantity is 20.');
         }
         $krses = implode(',', $krses);
 
@@ -231,13 +246,15 @@ class GusApi
 
     /**
      * @param array $regons
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByRegons9(array $regons): array
     {
         if (count($regons) > 20) {
-            throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
+            throw new \InvalidArgumentException('Too many REGON numbers. Maximum quantity is 20.');
         }
         $regons = implode(',', $regons);
 
@@ -246,13 +263,15 @@ class GusApi
 
     /**
      * @param array $regons
-     * @return array|SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return array|SearchReport[]
      */
     public function getByregons14(array $regons): array
     {
         if (count($regons) > 20) {
-            throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
+            throw new \InvalidArgumentException('Too many REGON numbers. Maximum quantity is 20.');
         }
         $regons = implode(',', $regons);
 
@@ -261,7 +280,8 @@ class GusApi
 
     /**
      * @param SearchReport $searchReport
-     * @param string $reportType
+     * @param string       $reportType
+     *
      * @return \SimpleXMLElement
      */
     public function getFullReport(SearchReport $searchReport, string $reportType): \SimpleXMLElement
@@ -291,6 +311,7 @@ class GusApi
 
     /**
      * Return message code if search not found record
+     *
      * @return int
      */
     public function getMessageCode(): int
@@ -300,11 +321,12 @@ class GusApi
             $this->sessionId
         );
 
-        return (int)$result->getGetValueResult();
+        return (int) $result->getGetValueResult();
     }
 
     /**
      * Return message text id search not found record
+     *
      * @return string
      */
     public function getMessage(): string
@@ -324,14 +346,16 @@ class GusApi
             $this->sessionId
         );
 
-        return (int)$response->getGetValueResult();
+        return (int) $response->getGetValueResult();
     }
 
     /**
      * @param string $searchType
      * @param string $parameters
-     * @return SearchReport[]
+     *
      * @throws NotFoundException
+     *
+     * @return SearchReport[]
      */
     private function search(string $searchType, string $parameters): array
     {

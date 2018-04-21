@@ -7,6 +7,7 @@ use GusApi\Environment\EnvironmentFactory;
 
 /**
  * Class Builder
+ *
  * @package GusApi\Client
  */
 class Builder implements BuilderInterface
@@ -23,7 +24,8 @@ class Builder implements BuilderInterface
 
     /**
      * Builder constructor.
-     * @param string $environment
+     *
+     * @param string            $environment
      * @param GusApiClient|null $gusApiClient
      */
     public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
@@ -37,7 +39,7 @@ class Builder implements BuilderInterface
      */
     public function build(): GusApiClient
     {
-        if ($this->gusApiClient !== null) {
+        if (null !== $this->gusApiClient) {
             return $this->gusApiClient;
         }
 
@@ -54,8 +56,8 @@ class Builder implements BuilderInterface
                 'WylogujResponse' => \GusApi\Type\LogoutResponse::class,
                 'GetValueResponse' => \GusApi\Type\GetValueResponse::class,
                 'DaneSzukajResponse' => \GusApi\Type\SearchResponseRaw::class,
-                'DanePobierzPelnyRaportResponse' => \GusApi\Type\GetFullReportResponseRaw::class
-            ]
+                'DanePobierzPelnyRaportResponse' => \GusApi\Type\GetFullReportResponseRaw::class,
+            ],
         ];
 
         $soap = new SoapClient(

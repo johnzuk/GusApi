@@ -1,14 +1,16 @@
 <?php
+
 namespace GusApi\Type;
 
 /**
  * Class DaneSzukajResponseRaw
+ *
  * @package GusApi\Type
  */
 class SearchResponseRaw
 {
     /**
-     * @var string $DaneSzukajResult
+     * @var string
      */
     protected $DaneSzukajResult = '';
 
@@ -30,11 +32,13 @@ class SearchResponseRaw
 
     /**
      * @param string $DaneSzukajResult
+     *
      * @return SearchResponseRaw
      */
     public function setDaneSzukajResult(string $DaneSzukajResult)
     {
         $this->DaneSzukajResult = $DaneSzukajResult;
+
         return $this;
     }
 }

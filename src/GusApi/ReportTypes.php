@@ -1,9 +1,11 @@
 <?php
+
 namespace GusApi;
 
 /**
  * All report types
  * Class ReportTypes
+ *
  * @package GusApi
  */
 final class ReportTypes
@@ -41,6 +43,6 @@ final class ReportTypes
         self::REPORT_LOCAL_LAW_PUBLIC,
         self::REPORT_ACTIVITY_LOCAL_LAW_PUBLIC,
         self::REPORT_COMMON_LAW_PUBLIC,
-        self::REPORT_UNIT_TYPE_PUBLIC
+        self::REPORT_UNIT_TYPE_PUBLIC,
     ];
 }

@@ -4,6 +4,7 @@ namespace GusApi\Type;
 
 /**
  * Class GetFullReportResponse
+ *
  * @package GusApi\Type
  */
 class GetFullReportResponse
@@ -15,6 +16,7 @@ class GetFullReportResponse
 
     /**
      * GetFullReportResponse constructor.
+     *
      * @param \SimpleXMLElement $report
      */
     public function __construct(\SimpleXMLElement $report)

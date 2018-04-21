@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Client;
 
 use GusApi\Context\Context;
@@ -8,6 +9,8 @@ class BuilderTest extends TestCase
 {
     /**
      * @dataProvider envProvider
+     *
+     * @param mixed $env
      */
     public function testBuildWithValidEnvironmentName($env)
     {
@@ -45,7 +48,7 @@ class BuilderTest extends TestCase
     {
         return [
             ['prod'],
-            ['dev']
+            ['dev'],
         ];
     }
 }

@@ -4,17 +4,18 @@ namespace GusApi\Type;
 
 /**
  * Class WylogujResponse
+ *
  * @package GusApi\Type
  */
 class LogoutResponse
 {
     /**
-     * @var boolean $WylogujResult
+     * @var bool
      */
     public $WylogujResult;
 
     /**
-     * @param boolean $WylogujResult
+     * @param bool $WylogujResult
      */
     public function __construct(bool $WylogujResult)
     {
@@ -22,7 +23,7 @@ class LogoutResponse
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getWylogujResult(): bool
     {
@@ -30,12 +31,14 @@ class LogoutResponse
     }
 
     /**
-     * @param boolean $WylogujResult
+     * @param bool $WylogujResult
+     *
      * @return LogoutResponse
      */
     public function setWylogujResult(bool $WylogujResult)
     {
         $this->WylogujResult = $WylogujResult;
+
         return $this;
     }
 }

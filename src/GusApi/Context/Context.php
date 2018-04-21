@@ -1,8 +1,10 @@
 <?php
+
 namespace GusApi\Context;
 
 /**
  * Class Context
+ *
  * @package GusApi\Context
  */
 class Context implements ContextInterface

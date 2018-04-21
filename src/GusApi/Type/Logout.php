@@ -4,12 +4,13 @@ namespace GusApi\Type;
 
 /**
  * Class Wyloguj
+ *
  * @package GusApi\Type
  */
 class Logout
 {
     /**
-     * @var string $pIdentyfikatorSesji
+     * @var string
      */
     protected $pIdentyfikatorSesji;
 
@@ -31,11 +32,13 @@ class Logout
 
     /**
      * @param string $pIdentyfikatorSesji
+     *
      * @return Logout
      */
     public function setPIdentyfikatorSesji(string $pIdentyfikatorSesji)
     {
         $this->pIdentyfikatorSesji = $pIdentyfikatorSesji;
+
         return $this;
     }
 }

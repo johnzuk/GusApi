@@ -10,6 +10,7 @@ namespace GusApi\Client;
 
 /**
  * Class SoapClient
+ *
  * @package GusApi\Client
  * @ignoreErrors
  */
