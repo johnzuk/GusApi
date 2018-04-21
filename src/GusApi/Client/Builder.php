@@ -16,7 +16,7 @@ class Builder implements BuilderInterface
     protected $environment;
 
     /**
-     * @var $gusApiClient
+     * @var GusApiClient|null
      */
     protected $gusApiClient;
 
