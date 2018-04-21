@@ -17,49 +17,32 @@ See file [examples/getFromNip.php](examples/getFromNip.php).
 require_once '../vendor/autoload.php';
 
 use GusApi\GusApi;
-use GusApi\RegonConstantsInterface;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\ReportTypes;
-use GusApi\ReportTypeMapper;
 
-$gus = new GusApi(
-    'abcde12345abcde12345', // your user key / twój klucz użytkownika
-    new \GusApi\Adapter\Soap\SoapAdapter(
-        RegonConstantsInterface::BASE_WSDL_URL,
-        RegonConstantsInterface::BASE_WSDL_ADDRESS // production server / serwer produkcyjny
-        //for test server use RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
-        //w przypadku serwera testowego użyj: RegonConstantsInterface::BASE_WSDL_ADDRESS_TEST
-    )
-);
-
-$mapper = new ReportTypeMapper();
+$gus = new GusApi('your api key here');
 
 try {
     $nipToCheck = 'xxxxxxxxxx'; //change to valid nip value
-    $sessionId = $gus->login();
-    
-    $gusReports = $gus->getByNip($sessionId, $nipToCheck);
-    
+    $gus->login();
+
+    $gusReports = $gus->getByNip($nipToCheck);
+
     foreach ($gusReports as $gusReport) {
-        $reportType = $mapper->getReportType($gusReport);
-
-        var_dump($gus->getFullReport(
-            $sessionId,
-            $gusReport,
-            $reportType
-        ));
-
+        //you can change report type to other one
+        $reportType = ReportTypes::REPORT_PUBLIC_LAW;
         echo $gusReport->getName();
+        $fullReport = $gus->getFullReport($gusReport, $reportType);
+        var_dump($fullReport);
     }
-    
+
 } catch (InvalidUserKeyException $e) {
     echo 'Bad user key';
 } catch (\GusApi\Exception\NotFoundException $e) {
     echo 'No data found <br>';
     echo 'For more information read server message below: <br>';
-    echo $gus->getResultSearchMessage($sessionId);
+    echo $gus->getResultSearchMessage();
 }
-
 ```
 
 
