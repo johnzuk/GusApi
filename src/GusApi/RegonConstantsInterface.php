@@ -9,6 +9,8 @@ interface RegonConstantsInterface
     const BASE_WSDL_URL = 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl.xsd';
     const BASE_WSDL_ADDRESS =  'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
 
+    const ADRESING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
+
     const PARAM_USER_KEY = 'pKluczUzytkownika';
     const PARAM_SESSION_ID = 'pIdentyfikatorSesji';
     const PARAM_CAPTCHA = 'pCaptcha';

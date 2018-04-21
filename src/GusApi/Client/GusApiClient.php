@@ -3,6 +3,7 @@ namespace GusApi\Client;
 
 use GusApi\Context\ContextInterface;
 use GusApi\Exception\NotFoundException;
+use GusApi\RegonConstantsInterface;
 use GusApi\Type\GetFullReport;
 use GusApi\Type\GetFullReportResponse;
 use GusApi\Type\SearchData;
@@ -172,10 +173,11 @@ class GusApiClient
 
     /**
      * @param \SoapHeader[] $headers
+     * @return bool
      */
-    public function setSoapHeaders(array $headers): void
+    public function setSoapHeaders(array $headers): bool
     {
-        $this->soapClient->__setSoapHeaders($headers);
+        return $this->soapClient->__setSoapHeaders($headers);
     }
 
     /**
@@ -188,10 +190,10 @@ class GusApiClient
         ]);
     }
 
-    protected function call(string $functionName, $arguments, ?string $sid = null)
+    public function call(string $functionName, $arguments, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
-        $soapHeaders = $this->getRequestHeaders($action, $this->location);
+        $soapHeaders = self::getRequestHeaders($action, $this->location);
         $this->setHttpOptions([
             'header' => 'sid: '.$sid."\r\n".'User-agent: PHP GusApi',
         ]);
@@ -204,20 +206,21 @@ class GusApiClient
      * @param string $to
      * @return \SoapHeader[]
      */
-    protected function getRequestHeaders(string $action, string $to): array
+    public static function getRequestHeaders(string $action, string $to): array
     {
         $headers = [];
-        $headers[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action);
-        $headers[] = new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to);
+        $headers[] = new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'Action', $action);
+        $headers[] = new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'To', $to);
 
         return $headers;
     }
 
     /**
      * Clear soap header
+     * @return bool
      */
-    protected function clearHeader(): void
+    public function clearHeader(): bool
     {
-        $this->soapClient->__setSoapHeaders(null);
+        return $this->soapClient->__setSoapHeaders(null);
     }
 }
