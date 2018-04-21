@@ -57,7 +57,7 @@ class GusApi
      */
     public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
     {
-        return new self($userKey, new Builder('', $apiClient));
+        return new self($userKey, '', new Builder('', $apiClient));
     }
 
     /**
@@ -93,9 +93,8 @@ class GusApi
     }
 
     /**
-     * Login in to regon server
-     *
-     * @return string session id value
+     * @return string
+     * @throws InvalidUserKeyException
      */
     public function login(): string
     {
@@ -184,7 +183,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByRegon(string $regon)
+    public function getByRegon(string $regon): array
     {
         return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGON, $regon);
     }
@@ -194,7 +193,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByKrs(string $krs)
+    public function getByKrs(string $krs): array
     {
         return $this->search(RegonConstantsInterface::SEARCH_TYPE_KRS, $krs);
     }
@@ -204,7 +203,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByNips(array $nips)
+    public function getByNips(array $nips): array
     {
         if (count($nips) > 20) {
             throw new \InvalidArgumentException("Too many NIP numbers. Maximum quantity is 20.");
@@ -219,7 +218,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByKrses(array $krses)
+    public function getByKrses(array $krses): array
     {
         if (count($krses) > 20) {
             throw new \InvalidArgumentException("Too many KRS numbers. Maximum quantity is 20.");
@@ -234,7 +233,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByRegons9(array $regons)
+    public function getByRegons9(array $regons): array
     {
         if (count($regons) > 20) {
             throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
@@ -249,7 +248,7 @@ class GusApi
      * @return array|SearchReport[]
      * @throws NotFoundException
      */
-    public function getByregons14(array $regons)
+    public function getByregons14(array $regons): array
     {
         if (count($regons) > 20) {
             throw new \InvalidArgumentException("Too many REGON numbers. Maximum quantity is 20.");
@@ -304,7 +303,7 @@ class GusApi
      * Return message text id search not found record
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_MESSAGE), $this->sessionId);
 
