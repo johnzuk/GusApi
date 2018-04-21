@@ -5,7 +5,7 @@ namespace GusApi;
  * Class SearchReport
  * @package GusApi
  */
-class SearchReport
+class SearchReport implements \JsonSerializable
 {
     const TYPE_JURIDICAL_PERSON = 'p';
 
@@ -211,5 +211,15 @@ class SearchReport
     private function makeType($type)
     {
         return trim(strtolower($type));
+    }
+    
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+    
+        return $vars;
     }
 }
