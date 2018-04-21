@@ -7,6 +7,8 @@ use GusApi\GusApi;
 use GusApi\ReportTypes;
 
 $gus = new GusApi('your api key here');
+//for development server use:
+//$gus = new GusApi('abcde12345abcde12345', 'dev');
 
 try {
     $nipToCheck = 'xxxxxxxxxx'; //change to valid nip value

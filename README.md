@@ -27,11 +27,13 @@ See file [examples/getFromNip.php](examples/getFromNip.php).
 ```php
 require_once '../vendor/autoload.php';
 
-use GusApi\GusApi;
 use GusApi\Exception\InvalidUserKeyException;
+use GusApi\GusApi;
 use GusApi\ReportTypes;
 
 $gus = new GusApi('your api key here');
+//for development server use:
+//$gus = new GusApi('abcde12345abcde12345', 'dev');
 
 try {
     $nipToCheck = 'xxxxxxxxxx'; //change to valid nip value
@@ -46,7 +48,6 @@ try {
         $fullReport = $gus->getFullReport($gusReport, $reportType);
         var_dump($fullReport);
     }
-
 } catch (InvalidUserKeyException $e) {
     echo 'Bad user key';
 } catch (\GusApi\Exception\NotFoundException $e) {
@@ -54,6 +55,7 @@ try {
     echo 'For more information read server message below: <br>';
     echo $gus->getResultSearchMessage();
 }
+
 ```
 
 
