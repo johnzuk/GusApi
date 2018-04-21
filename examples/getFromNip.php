@@ -4,9 +4,9 @@ ini_set('display_errors', 1);
 require_once '../vendor/autoload.php';
 session_start();
 
+use GusApi\Exception\InvalidUserKeyException;
 use GusApi\GusApi;
 use GusApi\RegonConstantsInterface;
-use GusApi\Exception\InvalidUserKeyException;
 
 //for development test use this:
 $key = 'abcde12345abcde12345';
@@ -22,9 +22,7 @@ if (isset($_GET['reset'])) {
 }
 
 if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
-
     try {
-
         if (!isset($_SESSION['sid']) || !$gus->isLogged()) {
             $_SESSION['sid'] = $gus->login();
         } else {
@@ -34,8 +32,8 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
         printNipForm();
 
         if (isset($_POST['nip'])) {
-
             $nip = $_POST['nip'];
+
             try {
                 $gusReports = $gus->getByNip($nip);
                 var_dump($gusReports);
@@ -51,31 +49,23 @@ if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_AVAILABLE) {
 
                     echo $gusReport->getName();
                 }
-
             } catch (\GusApi\Exception\NotFoundException $e) {
                 echo 'No data found <br>';
                 echo 'For more information read server message belowe: <br>';
                 echo $gus->getResultSearchMessage();
-
             }
         }
-
     } catch (InvalidUserKeyException $e) {
         echo 'Bad user key!';
     }
-
-} else if ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_UNAVAILABLE) {
-
+} elseif ($gus->serviceStatus() === RegonConstantsInterface::SERVICE_UNAVAILABLE) {
     echo 'Server is unavailable now. Please try again later <br>';
     echo 'For more information read server message belowe: <br>';
     echo $gus->serviceMessage();
-
 } else {
-
     echo 'Server technical break. Please try again later <br>';
     echo 'For more information read server message belowe: <br>';
     echo $gus->serviceMessage();
-
 }
 
 function printNipForm()
