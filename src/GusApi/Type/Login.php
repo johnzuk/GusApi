@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class Zaloguj
- *
- * @package GusApi\Type
- */
 class Login
 {
     /**

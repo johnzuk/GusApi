@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class WylogujResponse
- *
- * @package GusApi\Type
- */
 class LogoutResponse
 {
     /**

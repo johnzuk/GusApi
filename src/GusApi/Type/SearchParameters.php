@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class ParametryWyszukiwania
- *
- * @package GusApi\Type
- */
 class SearchParameters
 {
     /**

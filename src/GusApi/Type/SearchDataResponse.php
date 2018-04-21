@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class DaneSzukajResponse
- *
- * @package GusApi\Type
- */
 class SearchDataResponse
 {
     /**

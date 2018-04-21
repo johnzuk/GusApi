@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class GetValue
- *
- * @package GusApi\Type
- */
 class GetValue
 {
     /**

@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class GetFullReportResponseRaw
- *
- * @package GusApi\Type
- */
 class GetFullReportResponseRaw
 {
     /**

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 20.04.18
- * Time: 13:56
- */
 
 namespace GusApi\Client;
 

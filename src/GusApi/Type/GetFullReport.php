@@ -2,11 +2,6 @@
 
 namespace GusApi\Type;
 
-/**
- * Class DanePobierzPelnyRaport
- *
- * @package GusApi\Type
- */
 class GetFullReport
 {
     /**
