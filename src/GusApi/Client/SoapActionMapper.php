@@ -4,11 +4,6 @@ namespace GusApi\Client;
 
 use GusApi\Exception\InvalidActionNameException;
 
-/**
- * Class SoapActionMapper
- *
- * @package GusApi\Client
- */
 class SoapActionMapper
 {
     public const PUBLIC_NAMESPACE = 'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/';

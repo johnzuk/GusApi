@@ -1,19 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 18.04.18
- * Time: 21:42
- */
 
 namespace GusApi\Client;
 
-/**
- * Class SoapClient
- *
- * @package GusApi\Client
- * @ignoreErrors
- */
 class SoapClient extends \SoapClient
 {
     public function __doRequest($request, $location, $action, $version, $one_way = 0)

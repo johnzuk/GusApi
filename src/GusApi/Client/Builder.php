@@ -5,11 +5,6 @@ namespace GusApi\Client;
 use GusApi\Context\Context;
 use GusApi\Environment\EnvironmentFactory;
 
-/**
- * Class Builder
- *
- * @package GusApi\Client
- */
 class Builder implements BuilderInterface
 {
     /**

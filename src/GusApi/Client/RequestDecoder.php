@@ -2,11 +2,6 @@
 
 namespace GusApi\Client;
 
-/**
- * Class RequestDecoder
- *
- * @package GusApi\Client
- */
 class RequestDecoder
 {
     /**

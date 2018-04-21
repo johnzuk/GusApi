@@ -19,11 +19,6 @@ use GusApi\Type\SearchResponseRaw;
 use GusApi\Util\DataSearchDecoder;
 use GusApi\Util\FullReportResponseDecoder;
 
-/**
- * Class GusApiClient
- *
- * @package GusApi\Client
- */
 class GusApiClient
 {
     /**
@@ -226,8 +221,6 @@ class GusApiClient
     }
 
     /**
-     * Clear soap header
-     *
      * @return bool
      */
     public function clearHeader(): bool
