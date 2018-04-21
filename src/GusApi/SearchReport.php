@@ -90,7 +90,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get REGON number
+     * Get REGON number.
      *
      * @return string REGON number
      */
@@ -100,7 +100,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get subject name
+     * Get subject name.
      *
      * @return string name
      */
@@ -110,7 +110,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get province name
+     * Get province name.
      *
      * @return string province name
      */
@@ -120,7 +120,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get distinct name
+     * Get distinct name.
      *
      * @return string distinct name
      */
@@ -130,7 +130,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get community name
+     * Get community name.
      *
      * @return string community name
      */
@@ -140,7 +140,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return string city name
      */
@@ -150,7 +150,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get zip code
+     * Get zip code.
      *
      * @return string zip code
      */
@@ -160,7 +160,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get street name
+     * Get street name.
      *
      * @return string street name
      */
@@ -170,7 +170,7 @@ class SearchReport implements \JsonSerializable
     }
 
     /**
-     * Get type name
+     * Get type name.
      *
      * @return string type name
      */

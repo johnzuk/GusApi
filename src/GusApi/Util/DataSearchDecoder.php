@@ -16,6 +16,7 @@ class DataSearchDecoder
     public static function decode(SearchResponseRaw $searchResponseRaw): SearchDataResponse
     {
         $elements = [];
+
         try {
             $xmlElementsResponse = new \SimpleXMLElement($searchResponseRaw->getDaneSzukajResult());
 
