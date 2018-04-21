@@ -16,12 +16,19 @@ class Builder implements BuilderInterface
     protected $environment;
 
     /**
+     * @var $gusApiClient
+     */
+    protected $gusApiClient;
+
+    /**
      * Builder constructor.
      * @param string $environment
+     * @param GusApiClient|null $gusApiClient
      */
-    public function __construct(string $environment)
+    public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
     {
         $this->environment = $environment;
+        $this->gusApiClient = $gusApiClient;
     }
 
     /**
@@ -29,6 +36,10 @@ class Builder implements BuilderInterface
      */
     public function build(): GusApiClient
     {
+        if ($this->gusApiClient !== null) {
+            return $this->gusApiClient;
+        }
+
         $env = EnvironmentFactory::create($this->environment);
         $context = new Context();
 
