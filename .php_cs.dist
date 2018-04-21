@@ -1,10 +1,10 @@
 <?php
-        $finder = PhpCsFixer\Finder::create()
-        ->in('./src')
-        ->in('./tests');
+$finder = PhpCsFixer\Finder::create()
+    ->in('./src')
+    ->in('./tests');
 
-        return PhpCsFixer\Config::create()
-        ->setRules([
+return PhpCsFixer\Config::create()
+    ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
         'phpdoc_add_missing_param_annotation' => true,
@@ -13,5 +13,5 @@
         'phpdoc_no_package' => false,
         'phpdoc_order' => true,
         'phpdoc_align' => true,
-        ])
-        ->setFinder($finder);
+    ])
+    ->setFinder($finder);
