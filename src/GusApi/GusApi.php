@@ -294,7 +294,10 @@ class GusApi
      */
     public function getMessageCode(): int
     {
-        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_MESSAGE_CODE), $this->sessionId);
+        $result = $this->apiClient->getValue(
+            new GetValue(RegonConstantsInterface::PARAM_MESSAGE_CODE),
+            $this->sessionId
+        );
 
         return (int)$result->getGetValueResult();
     }
