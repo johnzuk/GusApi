@@ -13,5 +13,3 @@ install:
 
 script:
   - composer validate --strict
-  - vendor/bin/phpcs src
-  - vendor/bin/phpunit

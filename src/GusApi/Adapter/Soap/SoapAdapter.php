@@ -8,6 +8,7 @@ use GusApi\RegonConstantsInterface;
 
 /**
  * Class SoapAdapter SoapAdapter for
+ *
  * @package GusApi\Adapter\Soap
  */
 class SoapAdapter implements AdapterInterface
@@ -32,18 +33,20 @@ class SoapAdapter implements AdapterInterface
      *
      * @param string $baseUrl
      * @param string $address
-     * @param array $contextOptions
+     * @param array  $contextOptions
      */
     public function __construct($baseUrl, $address, array $contextOptions = null)
     {
         $this->baseUrl = $baseUrl;
         $this->address = $address;
 
-        $this->client = new SoapClient($this->baseUrl, $address, [
+        $this->client = new SoapClient(
+            $this->baseUrl, $address, [
             'soap_version' => SOAP_1_2,
             'trace' => true,
             'style' => SOAP_DOCUMENT
-        ], $contextOptions);
+            ], $contextOptions
+        );
     }
 
     /**
@@ -60,9 +63,11 @@ class SoapAdapter implements AdapterInterface
     public function login($userKey)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', $this->address);
-        $result = $this->client->Zaloguj([
+        $result = $this->client->Zaloguj(
+            [
             RegonConstantsInterface::PARAM_USER_KEY => $userKey
-        ]);
+            ]
+        );
 
         $sid = $result->ZalogujResult;
         return $sid;
@@ -74,9 +79,11 @@ class SoapAdapter implements AdapterInterface
     public function logout($sid)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', $this->address);
-        $result = $this->client->Wyloguj([
+        $result = $this->client->Wyloguj(
+            [
             RegonConstantsInterface::PARAM_SESSION_ID => $sid
-        ]);
+            ]
+        );
 
         return $result->WylogujResult;
     }
@@ -88,9 +95,11 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
 
-        $result = $this->client->DaneSzukaj([
+        $result = $this->client->DaneSzukaj(
+            [
             RegonConstantsInterface::PARAM_SEARCH => $parameters
-        ]);
+            ]
+        );
 
         try {
             $result = $this->decodeResponse($result->DaneSzukajResult);
@@ -107,10 +116,12 @@ class SoapAdapter implements AdapterInterface
     public function getFullData($sid, $regon, $reportType)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', $this->address, $sid);
-        $result = $this->client->DanePobierzPelnyRaport([
+        $result = $this->client->DanePobierzPelnyRaport(
+            [
             RegonConstantsInterface::PARAM_REGON => $regon,
             RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
-        ]);
+            ]
+        );
 
         try {
             $result = $this->decodeResponse($result->DanePobierzPelnyRaportResult);
@@ -127,9 +138,11 @@ class SoapAdapter implements AdapterInterface
     public function getValue($sid, $param)
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
-        $result = $this->client->GetValue([
+        $result = $this->client->GetValue(
+            [
             RegonConstantsInterface::PARAM_PARAM_NAME => $param
-        ]);
+            ]
+        );
 
         return $result->GetValueResult;
     }
@@ -137,9 +150,9 @@ class SoapAdapter implements AdapterInterface
     /**
      * Prepare soap necessary header
      *
-     * @param string $action
-     * @param string $to
-     * @param null|string $sid session id
+     * @param string      $action
+     * @param string      $to
+     * @param null|string $sid    session id
      */
     protected function prepareSoapHeader($action, $to, $sid = null)
     {
@@ -149,9 +162,11 @@ class SoapAdapter implements AdapterInterface
         $this->client->__setSoapHeaders($header);
 
         if ($sid !== null) {
-            $this->client->__setHttpHeader([
+            $this->client->__setHttpHeader(
+                [
                 'header' => 'sid: '.$sid
-            ]);
+                ]
+            );
         }
     }
 
@@ -166,10 +181,10 @@ class SoapAdapter implements AdapterInterface
     /**
      * Set soap header
      *
-     * @param $namespace
-     * @param $name
-     * @param null $data
-     * @param bool $mustUnderstand
+     * @param  $namespace
+     * @param  $name
+     * @param  null      $data
+     * @param  bool      $mustUnderstand
      * @return \SoapHeader
      */
     protected function setHeader($namespace, $name, $data = null, $mustUnderstand = false)
