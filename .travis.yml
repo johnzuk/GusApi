@@ -13,6 +13,6 @@ install:
 
 script:
   - composer validate --strict
-  - vendor/bin/phpstan analyze -c phpstan.neon -l 1 src
+  - vendor/bin/phpstan analyze -c phpstan.neon -l max src
   - vendor/bin/phpcs src
   - vendor/bin/phpunit
