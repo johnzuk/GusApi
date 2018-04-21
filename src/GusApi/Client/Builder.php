@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Client;
 
 use GusApi\Context\Context;

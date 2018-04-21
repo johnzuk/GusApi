@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi;
 
 use GusApi\Client\Builder;
