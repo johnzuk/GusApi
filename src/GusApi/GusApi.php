@@ -37,11 +37,27 @@ class GusApi
      */
     protected $sessionId;
 
-    public function __construct(string $userKey, string $env = 'dev', ?BuilderInterface $builder = null)
+    /**
+     * GusApi constructor.
+     * @param string $userKey
+     * @param string $env
+     * @param BuilderInterface|null $builder
+     */
+    public function __construct(string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
     {
         $builder = $builder ?: new Builder($env);
         $this->apiClient = $builder->build();
         $this->userKey = $userKey;
+    }
+
+    /**
+     * @param string $userKey
+     * @param GusApiClient $apiClient
+     * @return GusApi
+     */
+    public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
+    {
+        return new self($userKey, new Builder('', $apiClient));
     }
 
     /**
