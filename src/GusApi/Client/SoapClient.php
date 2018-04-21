@@ -1,11 +1,13 @@
 <?php
+
 namespace GusApi\Client;
+
+use SoapClient as BaseSoapClient;
 
 /**
  * Class SoapClient provides a client for the GUS server
- * @package GusApi\Client
  */
-class SoapClient extends \SoapClient
+class SoapClient extends BaseSoapClient
 {
     /**
      * @var resource
@@ -19,8 +21,9 @@ class SoapClient extends \SoapClient
 
     /**
      * SoapClient constructor.
-     * @param string $wsdl
-     * @param string $location
+     *
+     * @param string     $wsdl
+     * @param string     $location
      * @param array|null $options
      * @param array|null $contextOptions
      */
@@ -36,20 +39,20 @@ class SoapClient extends \SoapClient
     /**
      * Do request into regon server
      *
-     * @param string $request request
+     * @param string $request  request
      * @param string $location location
-     * @param string $action action
-     * @param int $version version
-     * @param int $one_way [optional] <p>
-     * If one_way is set to 1, this method returns nothing.
-     * Use this where a response is not expected.
-     * </p>
+     * @param string $action   action
+     * @param int    $version  version
+     * @param int    $one_way  [optional] <p>
+     *                         If one_way is set to 1, this method returns nothing.
+     *                         Use this where a response is not expected.
+     *                         </p>
+     *
      * @return string response
      */
     public function __doRequest($request, $location, $action, $version = SOAP_1_2, $one_way = null)
     {
-        $location = $this->location;
-        $response = parent::__doRequest($request, $location, $action, $version, $one_way);
+        $response = parent::__doRequest($request, $this->location, $action, $version, $one_way);
 
         return RequestDecoder::decode($response);
     }
@@ -62,12 +65,13 @@ class SoapClient extends \SoapClient
     public function __setHttpHeader(array $header)
     {
         $this->setContextOption([
-            'http' => $header
+            'http' => $header,
         ]);
     }
 
     /**
      * Set location
+     *
      * @param string $location
      */
     public function setLocation($location)
@@ -77,6 +81,7 @@ class SoapClient extends \SoapClient
 
     /**
      * Get location
+     *
      * @return string
      */
     public function getLocation()
@@ -88,6 +93,7 @@ class SoapClient extends \SoapClient
      * Create http context
      *
      * @param array|null $contextOptions
+     *
      * @return resource
      */
     private function createContext(array $contextOptions = null)

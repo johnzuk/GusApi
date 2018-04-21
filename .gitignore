@@ -3,3 +3,5 @@ build/
 examples/captcha.jpeg
 .idea
 phpunit.xml
+.php_cs.cache
+.php_cs

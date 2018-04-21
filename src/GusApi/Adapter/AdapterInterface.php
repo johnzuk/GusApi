@@ -1,8 +1,12 @@
 <?php
+
 namespace GusApi\Adapter;
+
+use GusApi\Exception\NotFoundException;
 
 /**
  * Interface AdapterInterface interface of GUS api adapter
+ *
  * @package GusApi\Adapter\
  */
 interface AdapterInterface
@@ -11,6 +15,7 @@ interface AdapterInterface
      * Login in to regon server
      *
      * @param string $userKey twenty-character user key eg. <b>abcde12345abcde12345</b>
+     *
      * @return string session id - used in other actions
      */
     public function login(string $userKey): string;
@@ -19,6 +24,7 @@ interface AdapterInterface
      * Logout from regon server
      *
      * @param string $sid session id
+     *
      * @return bool logout status
      */
     public function logout(string $sid): bool;
@@ -26,8 +32,11 @@ interface AdapterInterface
     /**
      * Search data in regon server
      *
-     * @param string $sid session id
-     * @param array $parameters search parameters
+     * @param string $sid        session id
+     * @param array  $parameters search parameters
+     *
+     * @throws NotFoundException
+     *
      * @return mixed
      */
     public function search(string $sid, array $parameters);
@@ -38,6 +47,9 @@ interface AdapterInterface
      * @param string $sid session id
      * @param $regon
      * @param $reportType
+     *
+     * @throws NotFoundException
+     *
      * @return mixed
      */
     public function getFullData(string $sid, string $regon, string $reportType);
@@ -47,6 +59,7 @@ interface AdapterInterface
      *
      * @param string $sid session id
      * @param $param - available param names: ["StatusSesji", "KomunikatKod", "KomunikatTresc"]
+     *
      * @return mixed
      */
     public function getValue(?string $sid, string $param);

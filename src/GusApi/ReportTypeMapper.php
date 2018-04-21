@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi;
 
 use GusApi\Exception\InvalidReportTypeException;
@@ -7,14 +8,17 @@ use GusApi\Exception\InvalidSiloTypeException;
 
 /**
  * Class ReportTypeMapper
+ *
  * @package GusApi
  */
 class ReportTypeMapper
 {
     /**
      * @param SearchReport $report
+     *
      * @throws InvalidReportTypeException
      * @throws InvalidSiloTypeException
+     *
      * @return string
      */
     public function getReportType(SearchReport $report): string
@@ -22,7 +26,7 @@ class ReportTypeMapper
         $method = 'type'.ucfirst($report->getType());
 
         if (!method_exists($this, $method)) {
-            throw new InvalidReportTypeException(sprintf("Invalid report type: %s", $report->getType()));
+            throw new InvalidReportTypeException(sprintf('Invalid report type: %s', $report->getType()));
         }
 
         return $this->$method($report->getSilo());
@@ -30,6 +34,7 @@ class ReportTypeMapper
 
     /**
      * @param int $silo
+     *
      * @return string
      */
     protected function typeP(int $silo): string
@@ -39,6 +44,7 @@ class ReportTypeMapper
 
     /**
      * @param int $silo
+     *
      * @return string
      */
     protected function typeF(int $silo): string
@@ -51,7 +57,7 @@ class ReportTypeMapper
         ];
 
         if (!array_key_exists($silo, $siloMapper)) {
-            throw new InvalidSidException(sprintf("Invalid silo type: %s", $silo));
+            throw new InvalidSidException(sprintf('Invalid silo type: %s', $silo));
         }
 
         return $siloMapper[$silo];
@@ -59,6 +65,7 @@ class ReportTypeMapper
 
     /**
      * @param int $silo
+     *
      * @return string
      */
     protected function typeLp(int $silo): string
@@ -68,6 +75,7 @@ class ReportTypeMapper
 
     /**
      * @param int $silo
+     *
      * @return string
      */
     protected function typeLf(int $silo): string
