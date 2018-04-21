@@ -2,11 +2,6 @@
 
 namespace GusApi\Environment;
 
-/**
- * Interface EnvironmentInterface
- *
- * @package GusApi\Environment
- */
 interface EnvironmentInterface
 {
     /**

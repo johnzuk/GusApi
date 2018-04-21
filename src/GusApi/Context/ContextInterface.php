@@ -2,11 +2,6 @@
 
 namespace GusApi\Context;
 
-/**
- * Interface ContextInterface
- *
- * @package GusApi\Context
- */
 interface ContextInterface
 {
     /**

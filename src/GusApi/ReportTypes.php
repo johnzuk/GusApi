@@ -2,12 +2,6 @@
 
 namespace GusApi;
 
-/**
- * All report types
- * Class ReportTypes
- *
- * @package GusApi
- */
 final class ReportTypes
 {
     public const REPORT_ACTIVITY_PHYSIC_PERSON = 'PublDaneRaportFizycznaOsoba';

@@ -6,11 +6,6 @@ use GusApi\Exception\InvalidReportTypeException;
 use GusApi\Exception\InvalidSidException;
 use GusApi\Exception\InvalidSiloTypeException;
 
-/**
- * Class ReportTypeMapper
- *
- * @package GusApi
- */
 class ReportTypeMapper
 {
     /**

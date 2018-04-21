@@ -6,11 +6,6 @@ use GusApi\Type\SearchDataResponse;
 use GusApi\Type\SearchResponseCompanyData;
 use GusApi\Type\SearchResponseRaw;
 
-/**
- * Class DataSearchDecoder
- *
- * @package GusApi\Util
- */
 class DataSearchDecoder
 {
     /**

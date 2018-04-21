@@ -4,11 +4,6 @@ namespace GusApi;
 
 use GusApi\Type\SearchResponseCompanyData;
 
-/**
- * Class SearchReport
- *
- * @package GusApi
- */
 class SearchReport implements \JsonSerializable
 {
     const TYPE_JURIDICAL_PERSON = 'p';

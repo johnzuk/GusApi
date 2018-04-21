@@ -15,10 +15,6 @@ use GusApi\Type\SearchData;
 use GusApi\Type\SearchParameters;
 
 /**
- * Class GusApi
- *
- * @package GusApi
- *
  * @author Janusz Żukowicz <john_zuk@wp.pl>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
@@ -151,7 +147,7 @@ class GusApi
      * <b>0</b> - service unavailable <br>
      * <b>1</b> - service available <br>
      * <b>2</b> - service technical break <br>
-     * </p>
+     * </p>.
      *
      * @return int actual service status
      */
@@ -163,9 +159,7 @@ class GusApi
     }
 
     /**
-     * Return service message
-     *
-     * @return string service message
+     * @return string
      */
     public function serviceMessage(): string
     {
@@ -295,7 +289,7 @@ class GusApi
     }
 
     /**
-     * Get message about search if you don't get data
+     * Get message about search if you don't get data.
      *
      * @return string
      */
@@ -310,7 +304,7 @@ class GusApi
     }
 
     /**
-     * Return message code if search not found record
+     * Return message code if search not found record.
      *
      * @return int
      */
@@ -325,7 +319,7 @@ class GusApi
     }
 
     /**
-     * Return message text id search not found record
+     * Return message text id search not found record.
      *
      * @return string
      */

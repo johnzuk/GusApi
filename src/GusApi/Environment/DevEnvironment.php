@@ -2,11 +2,6 @@
 
 namespace GusApi\Environment;
 
-/**
- * Class DevEnvironment
- *
- * @package GusApi\Environment
- */
 class DevEnvironment implements EnvironmentInterface
 {
     public function getWSDLUrl(): string
