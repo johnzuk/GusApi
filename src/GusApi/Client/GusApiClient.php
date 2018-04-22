@@ -176,16 +176,6 @@ class GusApiClient
     }
 
     /**
-     * @param \SoapHeader[] $headers
-     *
-     * @return bool
-     */
-    public function setSoapHeaders(array $headers): bool
-    {
-        return $this->soapClient->__setSoapHeaders($headers);
-    }
-
-    /**
      * @param array $options
      */
     public function setHttpOptions(array $options): void

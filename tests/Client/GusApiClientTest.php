@@ -244,20 +244,6 @@ class GusApiClientTest extends TestCase
         );
     }
 
-    public function testSetSoapHeaders()
-    {
-        $this->soap
-            ->expects($this->once())
-            ->method('__setSoapHeaders')
-            ->with($this->equalTo([
-                new \SoapHeader('TestNamespace', 'TestName', 'TestData'),
-            ]))->willReturn(true);
-
-        $this->assertTrue($this->gusApiClient->setSoapHeaders([
-            new \SoapHeader('TestNamespace', 'TestName', 'TestData'),
-        ]));
-    }
-
     public function getHeaders($action, $to)
     {
         return [
