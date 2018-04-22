@@ -4,8 +4,8 @@ namespace GusApi\Tests;
 
 use GusApi\Client\GusApiClient;
 use GusApi\GusApi;
-use GusApi\Type\Login;
-use GusApi\Type\LoginResponse;
+use GusApi\Type\Request\Login;
+use GusApi\Type\Response\LoginResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

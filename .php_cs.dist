@@ -13,5 +13,6 @@ return PhpCsFixer\Config::create()
         'phpdoc_no_package' => false,
         'phpdoc_order' => true,
         'phpdoc_align' => true,
+        'ordered_imports' => true,
     ])
     ->setFinder($finder);

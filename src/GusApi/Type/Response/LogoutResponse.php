@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class LogoutResponse
 {
@@ -23,17 +23,5 @@ class LogoutResponse
     public function getWylogujResult(): bool
     {
         return $this->WylogujResult;
-    }
-
-    /**
-     * @param bool $WylogujResult
-     *
-     * @return LogoutResponse
-     */
-    public function setWylogujResult(bool $WylogujResult)
-    {
-        $this->WylogujResult = $WylogujResult;
-
-        return $this;
     }
 }

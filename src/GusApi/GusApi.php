@@ -7,11 +7,11 @@ use GusApi\Client\BuilderInterface;
 use GusApi\Client\GusApiClient;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
-use GusApi\Type\GetFullReport;
-use GusApi\Type\GetValue;
-use GusApi\Type\Login;
-use GusApi\Type\Logout;
-use GusApi\Type\SearchData;
+use GusApi\Type\Request\GetFullReport;
+use GusApi\Type\Request\GetValue;
+use GusApi\Type\Request\Login;
+use GusApi\Type\Request\Logout;
+use GusApi\Type\Request\SearchData;
 use GusApi\Type\SearchParameters;
 
 /**

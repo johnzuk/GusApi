@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class SearchResponseRaw
 {
@@ -23,17 +23,5 @@ class SearchResponseRaw
     public function getDaneSzukajResult(): string
     {
         return $this->DaneSzukajResult;
-    }
-
-    /**
-     * @param string $DaneSzukajResult
-     *
-     * @return SearchResponseRaw
-     */
-    public function setDaneSzukajResult(string $DaneSzukajResult)
-    {
-        $this->DaneSzukajResult = $DaneSzukajResult;
-
-        return $this;
     }
 }

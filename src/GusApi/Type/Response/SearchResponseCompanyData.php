@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class SearchResponseCompanyData
 {

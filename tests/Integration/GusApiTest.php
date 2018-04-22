@@ -24,13 +24,13 @@ class GusApiTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        self::$apiClient = new GusApi('abcde12345abcde12345');
+        self::$apiClient = new GusApi('abcde12345abcde12345', 'dev');
         self::$sid = self::$apiClient->login();
     }
 
     public function testGetExampleCompanyByNip()
     {
-        $result = self::$apiClient->getByNip(self::$sid, '7740001454');
+        $result = self::$apiClient->getByNip('7740001454');
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
     }
@@ -38,19 +38,19 @@ class GusApiTest extends TestCase
     public function testGetByInvalidNip()
     {
         $this->expectException(NotFoundException::class);
-        self::$apiClient->getByNip(self::$sid, '0123456789');
+        self::$apiClient->getByNip('0123456789');
     }
 
     public function testGetExampleCompanyByRegon()
     {
-        $result = self::$apiClient->getByRegon(self::$sid, '610188201');
+        $result = self::$apiClient->getByRegon('610188201');
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
     }
 
     public function testGetExampleCompanyByKrs()
     {
-        $result = self::$apiClient->getByKrs(self::$sid, '0000028860');
+        $result = self::$apiClient->getByKrs('0000028860');
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
     }
@@ -67,6 +67,6 @@ class GusApiTest extends TestCase
         $this->assertSame('09-411', $report->getZipCode());
         $this->assertSame('ul. Test-Wilcza', $report->getStreet());
         $this->assertSame(SearchReport::TYPE_JURIDICAL_PERSON, $report->getType());
-        $this->assertSame(6, $report->getSilo());
+        $this->assertSame('6', $report->getSilo());
     }
 }

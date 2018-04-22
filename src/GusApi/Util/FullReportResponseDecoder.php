@@ -2,8 +2,8 @@
 
 namespace GusApi\Util;
 
-use GusApi\Type\GetFullReportResponse;
-use GusApi\Type\GetFullReportResponseRaw;
+use GusApi\Type\Response\GetFullReportResponse;
+use GusApi\Type\Response\GetFullReportResponseRaw;
 
 class FullReportResponseDecoder
 {
