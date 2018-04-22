@@ -95,9 +95,9 @@ class GusApi
     /**
      * @throws InvalidUserKeyException
      *
-     * @return string
+     * @return bool
      */
-    public function login(): string
+    public function login(): bool
     {
         $result = $this->apiClient->login(new Login($this->userKey));
 
@@ -107,7 +107,7 @@ class GusApi
 
         $this->sessionId = $result->getZalogujResult();
 
-        return $this->sessionId;
+        return true;
     }
 
     /**

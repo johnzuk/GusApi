@@ -219,12 +219,4 @@ class GusApiClient
             new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'To', $to),
         ];
     }
-
-    /**
-     * @return bool
-     */
-    public function clearHeader(): bool
-    {
-        return $this->soapClient->__setSoapHeaders(null);
-    }
 }

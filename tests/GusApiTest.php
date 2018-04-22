@@ -38,7 +38,7 @@ class GusApiTest extends TestCase
             )
             ->willReturn(new LoginResponse('12sessionid21'));
 
-        $this->assertSame('12sessionid21', $this->api->login());
+        $this->assertTrue($this->api->login());
     }
 
     /**

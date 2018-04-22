@@ -258,17 +258,6 @@ class GusApiClientTest extends TestCase
         ]));
     }
 
-    public function testClearSoapHeaders()
-    {
-        $this->soap
-            ->expects($this->once())
-            ->method('__setSoapHeaders')
-            ->with($this->isNull())
-            ->willReturn(true);
-
-        $this->assertTrue($this->gusApiClient->clearHeader());
-    }
-
     public function getHeaders($action, $to)
     {
         return [
