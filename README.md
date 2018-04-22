@@ -22,7 +22,7 @@ This library uses [Composer](https://packagist.org/packages/gusapi/gusapi), just
 
 Example
 ======================
-See file [examples/getFromNip.php](examples/getFromNip.php).
+See file [examples/readmeExample.php](examples/readmeExample.php).
 
 ```php
 require_once '../vendor/autoload.php';
