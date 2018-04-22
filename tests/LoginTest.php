@@ -9,7 +9,7 @@ use GusApi\Type\LoginResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class GusApiTest extends TestCase
+class LoginTest extends TestCase
 {
     protected $userKey = '123absdefg123';
 
