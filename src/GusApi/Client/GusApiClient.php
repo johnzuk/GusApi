@@ -215,8 +215,8 @@ class GusApiClient
     public static function getRequestHeaders(string $action, string $to): array
     {
         return [
-            new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'Action', $action),
-            new \SoapHeader(RegonConstantsInterface::ADRESING_NAMESPACE, 'To', $to),
+            new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'Action', $action),
+            new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'To', $to),
         ];
     }
 
