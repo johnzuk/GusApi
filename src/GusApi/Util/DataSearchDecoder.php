@@ -17,9 +17,6 @@ class DataSearchDecoder
     {
         $elements = [];
 
-        if (empty($searchResponseRaw->getDaneSzukajResult())) {
-            return new SearchDataResponse($elements);
-        }
         try {
             $xmlElementsResponse = new \SimpleXMLElement($searchResponseRaw->getDaneSzukajResult());
 
