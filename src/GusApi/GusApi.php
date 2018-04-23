@@ -213,8 +213,11 @@ class GusApi
      */
     public function getByNips(array $nips): array
     {
-        if (count($nips) > 20) {
-            throw new \InvalidArgumentException('Too many NIP numbers. Maximum quantity is 20.');
+        if (count($nips) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
+            throw new \InvalidArgumentException(sprintf(
+                'Too many NIP numbers. Maximum quantity is %s.',
+                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
+            ));
         }
         $nips = implode(',', $nips);
 
@@ -230,8 +233,11 @@ class GusApi
      */
     public function getByKrses(array $krses): array
     {
-        if (count($krses) > 20) {
-            throw new \InvalidArgumentException('Too many KRS numbers. Maximum quantity is 20.');
+        if (count($krses) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
+            throw new \InvalidArgumentException(sprintf(
+                'Too many KRS numbers. Maximum quantity is %s.',
+                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
+            ));
         }
         $krses = implode(',', $krses);
 
@@ -247,8 +253,11 @@ class GusApi
      */
     public function getByRegons9(array $regons): array
     {
-        if (count($regons) > 20) {
-            throw new \InvalidArgumentException('Too many REGON numbers. Maximum quantity is 20.');
+        if (count($regons) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
+            throw new \InvalidArgumentException(sprintf(
+                'Too many REGON numbers. Maximum quantity is %s.',
+                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
+            ));
         }
         $regons = implode(',', $regons);
 
@@ -264,8 +273,11 @@ class GusApi
      */
     public function getByregons14(array $regons): array
     {
-        if (count($regons) > 20) {
-            throw new \InvalidArgumentException('Too many REGON numbers. Maximum quantity is 20.');
+        if (count($regons) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
+            throw new \InvalidArgumentException(sprintf(
+                'Too many REGON numbers. Maximum quantity is %s.',
+                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
+            ));
         }
         $regons = implode(',', $regons);
 

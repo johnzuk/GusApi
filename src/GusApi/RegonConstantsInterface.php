@@ -45,4 +45,6 @@ interface RegonConstantsInterface
     const NOT_FOUND = 4;
     const NO_ACCESS_TO_REPORT = 5;
     const SESSION_ERROR = 7;
+
+    const MAX_IDENTIFIERS_NUMBER_IN_REQUEST = 20;
 }
