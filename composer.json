@@ -3,7 +3,7 @@
   "description": "Gus Api Library for PHP",
   "type" : "library",
   "license": "LGPL-2.1-or-later",
-  "keywords":["nip","regon","krs","api", "soap", "library", "GUS", "CEGID"],
+  "keywords":["nip","regon","krs","api", "soap", "library", "GUS", "CEIDG"],
   "authors": [
     {
       "name": "Janusz Żukowicz",
@@ -15,9 +15,9 @@
     "ext-soap": "*"
   },
   "require-dev": {
+    "phpstan/phpstan-shim": "^0.9.2",
     "phpunit/phpunit": "^7.0",
     "squizlabs/php_codesniffer": "^3.2",
-    "phpstan/phpstan-shim": "^0.9.2",
     "friendsofphp/php-cs-fixer": "^2.11"
   },
   "autoload":{

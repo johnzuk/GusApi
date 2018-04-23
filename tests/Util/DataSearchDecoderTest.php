@@ -2,9 +2,9 @@
 
 namespace GusApi\Util;
 
-use GusApi\Type\SearchDataResponse;
-use GusApi\Type\SearchResponseCompanyData;
-use GusApi\Type\SearchResponseRaw;
+use GusApi\Type\Response\SearchDataResponse;
+use GusApi\Type\Response\SearchResponseCompanyData;
+use GusApi\Type\Response\SearchResponseRaw;
 use PHPUnit\Framework\TestCase;
 
 class DataSearchDecoderTest extends TestCase

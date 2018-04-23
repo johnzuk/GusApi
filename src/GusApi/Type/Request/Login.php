@@ -1,13 +1,13 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Request;
 
 class Login
 {
     /**
      * @var string
      */
-    protected $pKluczUzytkownika = null;
+    protected $pKluczUzytkownika;
 
     /**
      * @param string $pKluczUzytkownika
@@ -23,17 +23,5 @@ class Login
     public function getPKluczUzytkownika(): string
     {
         return $this->pKluczUzytkownika;
-    }
-
-    /**
-     * @param string $pKluczUzytkownika
-     *
-     * @return Login
-     */
-    public function setPKluczUzytkownika(string $pKluczUzytkownika)
-    {
-        $this->pKluczUzytkownika = $pKluczUzytkownika;
-
-        return $this;
     }
 }

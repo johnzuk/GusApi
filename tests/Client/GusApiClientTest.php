@@ -4,20 +4,20 @@ namespace GusApi\Client;
 
 use GusApi\Context\Context;
 use GusApi\RegonConstantsInterface;
-use GusApi\Type\GetFullReport;
-use GusApi\Type\GetFullReportResponse;
-use GusApi\Type\GetFullReportResponseRaw;
-use GusApi\Type\GetValue;
-use GusApi\Type\GetValueResponse;
-use GusApi\Type\Login;
-use GusApi\Type\LoginResponse;
-use GusApi\Type\Logout;
-use GusApi\Type\LogoutResponse;
-use GusApi\Type\SearchData;
-use GusApi\Type\SearchDataResponse;
+use GusApi\Type\Request\GetFullReport;
+use GusApi\Type\Request\GetValue;
+use GusApi\Type\Request\Login;
+use GusApi\Type\Request\Logout;
+use GusApi\Type\Request\SearchData;
+use GusApi\Type\Response\GetFullReportResponse;
+use GusApi\Type\Response\GetFullReportResponseRaw;
+use GusApi\Type\Response\GetValueResponse;
+use GusApi\Type\Response\LoginResponse;
+use GusApi\Type\Response\LogoutResponse;
+use GusApi\Type\Response\SearchDataResponse;
+use GusApi\Type\Response\SearchResponseCompanyData;
+use GusApi\Type\Response\SearchResponseRaw;
 use GusApi\Type\SearchParameters;
-use GusApi\Type\SearchResponseCompanyData;
-use GusApi\Type\SearchResponseRaw;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -40,19 +40,6 @@ class GusApiClientTest extends TestCase
         $this->gusApiClient = new GusApiClient($this->soap, 'Location', new Context());
     }
 
-    public function testGetRequestHeaders()
-    {
-        $headers = GusApiClient::getRequestHeaders('TestAction', 'TestTo');
-
-        $this->assertEquals(
-            [
-                new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', 'TestAction'),
-                new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', 'TestTo'),
-            ],
-            $headers
-        );
-    }
-
     public function testCallWithValidFunctionName()
     {
         $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', 'Location');
@@ -61,7 +48,7 @@ class GusApiClientTest extends TestCase
             ->method('__soapCall')
             ->with(
                 $this->equalTo('Zaloguj'),
-                $this->equalTo(new Login('1234567890')),
+                $this->equalTo([new Login('1234567890')]),
                 $this->isNull(),
                 $this->equalTo($headers)
             )
@@ -69,16 +56,8 @@ class GusApiClientTest extends TestCase
 
         $this->assertEquals(
             new LoginResponse('0987654321'),
-            $this->gusApiClient->call('Zaloguj', new Login('1234567890'))
+            $this->gusApiClient->login(new Login('1234567890'))
         );
-    }
-
-    /**
-     * @expectedException \GusApi\Exception\InvalidActionNameException
-     */
-    public function testCallWithInvalidFunctionName()
-    {
-        $this->gusApiClient->call('InvalidFunctionName', new Login('1234567890'));
     }
 
     public function testLogin()

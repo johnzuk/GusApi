@@ -5,17 +5,17 @@ namespace GusApi\Client;
 use GusApi\Context\ContextInterface;
 use GusApi\Exception\NotFoundException;
 use GusApi\RegonConstantsInterface;
-use GusApi\Type\GetFullReport;
-use GusApi\Type\GetFullReportResponse;
-use GusApi\Type\GetValue;
-use GusApi\Type\GetValueResponse;
-use GusApi\Type\Login;
-use GusApi\Type\LoginResponse;
-use GusApi\Type\Logout;
-use GusApi\Type\LogoutResponse;
-use GusApi\Type\SearchData;
-use GusApi\Type\SearchDataResponse;
-use GusApi\Type\SearchResponseRaw;
+use GusApi\Type\Request\GetFullReport;
+use GusApi\Type\Request\GetValue;
+use GusApi\Type\Request\Login;
+use GusApi\Type\Request\Logout;
+use GusApi\Type\Request\SearchData;
+use GusApi\Type\Response\GetFullReportResponse;
+use GusApi\Type\Response\GetValueResponse;
+use GusApi\Type\Response\LoginResponse;
+use GusApi\Type\Response\LogoutResponse;
+use GusApi\Type\Response\SearchDataResponse;
+use GusApi\Type\Response\SearchResponseRaw;
 use GusApi\Util\DataSearchDecoder;
 use GusApi\Util\FullReportResponseDecoder;
 
@@ -185,12 +185,13 @@ class GusApiClient
         ]);
     }
 
-    public function call(string $functionName, $arguments, ?string $sid = null)
+    protected function call(string $functionName, $arguments, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
-        $soapHeaders = self::getRequestHeaders($action, $this->location);
+        $soapHeaders = $this->getRequestHeaders($action, $this->location);
         $this->setHttpOptions([
-            'header' => 'sid: '.$sid."\r\n".'User-agent: PHP GusApi',
+            'header' => 'sid: '.$sid,
+            'user_agent' => 'PHP GusApi',
         ]);
 
         return $this->soapClient->__soapCall($functionName, $arguments, null, $soapHeaders);
@@ -202,7 +203,7 @@ class GusApiClient
      *
      * @return \SoapHeader[]
      */
-    public static function getRequestHeaders(string $action, string $to): array
+    protected function getRequestHeaders(string $action, string $to): array
     {
         return [
             new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'Action', $action),

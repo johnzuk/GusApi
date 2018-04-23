@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class SearchDataResponse
 {
@@ -23,17 +23,5 @@ class SearchDataResponse
     public function getDaneSzukajResult(): array
     {
         return $this->DaneSzukajResult;
-    }
-
-    /**
-     * @param SearchResponseCompanyData[] $DaneSzukajResult
-     *
-     * @return SearchDataResponse
-     */
-    public function setDaneSzukajResult(array $DaneSzukajResult)
-    {
-        $this->DaneSzukajResult = $DaneSzukajResult;
-
-        return $this;
     }
 }

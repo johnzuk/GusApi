@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class GetValueResponse
 {
@@ -23,17 +23,5 @@ class GetValueResponse
     public function getGetValueResult(): string
     {
         return $this->GetValueResult;
-    }
-
-    /**
-     * @param string $GetValueResult
-     *
-     * @return GetValueResponse
-     */
-    public function setGetValueResult(string $GetValueResult)
-    {
-        $this->GetValueResult = $GetValueResult;
-
-        return $this;
     }
 }

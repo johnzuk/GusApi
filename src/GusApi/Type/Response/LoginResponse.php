@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class LoginResponse
 {
@@ -23,17 +23,5 @@ class LoginResponse
     public function getZalogujResult(): string
     {
         return $this->ZalogujResult;
-    }
-
-    /**
-     * @param string $ZalogujResult
-     *
-     * @return LoginResponse
-     */
-    public function setZalogujResult(string $ZalogujResult)
-    {
-        $this->ZalogujResult = $ZalogujResult;
-
-        return $this;
     }
 }

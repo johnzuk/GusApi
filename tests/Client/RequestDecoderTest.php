@@ -2,14 +2,14 @@
 
 namespace GusApi\Tests\Client;
 
-use GusApi\Client\RequestDecoder;
+use GusApi\Client\MultipartResponseDecoder;
 use PHPUnit\Framework\TestCase;
 
 final class RequestDecoderTest extends TestCase
 {
     public function testDecodeRawRandomString()
     {
-        $result = RequestDecoder::decode('test string');
+        $result = MultipartResponseDecoder::decode('test string');
         $this->assertEquals('</s:Envelope>', $result);
     }
 
@@ -17,7 +17,7 @@ final class RequestDecoderTest extends TestCase
     {
         $content = file_get_contents(__DIR__.'/../resources/validSOAPResponse.xsd');
 
-        $result = RequestDecoder::decode($content);
+        $result = MultipartResponseDecoder::decode($content);
         $this->assertEquals(trim($content), $result);
     }
 
@@ -26,13 +26,13 @@ final class RequestDecoderTest extends TestCase
         $content = file_get_contents(__DIR__.'/../resources/rawSOAPResponse.xsd');
         $valid = file_get_contents(__DIR__.'/../resources/validSOAPResponse.xsd');
 
-        $result = RequestDecoder::decode($content);
+        $result = MultipartResponseDecoder::decode($content);
         $this->assertEquals(trim($valid), $result);
     }
 
     public function testDecodeRawEnvelopeString()
     {
-        $result = RequestDecoder::decode('<s:Envelope>Test</s:Envelope>');
+        $result = MultipartResponseDecoder::decode('<s:Envelope>Test</s:Envelope>');
         $this->assertEquals('<s:Envelope>Test</s:Envelope>', $result);
     }
 }

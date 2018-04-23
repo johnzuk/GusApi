@@ -47,11 +47,11 @@ class Builder implements BuilderInterface
             'style' => SOAP_DOCUMENT,
             'stream_context' => $context->getContext(),
             'classmap' => [
-                'ZalogujResponse' => \GusApi\Type\LoginResponse::class,
-                'WylogujResponse' => \GusApi\Type\LogoutResponse::class,
-                'GetValueResponse' => \GusApi\Type\GetValueResponse::class,
-                'DaneSzukajResponse' => \GusApi\Type\SearchResponseRaw::class,
-                'DanePobierzPelnyRaportResponse' => \GusApi\Type\GetFullReportResponseRaw::class,
+                'ZalogujResponse' => \GusApi\Type\Response\LoginResponse::class,
+                'WylogujResponse' => \GusApi\Type\Response\LogoutResponse::class,
+                'GetValueResponse' => \GusApi\Type\Response\GetValueResponse::class,
+                'DaneSzukajResponse' => \GusApi\Type\Response\SearchResponseRaw::class,
+                'DanePobierzPelnyRaportResponse' => \GusApi\Type\Response\GetFullReportResponseRaw::class,
             ],
         ];
 

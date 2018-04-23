@@ -5,174 +5,118 @@ namespace GusApi\Type;
 class SearchParameters
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Krs = null;
+    protected $Krs;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Krsy = null;
+    protected $Krsy;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Nip = null;
+    protected $Nip;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Nipy = null;
+    protected $Nipy;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Regon = null;
+    protected $Regon;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Regony14zn = null;
+    protected $Regony14zn;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $Regony9zn = null;
+    protected $Regony9zn;
 
-    /**
-     * @return string
-     */
-    public function getKrs()
+    public function getKrs(): ?string
     {
         return $this->Krs;
     }
 
-    /**
-     * @param string $Krs
-     *
-     * @return SearchParameters
-     */
-    public function setKrs($Krs)
+    public function setKrs(?string $Krs): self
     {
         $this->Krs = $Krs;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getKrsy()
+    public function getKrsy(): ?string
     {
         return $this->Krsy;
     }
 
-    /**
-     * @param string $Krsy
-     *
-     * @return SearchParameters
-     */
-    public function setKrsy($Krsy)
+    public function setKrsy(?string $Krsy): self
     {
         $this->Krsy = $Krsy;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNip()
+    public function getNip(): ?string
     {
         return $this->Nip;
     }
 
-    /**
-     * @param string $Nip
-     *
-     * @return SearchParameters
-     */
-    public function setNip($Nip)
+    public function setNip(?string $Nip): self
     {
         $this->Nip = $Nip;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNipy()
+    public function getNipy(): ?string
     {
         return $this->Nipy;
     }
 
-    /**
-     * @param string $Nipy
-     *
-     * @return SearchParameters
-     */
-    public function setNipy($Nipy)
+    public function setNipy(?string $Nipy): self
     {
         $this->Nipy = $Nipy;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRegon()
+    public function getRegon(): ?string
     {
         return $this->Regon;
     }
 
-    /**
-     * @param string $Regon
-     *
-     * @return SearchParameters
-     */
-    public function setRegon($Regon)
+    public function setRegon(?string $Regon): self
     {
         $this->Regon = $Regon;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRegony14zn()
+    public function getRegony14zn(): ?string
     {
         return $this->Regony14zn;
     }
 
-    /**
-     * @param string $Regony14zn
-     *
-     * @return SearchParameters
-     */
-    public function setRegony14zn($Regony14zn)
+    public function setRegony14zn(?string $Regony14zn): self
     {
         $this->Regony14zn = $Regony14zn;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRegony9zn()
+    public function getRegony9zn(): ?string
     {
         return $this->Regony9zn;
     }
 
-    /**
-     * @param string $Regony9zn
-     *
-     * @return SearchParameters
-     */
-    public function setRegony9zn($Regony9zn)
+    public function setRegony9zn(?string $Regony9zn): self
     {
         $this->Regony9zn = $Regony9zn;
 

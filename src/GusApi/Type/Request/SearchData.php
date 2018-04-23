@@ -1,13 +1,15 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Request;
+
+use GusApi\Type\SearchParameters;
 
 class SearchData
 {
     /**
      * @var SearchParameters
      */
-    protected $pParametryWyszukiwania = null;
+    protected $pParametryWyszukiwania;
 
     /**
      * @param SearchParameters $pParametryWyszukiwania
@@ -23,17 +25,5 @@ class SearchData
     public function getPParametryWyszukiwania(): SearchParameters
     {
         return $this->pParametryWyszukiwania;
-    }
-
-    /**
-     * @param SearchParameters $pParametryWyszukiwania
-     *
-     * @return SearchData
-     */
-    public function setPParametryWyszukiwania(SearchParameters $pParametryWyszukiwania)
-    {
-        $this->pParametryWyszukiwania = $pParametryWyszukiwania;
-
-        return $this;
     }
 }

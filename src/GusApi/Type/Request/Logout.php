@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Request;
 
 class Logout
 {
@@ -23,17 +23,5 @@ class Logout
     public function getPIdentyfikatorSesji(): string
     {
         return $this->pIdentyfikatorSesji;
-    }
-
-    /**
-     * @param string $pIdentyfikatorSesji
-     *
-     * @return Logout
-     */
-    public function setPIdentyfikatorSesji(string $pIdentyfikatorSesji)
-    {
-        $this->pIdentyfikatorSesji = $pIdentyfikatorSesji;
-
-        return $this;
     }
 }

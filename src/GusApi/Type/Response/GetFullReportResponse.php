@@ -1,6 +1,6 @@
 <?php
 
-namespace GusApi\Type;
+namespace GusApi\Type\Response;
 
 class GetFullReportResponse
 {
@@ -25,13 +25,5 @@ class GetFullReportResponse
     public function getReport(): \SimpleXMLElement
     {
         return $this->report;
-    }
-
-    /**
-     * @param \SimpleXMLElement $report
-     */
-    public function setReport(\SimpleXMLElement $report): void
-    {
-        $this->report = $report;
     }
 }
