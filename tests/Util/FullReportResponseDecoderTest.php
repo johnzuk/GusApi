@@ -27,4 +27,13 @@ class FullReportResponseDecoderTest extends TestCase
 
         $this->assertEquals($expected, $reportDecoded);
     }
+
+    /**
+     * @expectedException \GusApi\Exception\InvalidServerResponseException
+     */
+    public function testInvalidServerResponse()
+    {
+        $rawReport = new GetFullReportResponseRaw('Invalid XML structure');
+        FullReportResponseDecoder::decode($rawReport);
+    }
 }

@@ -35,10 +35,19 @@ class DataSearchDecoderTest extends TestCase
         $this->assertEquals($expected, $decodedResponse);
     }
 
+    /**
+     * @expectedException \GusApi\Exception\InvalidServerResponseException
+     */
     public function testDecodeWithInvalidStringStructure()
     {
         $content = 'Invalid XML structure';
         $rawResponse = new SearchResponseRaw($content);
+        DataSearchDecoder::decode($rawResponse);
+    }
+
+    public function testDecodeEmptyServerResponse()
+    {
+        $rawResponse = new SearchResponseRaw('');
         $decodedResponse = DataSearchDecoder::decode($rawResponse);
         $expected = new SearchDataResponse([]);
 
