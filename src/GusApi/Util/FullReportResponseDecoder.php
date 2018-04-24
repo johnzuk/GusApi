@@ -23,6 +23,7 @@ class FullReportResponseDecoder
 
         try {
             $xmlElementsResponse = new \SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
+
             return new GetFullReportResponse($xmlElementsResponse->dane);
         } catch (\Exception $e) {
             throw new InvalidServerResponseException('Invalid server response');
