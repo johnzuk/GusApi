@@ -270,7 +270,7 @@ class GusApi
      */
     public function getResultSearchMessage($sid)
     {
-        return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:\n",
+        return sprintf("StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
             $this->sessionStatus($sid),
             $this->getMessageCode($sid),
             $this->getMessage($sid)
