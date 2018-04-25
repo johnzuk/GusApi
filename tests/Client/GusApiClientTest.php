@@ -3,7 +3,7 @@
 namespace GusApi\Client;
 
 use GusApi\Context\Context;
-use GusApi\RegonConstantsInterface;
+use GusApi\ParamName;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
@@ -122,7 +122,7 @@ class GusApiClientTest extends TestCase
 
         $this->assertEquals(
             new GetValueResponse('stan danych response'),
-            $this->gusApiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_STATUS_DATE_STATE))
+            $this->gusApiClient->getValue(new GetValue(ParamName::STATUS_DATE_STATE))
         );
     }
 
