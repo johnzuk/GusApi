@@ -12,6 +12,7 @@ use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
 use GusApi\Type\Request\SearchData;
+use GusApi\Type\Response\SearchResponseCompanyData;
 use GusApi\Type\SearchParameters;
 
 /**
@@ -20,6 +21,8 @@ use GusApi\Type\SearchParameters;
  */
 class GusApi
 {
+    const MAX_IDENTIFIERS = 20;
+
     /**
      * @var string user key
      */
@@ -57,7 +60,7 @@ class GusApi
      */
     public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
     {
-        return new self($userKey, '', new Builder('', $apiClient));
+        return new self($userKey, 'prod', new Builder('prod', $apiClient));
     }
 
     /**
@@ -134,7 +137,7 @@ class GusApi
     public function dataStatus(): \DateTime
     {
         $result = $this->apiClient->getValue(
-            new GetValue(RegonConstantsInterface::PARAM_STATUS_DATE_STATE),
+            new GetValue(ParamName::STATUS_DATE_STATE),
             $this->sessionId
         );
 
@@ -153,7 +156,7 @@ class GusApi
      */
     public function serviceStatus(): int
     {
-        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_SERVICE_STATUS));
+        $result = $this->apiClient->getValue(new GetValue(ParamName::SERVICE_STATUS));
 
         return (int) $result->getGetValueResult();
     }
@@ -163,7 +166,7 @@ class GusApi
      */
     public function serviceMessage(): string
     {
-        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_SERVICE_MESSAGE));
+        $result = $this->apiClient->getValue(new GetValue(ParamName::SERVICE_MESSAGE));
 
         return $result->getGetValueResult();
     }
@@ -177,7 +180,7 @@ class GusApi
      */
     public function getByNip(string $nip): array
     {
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_NIP, $nip);
+        return $this->search(SearchType::NIP, $nip);
     }
 
     /**
@@ -189,7 +192,7 @@ class GusApi
      */
     public function getByRegon(string $regon): array
     {
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGON, $regon);
+        return $this->search(SearchType::REGON, $regon);
     }
 
     /**
@@ -201,11 +204,11 @@ class GusApi
      */
     public function getByKrs(string $krs): array
     {
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_KRS, $krs);
+        return $this->search(SearchType::KRS, $krs);
     }
 
     /**
-     * @param array $nips
+     * @param string[] $nips
      *
      * @throws NotFoundException
      *
@@ -213,19 +216,13 @@ class GusApi
      */
     public function getByNips(array $nips): array
     {
-        if (count($nips) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
-            throw new \InvalidArgumentException(sprintf(
-                'Too many NIP numbers. Maximum quantity is %s.',
-                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
-            ));
-        }
-        $nips = implode(',', $nips);
+        $this->checkIdentifiersCount($nips);
 
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_NIPS, $nips);
+        return $this->search(SearchType::NIPS, implode(',', $nips));
     }
 
     /**
-     * @param array $krses
+     * @param string[] $krses
      *
      * @throws NotFoundException
      *
@@ -233,19 +230,13 @@ class GusApi
      */
     public function getByKrses(array $krses): array
     {
-        if (count($krses) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
-            throw new \InvalidArgumentException(sprintf(
-                'Too many KRS numbers. Maximum quantity is %s.',
-                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
-            ));
-        }
-        $krses = implode(',', $krses);
+        $this->checkIdentifiersCount($krses);
 
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_KRSES, $krses);
+        return $this->search(SearchType::KRSES, implode(',', $krses));
     }
 
     /**
-     * @param array $regons
+     * @param string[] $regons
      *
      * @throws NotFoundException
      *
@@ -253,19 +244,13 @@ class GusApi
      */
     public function getByRegons9(array $regons): array
     {
-        if (count($regons) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
-            throw new \InvalidArgumentException(sprintf(
-                'Too many REGON numbers. Maximum quantity is %s.',
-                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
-            ));
-        }
-        $regons = implode(',', $regons);
+        $this->checkIdentifiersCount($regons);
 
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGONS_9, $regons);
+        return $this->search(SearchType::REGONS_9, implode(',', $regons));
     }
 
     /**
-     * @param array $regons
+     * @param string[] $regons
      *
      * @throws NotFoundException
      *
@@ -273,15 +258,9 @@ class GusApi
      */
     public function getByregons14(array $regons): array
     {
-        if (count($regons) > RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST) {
-            throw new \InvalidArgumentException(sprintf(
-                'Too many REGON numbers. Maximum quantity is %s.',
-                RegonConstantsInterface::MAX_IDENTIFIERS_NUMBER_IN_REQUEST
-            ));
-        }
-        $regons = implode(',', $regons);
+        $this->checkIdentifiersCount($regons);
 
-        return $this->search(RegonConstantsInterface::SEARCH_TYPE_REGONS_14, $regons);
+        return $this->search(SearchType::REGONS_14, implode(',', $regons));
     }
 
     /**
@@ -323,7 +302,7 @@ class GusApi
     public function getMessageCode(): int
     {
         $result = $this->apiClient->getValue(
-            new GetValue(RegonConstantsInterface::PARAM_MESSAGE_CODE),
+            new GetValue(ParamName::MESSAGE_CODE),
             $this->sessionId
         );
 
@@ -337,7 +316,7 @@ class GusApi
      */
     public function getMessage(): string
     {
-        $result = $this->apiClient->getValue(new GetValue(RegonConstantsInterface::PARAM_MESSAGE), $this->sessionId);
+        $result = $this->apiClient->getValue(new GetValue(ParamName::MESSAGE), $this->sessionId);
 
         return $result->getGetValueResult();
     }
@@ -348,11 +327,26 @@ class GusApi
     public function getSessionStatus(): int
     {
         $response = $this->apiClient->getValue(
-            new GetValue(RegonConstantsInterface::PARAM_SESSION_STATUS),
+            new GetValue(ParamName::SESSION_STATUS),
             $this->sessionId
         );
 
         return (int) $response->getGetValueResult();
+    }
+
+    /**
+     * @param string[] $identifiers
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function checkIdentifiersCount(array $identifiers)
+    {
+        if (count($identifiers) > self::MAX_IDENTIFIERS) {
+            throw new \InvalidArgumentException(sprintf(
+                'Too many identifiers. Maximum allowed is %d.',
+                self::MAX_IDENTIFIERS
+            ));
+        }
     }
 
     /**
@@ -371,12 +365,8 @@ class GusApi
 
         $result = $this->apiClient->searchData(new SearchData($searchParameters), $this->sessionId);
 
-        $response = [];
-
-        foreach ($result->getDaneSzukajResult() as $company) {
-            $response[] = new SearchReport($company);
-        }
-
-        return $response;
+        return array_map(function (SearchResponseCompanyData $company) {
+            return new SearchReport($company);
+        }, $result->getDaneSzukajResult());
     }
 }

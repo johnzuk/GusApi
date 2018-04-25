@@ -4,7 +4,6 @@ namespace GusApi\Client;
 
 use GusApi\Context\ContextInterface;
 use GusApi\Exception\NotFoundException;
-use GusApi\RegonConstantsInterface;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
@@ -21,6 +20,8 @@ use GusApi\Util\FullReportResponseDecoder;
 
 class GusApiClient
 {
+    const ADDRESSING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
+
     /**
      * @var \SoapClient
      */
@@ -206,8 +207,8 @@ class GusApiClient
     protected function getRequestHeaders(string $action, string $to): array
     {
         return [
-            new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'Action', $action),
-            new \SoapHeader(RegonConstantsInterface::ADDRESSING_NAMESPACE, 'To', $to),
+            new \SoapHeader(self::ADDRESSING_NAMESPACE, 'Action', $action),
+            new \SoapHeader(self::ADDRESSING_NAMESPACE, 'To', $to),
         ];
     }
 }

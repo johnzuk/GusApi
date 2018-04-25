@@ -18,7 +18,7 @@ class SearchDataResponse
     }
 
     /**
-     * @return array
+     * @return SearchResponseCompanyData[]
      */
     public function getDaneSzukajResult(): array
     {
