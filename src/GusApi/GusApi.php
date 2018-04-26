@@ -190,9 +190,9 @@ class GusApi
         }
         $nips = implode(',', $nips);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_NIPS => $nips
-        ]);
+        ));
     }
 
     /**
@@ -208,9 +208,9 @@ class GusApi
         }
         $krses = implode(',', $krses);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_KRSES => $krses
-        ]);
+        ));
     }
 
     /**
@@ -226,9 +226,9 @@ class GusApi
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_REGONS_9 => $regons
-        ]);
+        ));
     }
 
     /**
@@ -244,9 +244,9 @@ class GusApi
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_REGONS_14 => $regons
-        ]);
+        ));
     }
 
     /**
