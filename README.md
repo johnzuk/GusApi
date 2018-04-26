@@ -12,12 +12,17 @@ Official GUS docs [here](http://bip.stat.gov.pl/dzialalnosc-statystyki-publiczne
 Installation
 ======================
 This library uses [Composer](https://packagist.org/packages/gusapi/gusapi), just type in:
+```bash
+composer require gusapi/gusapi
+```
 
-|Version|PHP version |Composer command                           |Support                           |
-|-------|------------|-------------------------------------------|----------------------------------|
-|4.x    | >= 7.1     | ```composer require gusapi/gusapi:^4.0``` | Support ends on December 1, 2019 |
-|3.3.x  | >= 5.6     | ```composer require gusapi/gusapi:^3.0``` | Support ends on December 1, 2018 |
-|3.2.x  | >= 5.4     | ```composer require gusapi/gusapi:~3.2``` | Support ended on April 1, 2018   |
+Supported Versions
+==================
+|Version|PHP version |Support                           |
+|-------|------------|----------------------------------|
+|4.x    | >= 7.1     | Support ends on December 1, 2019 |
+|3.3.x  | >= 5.6     | Support ends on December 1, 2018 |
+|3.2.x  | >= 5.4     | Support ended on April 1, 2018   |
 
 
 Upgrade from 3.x to 4.x
