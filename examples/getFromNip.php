@@ -21,7 +21,7 @@ $gus = new GusApi(
 );
 
 if (isset($_GET['reset'])) {
-    $_SESSION = [];
+    $_SESSION = array();
     $_SESSION['checked'] = false;
 }
 

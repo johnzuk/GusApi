@@ -142,9 +142,9 @@ class GusApi
      */
     public function getByNip($sid, $nip)
     {
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_NIP => $nip
-        ]);
+        ));
     }
 
     /**
@@ -157,9 +157,9 @@ class GusApi
      */
     public function getByRegon($sid, $regon)
     {
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_REGON => $regon
-        ]);
+        ));
     }
 
     /**
@@ -172,9 +172,9 @@ class GusApi
      */
     public function getByKrs($sid, $krs)
     {
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_KRS => $krs
-        ]);
+        ));
     }
 
     /**
@@ -190,9 +190,9 @@ class GusApi
         }
         $nips = implode(',', $nips);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_NIPS => $nips
-        ]);
+        ));
     }
 
     /**
@@ -208,9 +208,9 @@ class GusApi
         }
         $krses = implode(',', $krses);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_KRSES => $krses
-        ]);
+        ));
     }
 
     /**
@@ -226,9 +226,9 @@ class GusApi
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_REGONS_9 => $regons
-        ]);
+        ));
     }
 
     /**
@@ -244,9 +244,9 @@ class GusApi
         }
         $regons = implode(',', $regons);
 
-        return $this->search($sid, [
+        return $this->search($sid, array(
             RegonConstantsInterface::SEARCH_TYPE_REGONS_14 => $regons
-        ]);
+        ));
     }
 
     /**
@@ -314,7 +314,7 @@ class GusApi
      */
     private function search($sid, array $searchData)
     {
-        $result = [];
+        $result = array();
         try{
             $response = $this->adapter->search($sid, $searchData);
         } catch (NoDataException $e) {
