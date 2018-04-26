@@ -24,7 +24,7 @@ class ReportTypeMapper
             throw new InvalidReportTypeException(sprintf("Invalid report type: %s"), $report->getType());
         }
 
-        return call_user_func([$this, $method], $report->getSilo());
+        return call_user_func(array($this, $method), $report->getSilo());
     }
 
     /**
@@ -42,12 +42,12 @@ class ReportTypeMapper
      */
     protected function typeF($silo)
     {
-        $siloMapper = [
+        $siloMapper = array(
             1 => ReportTypes::REPORT_ACTIVITY_PHYSIC_CEIDG,
             2 => ReportTypes::REPORT_ACTIVITY_PHYSIC_AGRO,
             3 => ReportTypes::REPORT_ACTIVITY_PHYSIC_OTHER_PUBLIC,
             4 => ReportTypes::REPORT_ACTIVITY_LOCAL_PHYSIC_WKR_PUBLIC,
-        ];
+        );
 
         if (!key_exists($silo, $siloMapper)) {
             throw new InvalidSidException(sprintf("Invalid silo type: %s", $silo));
