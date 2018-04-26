@@ -41,11 +41,11 @@ class SoapAdapter implements AdapterInterface
         $this->address = $address;
 
         $this->client = new SoapClient(
-            $this->baseUrl, $address, [
+            $this->baseUrl, $address, array(
             'soap_version' => SOAP_1_2,
             'trace' => true,
             'style' => SOAP_DOCUMENT
-            ], $contextOptions
+            ), $contextOptions
         );
     }
 
@@ -64,9 +64,9 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', $this->address);
         $result = $this->client->Zaloguj(
-            [
+            array(
             RegonConstantsInterface::PARAM_USER_KEY => $userKey
-            ]
+            )
         );
 
         $sid = $result->ZalogujResult;
@@ -80,9 +80,9 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', $this->address);
         $result = $this->client->Wyloguj(
-            [
+            array(
             RegonConstantsInterface::PARAM_SESSION_ID => $sid
-            ]
+            )
         );
 
         return $result->WylogujResult;
@@ -96,9 +96,9 @@ class SoapAdapter implements AdapterInterface
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
 
         $result = $this->client->DaneSzukaj(
-            [
+            array(
             RegonConstantsInterface::PARAM_SEARCH => $parameters
-            ]
+            )
         );
 
         try {
@@ -117,10 +117,10 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', $this->address, $sid);
         $result = $this->client->DanePobierzPelnyRaport(
-            [
+            array(
             RegonConstantsInterface::PARAM_REGON => $regon,
             RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
-            ]
+            )
         );
 
         try {
@@ -139,9 +139,9 @@ class SoapAdapter implements AdapterInterface
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
         $result = $this->client->GetValue(
-            [
+            array(
             RegonConstantsInterface::PARAM_PARAM_NAME => $param
-            ]
+            )
         );
 
         return $result->GetValueResult;
@@ -163,9 +163,9 @@ class SoapAdapter implements AdapterInterface
 
         if ($sid !== null) {
             $this->client->__setHttpHeader(
-                [
+                array(
                 'header' => 'sid: '.$sid
-                ]
+                )
             );
         }
     }
