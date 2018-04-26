@@ -20,6 +20,9 @@
   "autoload":{
     "psr-4": {
       "GusApi\\": "src/GusApi/"
-    }
+    },
+    "classmap": [
+      "src/JsonSerializable.php"
+    ]
   }
 }
