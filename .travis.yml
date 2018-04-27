@@ -12,4 +12,4 @@ install:
   - composer install --no-interaction --no-progress
 
 script:
-  - composer validate --strict
+  - composer validate --strict --no-check-lock
