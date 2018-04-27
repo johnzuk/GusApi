@@ -2,3 +2,4 @@ vendor/
 examples/captcha.jpeg
 .idea
 build/
+composer.lock
