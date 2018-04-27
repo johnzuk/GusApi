@@ -1,7 +1,10 @@
 <?php
 
-namespace GusApi\Client;
+namespace GusApi\Tests\Client;
 
+use GusApi\Client\Builder;
+use GusApi\Client\GusApiClient;
+use GusApi\Client\SoapClient;
 use GusApi\Context\Context;
 use PHPUnit\Framework\TestCase;
 

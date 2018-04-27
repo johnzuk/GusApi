@@ -1,10 +1,11 @@
 <?php
 
-namespace GusApi\Util;
+namespace GusApi\Tests\Util;
 
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseCompanyData;
 use GusApi\Type\Response\SearchResponseRaw;
+use GusApi\Util\DataSearchDecoder;
 use PHPUnit\Framework\TestCase;
 
 class DataSearchDecoderTest extends TestCase

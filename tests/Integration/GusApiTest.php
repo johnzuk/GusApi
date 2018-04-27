@@ -17,15 +17,10 @@ class GusApiTest extends TestCase
      */
     protected static $apiClient;
 
-    /**
-     * @var string
-     */
-    protected static $sid;
-
     public static function setUpBeforeClass()
     {
         self::$apiClient = new GusApi('abcde12345abcde12345', 'dev');
-        self::$sid = self::$apiClient->login();
+        self::$apiClient->login();
     }
 
     public function testGetExampleCompanyByNip()
