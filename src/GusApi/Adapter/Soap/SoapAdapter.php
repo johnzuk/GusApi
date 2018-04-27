@@ -1,4 +1,5 @@
 <?php
+
 namespace GusApi\Adapter\Soap;
 
 use GusApi\Adapter\AdapterInterface;
@@ -7,8 +8,7 @@ use GusApi\Client\SoapClient;
 use GusApi\RegonConstantsInterface;
 
 /**
- * Class SoapAdapter SoapAdapter for
- * @package GusApi\Adapter\Soap
+ * Class SoapAdapter SoapAdapter for.
  */
 class SoapAdapter implements AdapterInterface
 {
@@ -28,22 +28,22 @@ class SoapAdapter implements AdapterInterface
     protected $address;
 
     /**
-     * Create Gus soap adapter
+     * Create Gus soap adapter.
      *
      * @param string $baseUrl
      * @param string $address
-     * @param array $contextOptions
+     * @param array  $contextOptions
      */
     public function __construct($baseUrl, $address, array $contextOptions = null)
     {
         $this->baseUrl = $baseUrl;
         $this->address = $address;
 
-        $this->client = new SoapClient($this->baseUrl, $address, [
+        $this->client = new SoapClient($this->baseUrl, $address, array(
             'soap_version' => SOAP_1_2,
-            'trace' => true,
-            'style' => SOAP_DOCUMENT
-        ], $contextOptions);
+            'trace'        => true,
+            'style'        => SOAP_DOCUMENT,
+        ), $contextOptions);
     }
 
     /**
@@ -55,91 +55,92 @@ class SoapAdapter implements AdapterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function login($userKey)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', $this->address);
-        $result = $this->client->Zaloguj([
-            RegonConstantsInterface::PARAM_USER_KEY => $userKey
-        ]);
+        $result = $this->client->Zaloguj(array(
+            RegonConstantsInterface::PARAM_USER_KEY => $userKey,
+        ));
 
         $sid = $result->ZalogujResult;
+
         return $sid;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logout($sid)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', $this->address);
-        $result = $this->client->Wyloguj([
-            RegonConstantsInterface::PARAM_SESSION_ID => $sid
-        ]);
+        $result = $this->client->Wyloguj(array(
+            RegonConstantsInterface::PARAM_SESSION_ID => $sid,
+        ));
 
         return $result->WylogujResult;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function search($sid, array $parameters)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', $this->address, $sid);
 
-        $result = $this->client->DaneSzukaj([
-            RegonConstantsInterface::PARAM_SEARCH => $parameters
-        ]);
+        $result = $this->client->DaneSzukaj(array(
+            RegonConstantsInterface::PARAM_SEARCH => $parameters,
+        ));
 
         try {
             $result = $this->decodeResponse($result->DaneSzukajResult);
         } catch (\Exception $e) {
-            throw new NoDataException("No data found for");
+            throw new NoDataException('No data found for');
         }
 
         return $result->dane;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFullData($sid, $regon, $reportType)
     {
         $this->prepareSoapHeader('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', $this->address, $sid);
-        $result = $this->client->DanePobierzPelnyRaport([
-            RegonConstantsInterface::PARAM_REGON => $regon,
-            RegonConstantsInterface::PARAM_REPORT_NAME => $reportType
-        ]);
+        $result = $this->client->DanePobierzPelnyRaport(array(
+            RegonConstantsInterface::PARAM_REGON       => $regon,
+            RegonConstantsInterface::PARAM_REPORT_NAME => $reportType,
+        ));
 
         try {
             $result = $this->decodeResponse($result->DanePobierzPelnyRaportResult);
         } catch (\Exception $e) {
-            throw new NoDataException("No data found");
+            throw new NoDataException('No data found');
         }
 
         return $result;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getValue($sid, $param)
     {
         $this->prepareSoapHeader('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', $this->address, $sid);
-        $result = $this->client->GetValue([
-            RegonConstantsInterface::PARAM_PARAM_NAME => $param
-        ]);
+        $result = $this->client->GetValue(array(
+            RegonConstantsInterface::PARAM_PARAM_NAME => $param,
+        ));
 
         return $result->GetValueResult;
     }
 
     /**
-     * Prepare soap necessary header
+     * Prepare soap necessary header.
      *
-     * @param string $action
-     * @param string $to
-     * @param null|string $sid session id
+     * @param string      $action
+     * @param string      $to
+     * @param null|string $sid    session id
      */
     protected function prepareSoapHeader($action, $to, $sid = null)
     {
@@ -149,14 +150,14 @@ class SoapAdapter implements AdapterInterface
         $this->client->__setSoapHeaders($header);
 
         if ($sid !== null) {
-            $this->client->__setHttpHeader([
-                'header' => 'sid: '.$sid
-            ]);
+            $this->client->__setHttpHeader(array(
+                'header' => 'sid: '.$sid,
+            ));
         }
     }
 
     /**
-     * Clear soap header
+     * Clear soap header.
      */
     protected function clearHeader()
     {
@@ -164,12 +165,13 @@ class SoapAdapter implements AdapterInterface
     }
 
     /**
-     * Set soap header
+     * Set soap header.
      *
      * @param $namespace
      * @param $name
      * @param null $data
      * @param bool $mustUnderstand
+     *
      * @return \SoapHeader
      */
     protected function setHeader($namespace, $name, $data = null, $mustUnderstand = false)
@@ -179,6 +181,7 @@ class SoapAdapter implements AdapterInterface
 
     /**
      * @param string $response xml string
+     *
      * @return \SimpleXMLElement
      */
     protected function decodeResponse($response)
