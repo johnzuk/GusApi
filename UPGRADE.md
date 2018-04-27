@@ -1,5 +1,14 @@
 # UPGRADE FROM 3.x to 4.0
 
+Installation
+------------
+Before upgrading this package make sure you are using [PHP 7.1](http://php.net/migration71) or newer as it is required to run version 4.0 of this library.
+
+To upgrade, simply run:
+```bash
+composer require gusapi/gusapi ^4.0
+``` 
+
 Creating the client
 -------------------
 Before:
@@ -24,7 +33,6 @@ $gus = new GusApi(
 Calling API methods
 -------------------
 The GusApi class now handles the session so you don't need to pass SID to every method.
-Remember
 
 Before:
 ```php
