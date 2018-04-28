@@ -19,4 +19,7 @@ script:
   - composer validate --strict
   - vendor/bin/phpstan analyze -c phpstan.neon -l max src
   - vendor/bin/phpcs src
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

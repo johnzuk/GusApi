@@ -1,7 +1,8 @@
 <?php
 
-namespace GusApi\Client;
+namespace GusApi\Tests\Client;
 
+use GusApi\Client\SoapActionMapper;
 use PHPUnit\Framework\TestCase;
 
 class SoapActionMapperTest extends TestCase

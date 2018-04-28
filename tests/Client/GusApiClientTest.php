@@ -1,7 +1,8 @@
 <?php
 
-namespace GusApi\Client;
+namespace GusApi\Tests\Client;
 
+use GusApi\Client\GusApiClient;
 use GusApi\Context\Context;
 use GusApi\ParamName;
 use GusApi\Type\Request\GetFullReport;
@@ -42,17 +43,7 @@ class GusApiClientTest extends TestCase
 
     public function testCallWithValidFunctionName()
     {
-        $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('Zaloguj'),
-                $this->equalTo([new Login('1234567890')]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new LoginResponse('0987654321'));
+        $this->expectSoapCall('Zaloguj', [new Login('1234567890')], new LoginResponse('0987654321'));
 
         $this->assertEquals(
             new LoginResponse('0987654321'),
@@ -62,19 +53,7 @@ class GusApiClientTest extends TestCase
 
     public function testLogin()
     {
-        $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('Zaloguj'),
-                $this->equalTo([
-                    new Login('1234567890'),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new LoginResponse('0987654321'));
+        $this->expectSoapCall('Zaloguj', [new Login('1234567890')], new LoginResponse('0987654321'));
 
         $this->assertEquals(
             new LoginResponse('0987654321'),
@@ -84,64 +63,25 @@ class GusApiClientTest extends TestCase
 
     public function testLogout()
     {
-        $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('Wyloguj'),
-                $this->equalTo([
-                    new Logout('1234567890'),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new LogoutResponse(true));
+        $this->expectSoapCall('Wyloguj', [new Logout('1234567890')], new LogoutResponse(true));
+        $logoutResult = $this->gusApiClient->logout(new Logout('1234567890'));
 
-        $this->assertEquals(
-            new LogoutResponse(true),
-            $this->gusApiClient->logout(new Logout('1234567890'))
-        );
+        $this->assertTrue($logoutResult->getWylogujResult());
     }
 
     public function testGetValue()
     {
-        $headers = $this->getHeaders('http://CIS/BIR/2014/07/IUslugaBIR/GetValue', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('GetValue'),
-                $this->equalTo([
-                    new GetValue('StanDanych'),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new GetValueResponse('stan danych response'));
+        $this->expectSoapCall('GetValue', [new GetValue('StanDanych')], new GetValueResponse('stan danych response'), false);
+        $value = $this->gusApiClient->getValue(new GetValue(ParamName::STATUS_DATE_STATE));
 
-        $this->assertEquals(
-            new GetValueResponse('stan danych response'),
-            $this->gusApiClient->getValue(new GetValue(ParamName::STATUS_DATE_STATE))
-        );
+        $this->assertSame('stan danych response', $value->getGetValueResult());
     }
 
     public function testSearchData()
     {
         $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResult.xsd');
-        $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('DaneSzukaj'),
-                $this->equalTo([
-                    new SearchData((new SearchParameters())->setNip('0011223344')),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new SearchResponseRaw($searchRawResponse));
+        $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
+        $this->expectSoapCall('DaneSzukaj', [$searchData], new SearchResponseRaw($searchRawResponse));
 
         $companyData = new SearchResponseCompanyData();
         $companyData->Regon = '02092251199990';
@@ -159,13 +99,8 @@ class GusApiClientTest extends TestCase
         $expected = new SearchDataResponse([
             $companyData,
         ]);
-        $this->assertEquals(
-            $expected,
-            $this->gusApiClient->searchData(
-                new SearchData((new SearchParameters())->setNip('0011223344')),
-                '1234567890'
-            )
-        );
+
+        $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
     /**
@@ -173,61 +108,44 @@ class GusApiClientTest extends TestCase
      */
     public function testSearchDataNotFound()
     {
-        $headers = $this->getHeaders('http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj', 'Location');
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('DaneSzukaj'),
-                $this->equalTo([
-                    new SearchData((new SearchParameters())->setNip('0011223344')),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new SearchResponseRaw(''));
+        $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
+        $this->expectSoapCall('DaneSzukaj', [$searchData], new SearchResponseRaw(''));
 
-        $this->gusApiClient->searchData(
-            new SearchData((new SearchParameters())->setNip('0011223344')),
-            '1234567890'
-        );
+        $this->gusApiClient->searchData($searchData, '1234567890');
     }
 
     public function testGetFullReport()
     {
         $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/fullSearchResponse.xsd');
-        $headers = $this->getHeaders(
-            'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport',
-            'Location'
+        $searchData = new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki');
+        $this->expectSoapCall(
+            'DanePobierzPelnyRaport',
+            [$searchData],
+            new GetFullReportResponseRaw('<report>'.$searchRawResponse.'</report>')
         );
-
-        $this->soap
-            ->expects($this->once())
-            ->method('__soapCall')
-            ->with(
-                $this->equalTo('DanePobierzPelnyRaport'),
-                $this->equalTo([
-                    new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki'),
-                ]),
-                $this->isNull(),
-                $this->equalTo($headers)
-            )
-            ->willReturn(new GetFullReportResponseRaw('<report>'.$searchRawResponse.'</report>'));
 
         $this->assertEquals(
             new GetFullReportResponse(new \SimpleXMLElement($searchRawResponse)),
-            $this->gusApiClient->getFullReport(
-                new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki'),
-                '1234567890'
-            )
+            $this->gusApiClient->getFullReport($searchData, '1234567890')
         );
     }
 
-    public function getHeaders($action, $to)
+    protected function getHeaders($action, $to)
     {
         return [
             new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action),
             new \SoapHeader('http://www.w3.org/2005/08/addressing', 'To', $to),
         ];
+    }
+
+    protected function expectSoapCall(string $action, array $arguments, $result, bool $public = true)
+    {
+        $baseUrl = $public ? 'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl' : 'http://CIS/BIR/2014/07/IUslugaBIR';
+        $headers = $this->getHeaders(sprintf('%s/%s', $baseUrl, $action), 'Location');
+        $this->soap
+            ->expects($this->once())
+            ->method('__soapCall')
+            ->with($action, $arguments, null, $headers)
+            ->willReturn($result);
     }
 }

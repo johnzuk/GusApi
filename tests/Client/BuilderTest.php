@@ -1,7 +1,10 @@
 <?php
 
-namespace GusApi\Client;
+namespace GusApi\Tests\Client;
 
+use GusApi\Client\Builder;
+use GusApi\Client\GusApiClient;
+use GusApi\Client\SoapClient;
 use GusApi\Context\Context;
 use PHPUnit\Framework\TestCase;
 
@@ -9,15 +12,18 @@ class BuilderTest extends TestCase
 {
     /**
      * @dataProvider envProvider
-     *
-     * @param mixed $env
      */
-    public function testBuildWithValidEnvironmentName($env)
+    public function testBuildWithValidEnvironmentName(string $env, string $location)
     {
         $builder = new Builder($env);
         $client = $builder->build();
+        $soapClient = $client->getSoapClient();
 
         $this->assertInstanceOf(GusApiClient::class, $client);
+        $this->assertSame($location, $client->getLocation());
+        $this->assertAttributeSame(2, '_soap_version', $soapClient);
+        $this->assertAttributeInternalType('resource', '_stream_context', $soapClient);
+        $this->assertAttributeSame($client->getStreamContext()->getContext(), '_stream_context', $soapClient);
     }
 
     /**
@@ -26,7 +32,7 @@ class BuilderTest extends TestCase
     public function testBuildWithInvalidEnvironmentName()
     {
         $builder = new Builder('random');
-        $client = $builder->build();
+        $builder->build();
     }
 
     public function testBuildWithApiClient()
@@ -41,14 +47,14 @@ class BuilderTest extends TestCase
         );
         $builder = new Builder('dev', $client);
 
-        $this->assertEquals($client, $builder->build());
+        $this->assertSame($client, $builder->build());
     }
 
     public function envProvider()
     {
         return [
-            ['prod'],
-            ['dev'],
+            ['prod', 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'],
+            ['dev', 'https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'],
         ];
     }
 }

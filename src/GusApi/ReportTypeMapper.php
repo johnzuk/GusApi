@@ -3,7 +3,6 @@
 namespace GusApi;
 
 use GusApi\Exception\InvalidReportTypeException;
-use GusApi\Exception\InvalidSidException;
 use GusApi\Exception\InvalidSiloTypeException;
 
 class ReportTypeMapper
@@ -40,6 +39,8 @@ class ReportTypeMapper
     /**
      * @param int $silo
      *
+     * @throws InvalidSiloTypeException
+     *
      * @return string
      */
     protected function typeF(int $silo): string
@@ -52,7 +53,7 @@ class ReportTypeMapper
         ];
 
         if (!array_key_exists($silo, $siloMapper)) {
-            throw new InvalidSidException(sprintf('Invalid silo type: %s', $silo));
+            throw new InvalidSiloTypeException(sprintf('Invalid silo type: %s', $silo));
         }
 
         return $siloMapper[$silo];
