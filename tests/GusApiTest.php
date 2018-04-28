@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 class GusApiTest extends TestCase
 {
     protected $userKey = '123absdefg123';
-
     protected $sessionId = '12sessionid21';
 
     /**
@@ -65,7 +64,7 @@ class GusApiTest extends TestCase
         $this->apiClient
             ->expects($this->exactly(2))
             ->method('getValue')
-            ->with(new GetValue('StatusSesji'))
+            ->with(new GetValue('StatusSesji'), $this->sessionId)
             ->willReturn(new GetValueResponse('1'));
 
         $this->api->setSessionId($this->sessionId);
