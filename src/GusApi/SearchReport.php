@@ -76,17 +76,17 @@ class SearchReport implements \JsonSerializable
      */
     public function __construct(SearchResponseCompanyData $data)
     {
-        $this->regon = $data->Regon;
-        $this->name = $data->Nazwa;
-        $this->province = $data->Wojewodztwo;
-        $this->district = $data->Powiat;
-        $this->community = $data->Gmina;
-        $this->city = $data->Miejscowosc;
-        $this->zipCode = $data->KodPocztowy;
-        $this->street = $data->Ulica;
-        $this->type = $this->makeType($data->Typ);
-        $this->regon14 = $this->makeRegon14($this->regon);
-        $this->silo = $data->SilosID;
+        $this->regon = $data->getRegon();
+        $this->name = $data->getNazwa();
+        $this->province = $data->getWojewodztwo();
+        $this->district = $data->getPowiat();
+        $this->community = $data->getGmina();
+        $this->city = $data->getMiejscowosc();
+        $this->zipCode = $data->getKodPocztowy();
+        $this->street = $data->getUlica();
+        $this->type = $this->makeType($data->getTyp());
+        $this->regon14 = $this->makeRegon14($this->getRegon());
+        $this->silo = $data->getSilosID();
     }
 
     /**
@@ -94,7 +94,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string REGON number
      */
-    public function getRegon()
+    public function getRegon(): string
     {
         return $this->regon;
     }
@@ -104,7 +104,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -114,7 +114,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string province name
      */
-    public function getProvince()
+    public function getProvince(): string
     {
         return $this->province;
     }
@@ -124,7 +124,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string distinct name
      */
-    public function getDistrict()
+    public function getDistrict(): string
     {
         return $this->district;
     }
@@ -134,7 +134,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string community name
      */
-    public function getCommunity()
+    public function getCommunity(): string
     {
         return $this->community;
     }
@@ -144,7 +144,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string city name
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -154,7 +154,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string zip code
      */
-    public function getZipCode()
+    public function getZipCode(): string
     {
         return $this->zipCode;
     }
@@ -164,7 +164,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string street name
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
@@ -174,7 +174,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string type name
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -182,7 +182,7 @@ class SearchReport implements \JsonSerializable
     /**
      * @return string
      */
-    public function getRegon14()
+    public function getRegon14(): string
     {
         return $this->regon14;
     }
@@ -190,7 +190,7 @@ class SearchReport implements \JsonSerializable
     /**
      * @return int
      */
-    public function getSilo()
+    public function getSilo(): int
     {
         return $this->silo;
     }
@@ -200,7 +200,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string
      */
-    private function makeRegon14($regon)
+    private function makeRegon14(string $regon): string
     {
         return str_pad($regon, 14, '0');
     }
@@ -210,7 +210,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string
      */
-    private function makeType($type)
+    private function makeType($type): string
     {
         return trim(strtolower($type));
     }
@@ -218,10 +218,8 @@ class SearchReport implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        $vars = get_object_vars($this);
-
-        return $vars;
+        return get_object_vars($this);
     }
 }

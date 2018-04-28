@@ -134,6 +134,6 @@ class GusApiTest extends TestCase
         $this->assertSame('09-411', $report->getZipCode());
         $this->assertSame('ul. Test-Wilcza', $report->getStreet());
         $this->assertSame(SearchReport::TYPE_JURIDICAL_PERSON, $report->getType());
-        $this->assertSame('6', $report->getSilo());
+        $this->assertSame(6, $report->getSilo());
     }
 }
