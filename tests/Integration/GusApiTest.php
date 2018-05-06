@@ -7,6 +7,7 @@ use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
 use GusApi\SearchReport;
+use GusApi\Tests\ExampleCompanyTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class GusApiTest extends TestCase
 {
+    use ExampleCompanyTrait;
+
     /**
      * @var GusApi
      */
@@ -97,12 +100,6 @@ class GusApiTest extends TestCase
         $this->assertEquals('1993-07-01', $result->praw_dataPowstania);
     }
 
-    public function testTooManyNipsRaisesAnException()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        self::$apiClient->getByNips(array_fill(0, 21, '7740001454'));
-    }
-
     public function testInvalidKey()
     {
         $apiClient = new GusApi('abcde12345abcde12345', 'dev');
@@ -120,20 +117,5 @@ class GusApiTest extends TestCase
         $this->assertTrue($apiClient->isLogged());
         $this->assertTrue($apiClient->logout());
         $this->assertFalse($apiClient->isLogged());
-    }
-
-    protected function assertValidExampleCompany(SearchReport $report)
-    {
-        $this->assertSame('61018820100000', $report->getRegon());
-        $this->assertSame('61018820100000', $report->getRegon14());
-        $this->assertSame('POLSKI KONCERN NAFTOWY ORLEN SPÓŁKA AKCYJNA', $report->getName());
-        $this->assertSame('MAZOWIECKIE', $report->getProvince());
-        $this->assertSame('m. Płock', $report->getDistrict());
-        $this->assertSame('M. Płock', $report->getCommunity());
-        $this->assertSame('Płock', $report->getCity());
-        $this->assertSame('09-411', $report->getZipCode());
-        $this->assertSame('ul. Test-Wilcza', $report->getStreet());
-        $this->assertSame(SearchReport::TYPE_JURIDICAL_PERSON, $report->getType());
-        $this->assertSame(6, $report->getSilo());
     }
 }
