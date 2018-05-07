@@ -18,12 +18,13 @@ composer require gusapi/gusapi
 
 Supported Versions
 ==================
-|Version|PHP version |Support                           |
-|-------|------------|----------------------------------|
-|4.x    | >= 7.1     | Support ends on December 1, 2019 |
-|3.3.x  | >= 5.6     | Support ends on December 1, 2018 |
-|3.2.x  | >= 5.4     | Support ended on April 1, 2018   |
+|Version|PHP version |Support                           | Doc  |
+|-------|------------|----------------------------------|------|
+|4.x    | >= 7.1     | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
+|3.3.x  | >= 5.6     | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
+|3.2.x  | >= 5.4     | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
 
+####If you use PHP <= 7.0 see documentation for 3.3.x version [HERE](https://github.com/johnzuk/GusApi/blob/master/README.md)
 
 Upgrade from 3.x to 4.x
 =========================
