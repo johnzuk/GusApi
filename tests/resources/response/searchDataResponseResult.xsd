@@ -1,0 +1,15 @@
+<root>
+    <dane>
+        <Regon>02092251199990</Regon>
+        <RegonLink>Link Dane</RegonLink>
+        <Nazwa>ZAKŁAD MALARSKI TEST</Nazwa>
+        <Wojewodztwo>DOLNOŚLĄSKIE</Wojewodztwo>
+        <Powiat>m. Wrocław</Powiat>
+        <Gmina>Wrocław-Stare Miasto</Gmina>
+        <Miejscowosc>Wrocław</Miejscowosc>
+        <KodPocztowy>50-038</KodPocztowy>
+        <Ulica>ul. Test-Krucza</Ulica>
+        <Typ>P</Typ>
+        <SilosID>6</SilosID>
+    </dane>
+</root>

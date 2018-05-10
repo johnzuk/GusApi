@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+  <xs:schema elementFormDefault="qualified" targetNamespace="http://CIS/BIR/2014/07" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://CIS/BIR/2014/07">
+  <xs:element name="PobierzCaptcha">
+  <xs:complexType>
+  <xs:sequence /> 
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="PobierzCaptchaResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="PobierzCaptchaResult" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="SprawdzCaptcha">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pCaptcha" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  <xs:element name="SprawdzCaptchaResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="SprawdzCaptchaResult" type="xs:boolean" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+
+  
+  <xs:element name="GetValue">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pNazwaParametru" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="GetValueResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="GetValueResult" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="SetValue">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="pNazwaParametru" nillable="true" type="xs:string" /> 
+  <xs:element minOccurs="0" name="pWartoscParametru" nillable="true" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="SetValueResponse">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element minOccurs="0" name="SetValueResult" type="xs:string" /> 
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+  
+  </xs:schema>

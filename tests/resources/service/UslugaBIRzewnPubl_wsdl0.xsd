@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+  <wsdl:definitions targetNamespace="http://CIS/BIR/PUBL/2014/07" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://CIS/BIR/PUBL/2014/07" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+  <xsd:schema targetNamespace="http://CIS/BIR/PUBL/2014/07/Imports">
+  <xsd:import schemaLocation="https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl_xsd0.xsd" namespace="http://CIS/BIR/2014/07" /> 
+  <xsd:import schemaLocation="https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl_xsd1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/" /> 
+  <xsd:import schemaLocation="https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl_xsd2.xsd" namespace="http://CIS/BIR/PUBL/2014/07" /> 
+  <xsd:import schemaLocation="https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl_xsd3.xsd" namespace="http://CIS/BIR/PUBL/2014/07/DataContract" /> 
+  </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUslugaBIRzewnPubl_PobierzCaptcha_InputMessage"> 
+  <wsdl:part name="parameters" element="q1:PobierzCaptcha" xmlns:q1="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_PobierzCaptcha_OutputMessage">
+  <wsdl:part name="parameters" element="q2:PobierzCaptchaResponse" xmlns:q2="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_SprawdzCaptcha_InputMessage">
+  <wsdl:part name="parameters" element="q3:SprawdzCaptcha" xmlns:q3="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_SprawdzCaptcha_OutputMessage">
+  <wsdl:part name="parameters" element="q4:SprawdzCaptchaResponse" xmlns:q4="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+
+  <wsdl:message name="IUslugaBIRzewnPubl_GetValue_InputMessage">
+  <wsdl:part name="parameters" element="q5:GetValue" xmlns:q5="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_GetValue_OutputMessage">
+  <wsdl:part name="parameters" element="q6:GetValueResponse" xmlns:q6="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  
+  <wsdl:message name="IUslugaBIRzewnPubl_SetValue_InputMessage">
+  <wsdl:part name="parameters" element="q7:SetValue" xmlns:q7="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_SetValue_OutputMessage">
+  <wsdl:part name="parameters" element="q8:SetValueResponse" xmlns:q8="http://CIS/BIR/2014/07" /> 
+  </wsdl:message>
+
+  <wsdl:message name="IUslugaBIRzewnPubl_Zaloguj_InputMessage">
+  <wsdl:part name="parameters" element="tns:Zaloguj" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_Zaloguj_OutputMessage">
+  <wsdl:part name="parameters" element="tns:ZalogujResponse" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_Wyloguj_InputMessage">
+  <wsdl:part name="parameters" element="tns:Wyloguj" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_Wyloguj_OutputMessage">
+  <wsdl:part name="parameters" element="tns:WylogujResponse" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DaneSzukaj_InputMessage">
+  <wsdl:part name="parameters" element="tns:DaneSzukaj" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DaneSzukaj_OutputMessage">
+  <wsdl:part name="parameters" element="tns:DaneSzukajResponse" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DanePobierzPelnyRaport_InputMessage">
+  <wsdl:part name="parameters" element="tns:DanePobierzPelnyRaport" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DanePobierzPelnyRaport_OutputMessage">
+  <wsdl:part name="parameters" element="tns:DanePobierzPelnyRaportResponse" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DaneKomunikat_InputMessage">
+  <wsdl:part name="parameters" element="tns:DaneKomunikat" /> 
+  </wsdl:message>
+  <wsdl:message name="IUslugaBIRzewnPubl_DaneKomunikat_OutputMessage">
+  <wsdl:part name="parameters" element="tns:DaneKomunikatResponse" /> 
+  </wsdl:message>
+  
+  <wsdl:portType name="IUslugaBIRzewnPubl">
+  <wsdl:operation name="PobierzCaptcha">
+  <wsdl:input wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/PobierzCaptcha" message="tns:IUslugaBIRzewnPubl_PobierzCaptcha_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/PobierzCaptchaResponse" message="tns:IUslugaBIRzewnPubl_PobierzCaptcha_OutputMessage" /> 
+  </wsdl:operation>
+  <wsdl:operation name="SprawdzCaptcha">
+  <wsdl:input wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/SprawdzCaptcha" message="tns:IUslugaBIRzewnPubl_SprawdzCaptcha_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/SprawdzCaptchaResponse" message="tns:IUslugaBIRzewnPubl_SprawdzCaptcha_OutputMessage" /> 
+  </wsdl:operation>
+
+  <wsdl:operation name="SetValue">
+  <wsdl:input wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/SetValue" message="tns:IUslugaBIRzewnPubl_SetValue_InputMessage" />
+  <wsdl:output wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/SetValueResponse" message="tns:IUslugaBIRzewnPubl_SetValue_OutputMessage" />
+  </wsdl:operation>
+  <wsdl:operation name="GetValue">
+  <wsdl:input wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/GetValue" message="tns:IUslugaBIRzewnPubl_GetValue_InputMessage" />
+  <wsdl:output wsaw:Action="http://CIS/BIR/2014/07/IUslugaBIR/GetValueResponse" message="tns:IUslugaBIRzewnPubl_GetValue_OutputMessage" />
+  </wsdl:operation>
+
+  <wsdl:operation name="Zaloguj">
+  <wsdl:input wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj" message="tns:IUslugaBIRzewnPubl_Zaloguj_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/ZalogujResponse" message="tns:IUslugaBIRzewnPubl_Zaloguj_OutputMessage" /> 
+  </wsdl:operation>
+  <wsdl:operation name="Wyloguj">
+  <wsdl:input wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj" message="tns:IUslugaBIRzewnPubl_Wyloguj_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/WylogujResponse" message="tns:IUslugaBIRzewnPubl_Wyloguj_OutputMessage" /> 
+  </wsdl:operation>
+  <wsdl:operation name="DaneSzukaj">
+  <wsdl:input wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukaj" message="tns:IUslugaBIRzewnPubl_DaneSzukaj_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukajResponse" message="tns:IUslugaBIRzewnPubl_DaneSzukaj_OutputMessage" /> 
+  </wsdl:operation>
+  <wsdl:operation name="DanePobierzPelnyRaport">
+  <wsdl:input wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport" message="tns:IUslugaBIRzewnPubl_DanePobierzPelnyRaport_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaportResponse" message="tns:IUslugaBIRzewnPubl_DanePobierzPelnyRaport_OutputMessage" /> 
+  </wsdl:operation>
+  <wsdl:operation name="DaneKomunikat">
+  <wsdl:input wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneKomunikat" message="tns:IUslugaBIRzewnPubl_DaneKomunikat_InputMessage" /> 
+  <wsdl:output wsaw:Action="http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneKomunikatResponse" message="tns:IUslugaBIRzewnPubl_DaneKomunikat_OutputMessage" /> 
+  </wsdl:operation>
+  </wsdl:portType>
+  </wsdl:definitions>

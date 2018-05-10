@@ -2,11 +2,8 @@
 
 namespace GusApi;
 
-/**
- * Class SearchReport
- *
- * @package GusApi
- */
+use GusApi\Type\Response\SearchResponseCompanyData;
+
 class SearchReport implements \JsonSerializable
 {
     const TYPE_JURIDICAL_PERSON = 'p';
@@ -75,109 +72,109 @@ class SearchReport implements \JsonSerializable
     /**
      * SearchReport constructor.
      *
-     * @param $data
+     * @param SearchResponseCompanyData $data
      */
-    public function __construct($data)
+    public function __construct(SearchResponseCompanyData $data)
     {
-        $this->regon = (string) $data->Regon;
-        $this->name = (string) $data->Nazwa;
-        $this->province = (string) $data->Wojewodztwo;
-        $this->district = (string) $data->Powiat;
-        $this->community = (string) $data->Gmina;
-        $this->city = (string) $data->Miejscowosc;
-        $this->zipCode = (string) $data->KodPocztowy;
-        $this->street = (string) $data->Ulica;
-        $this->type = $this->makeType((string) $data->Typ);
-        $this->regon14 = $this->makeRegon14($this->regon);
-        $this->silo = (int) $data->SilosID;
+        $this->regon = $data->getRegon();
+        $this->name = $data->getNazwa();
+        $this->province = $data->getWojewodztwo();
+        $this->district = $data->getPowiat();
+        $this->community = $data->getGmina();
+        $this->city = $data->getMiejscowosc();
+        $this->zipCode = $data->getKodPocztowy();
+        $this->street = $data->getUlica();
+        $this->type = $this->makeType($data->getTyp());
+        $this->regon14 = $this->makeRegon14($this->getRegon());
+        $this->silo = $data->getSilosID();
     }
 
     /**
-     * Get REGON number
+     * Get REGON number.
      *
      * @return string REGON number
      */
-    public function getRegon()
+    public function getRegon(): string
     {
         return $this->regon;
     }
 
     /**
-     * Get subject name
+     * Get subject name.
      *
      * @return string name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Get province name
+     * Get province name.
      *
      * @return string province name
      */
-    public function getProvince()
+    public function getProvince(): string
     {
         return $this->province;
     }
 
     /**
-     * Get distinct name
+     * Get distinct name.
      *
      * @return string distinct name
      */
-    public function getDistrict()
+    public function getDistrict(): string
     {
         return $this->district;
     }
 
     /**
-     * Get community name
+     * Get community name.
      *
      * @return string community name
      */
-    public function getCommunity()
+    public function getCommunity(): string
     {
         return $this->community;
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return string city name
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
     /**
-     * Get zip code
+     * Get zip code.
      *
      * @return string zip code
      */
-    public function getZipCode()
+    public function getZipCode(): string
     {
         return $this->zipCode;
     }
 
     /**
-     * Get street name
+     * Get street name.
      *
      * @return string street name
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
     /**
-     * Get type name
+     * Get type name.
      *
      * @return string type name
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -185,7 +182,7 @@ class SearchReport implements \JsonSerializable
     /**
      * @return string
      */
-    public function getRegon14()
+    public function getRegon14(): string
     {
         return $this->regon14;
     }
@@ -193,7 +190,7 @@ class SearchReport implements \JsonSerializable
     /**
      * @return int
      */
-    public function getSilo()
+    public function getSilo(): int
     {
         return $this->silo;
     }
@@ -203,7 +200,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string
      */
-    private function makeRegon14($regon)
+    private function makeRegon14(string $regon): string
     {
         return str_pad($regon, 14, '0');
     }
@@ -213,7 +210,7 @@ class SearchReport implements \JsonSerializable
      *
      * @return string
      */
-    private function makeType($type)
+    private function makeType($type): string
     {
         return trim(strtolower($type));
     }
@@ -221,10 +218,8 @@ class SearchReport implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        $vars = get_object_vars($this);
-
-        return $vars;
+        return get_object_vars($this);
     }
 }

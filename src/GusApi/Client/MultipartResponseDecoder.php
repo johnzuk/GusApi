@@ -2,7 +2,7 @@
 
 namespace GusApi\Client;
 
-class RequestDecoder
+class MultipartResponseDecoder
 {
     /**
      * @param string $response
