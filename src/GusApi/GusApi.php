@@ -267,9 +267,9 @@ class GusApi
      * @param SearchReport $searchReport
      * @param string       $reportType
      *
-     * @return \SimpleXMLElement
+     * @return array[]
      */
-    public function getFullReport(SearchReport $searchReport, string $reportType): \SimpleXMLElement
+    public function getFullReport(SearchReport $searchReport, string $reportType): array
     {
         $result = $this->apiClient->getFullReport(
             new GetFullReport($searchReport->getRegon14(), $reportType),

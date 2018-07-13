@@ -1,0 +1,17 @@
+<root>
+    <dane>
+        <praw_pkdKod>7430Z</praw_pkdKod>
+        <praw_pkdNazwa>DZIAŁALNOŚĆ ZWIĄZANA Z TŁUMACZENIAMI</praw_pkdNazwa>
+        <praw_pkdPrzewazajace>0</praw_pkdPrzewazajace>
+    </dane>
+    <dane>
+        <praw_pkdKod>7420Z</praw_pkdKod>
+        <praw_pkdNazwa>DZIAŁALNOŚĆ FOTOGRAFICZNA</praw_pkdNazwa>
+        <praw_pkdPrzewazajace>0</praw_pkdPrzewazajace>
+    </dane>
+    <dane>
+        <praw_pkdKod>7410Z</praw_pkdKod>
+        <praw_pkdNazwa>DZIAŁALNOŚĆ W ZAKRESIE SPECJALISTYCZNEGO PROJEKTOWANIA</praw_pkdNazwa>
+        <praw_pkdPrzewazajace>1</praw_pkdPrzewazajace>
+    </dane>
+</root>

@@ -17,14 +17,24 @@ class FullReportResponseDecoder
      */
     public static function decode(GetFullReportResponseRaw $fullReportResponseRaw): GetFullReportResponse
     {
+        $elements = [];
+
         if ('' === $fullReportResponseRaw->getDanePobierzPelnyRaportResult()) {
-            return new GetFullReportResponse(new \SimpleXMLElement('<data></data>'));
+            return new GetFullReportResponse($elements);
         }
 
         try {
             $xmlElementsResponse = new \SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
 
-            return new GetFullReportResponse($xmlElementsResponse->dane);
+            foreach ($xmlElementsResponse->dane as $resultData) {
+                $element = [];
+                foreach ($resultData as $key => $item) {
+                    $element[$key] = (string)$item;
+                }
+                $elements[] = $element;
+            }
+
+            return new GetFullReportResponse($elements);
         } catch (\Exception $e) {
             throw new InvalidServerResponseException('Invalid server response');
         }

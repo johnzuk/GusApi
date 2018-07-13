@@ -5,24 +5,24 @@ namespace GusApi\Type\Response;
 class GetFullReportResponse
 {
     /**
-     * @var \SimpleXMLElement
+     * @var array[]
      */
     public $report;
 
     /**
      * GetFullReportResponse constructor.
      *
-     * @param \SimpleXMLElement $report
+     * @param array[] $report
      */
-    public function __construct(\SimpleXMLElement $report)
+    public function __construct(array $report = [])
     {
         $this->report = $report;
     }
 
     /**
-     * @return \SimpleXMLElement
+     * @return array[]
      */
-    public function getReport(): \SimpleXMLElement
+    public function getReport(): array
     {
         return $this->report;
     }
