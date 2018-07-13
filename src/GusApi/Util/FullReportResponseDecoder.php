@@ -29,7 +29,7 @@ class FullReportResponseDecoder
             foreach ($xmlElementsResponse->dane as $resultData) {
                 $element = [];
                 foreach ($resultData as $key => $item) {
-                    $element[$key] = (string)$item;
+                    $element[$key] = (string) $item;
                 }
                 $elements[] = $element;
             }
