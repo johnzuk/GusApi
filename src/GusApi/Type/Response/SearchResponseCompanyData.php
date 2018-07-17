@@ -57,7 +57,7 @@ class SearchResponseCompanyData
     /**
      * @var int
      */
-    public $SilosID = '';
+    public $SilosID = 0;
 
     /**
      * @return string
