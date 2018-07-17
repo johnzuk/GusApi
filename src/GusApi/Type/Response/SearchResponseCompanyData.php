@@ -7,57 +7,57 @@ class SearchResponseCompanyData
     /**
      * @var string
      */
-    public $Regon;
+    public $Regon = '';
 
     /**
      * @var string
      */
-    public $RegonLink;
+    public $RegonLink = '';
 
     /**
      * @var string
      */
-    public $Nazwa;
+    public $Nazwa = '';
 
     /**
      * @var string
      */
-    public $Wojewodztwo;
+    public $Wojewodztwo = '';
 
     /**
      * @var string
      */
-    public $Powiat;
+    public $Powiat = '';
 
     /**
      * @var string
      */
-    public $Gmina;
+    public $Gmina = '';
 
     /**
      * @var string
      */
-    public $Miejscowosc;
+    public $Miejscowosc = '';
 
     /**
      * @var string
      */
-    public $KodPocztowy;
+    public $KodPocztowy = '';
 
     /**
      * @var string
      */
-    public $Ulica;
+    public $Ulica = '';
 
     /**
      * @var string
      */
-    public $Typ;
+    public $Typ = '';
 
     /**
      * @var int
      */
-    public $SilosID;
+    public $SilosID = 0;
 
     /**
      * @return string
