@@ -117,13 +117,56 @@ class GusApiTest extends TestCase
             ->expects($this->once())
             ->method('getFullReport')
             ->with(new GetFullReport('61018820100000', 'PublDaneRaportPrawna'), $this->sessionId)
-            ->willReturn(new GetFullReportResponse(new \SimpleXMLElement($response)))
+            ->willReturn(new GetFullReportResponse([
+                [
+                    'fiz_regon9' => '666666666',
+                    'fiz_nazwa' => 'NIEPUBLICZNY ZAKŁAD OPIEKI ZDROWOTNEJ xxxxxxxxxxxxx',
+                    'fiz_nazwaSkrocona' => '',
+                    'fiz_dataPowstania' => '1993-03-20',
+                    'fiz_dataRozpoczeciaDzialalnosci' => '1999-10-20',
+                    'fiz_dataWpisuDoREGONDzialalnosci' => '',
+                    'fiz_dataZawieszeniaDzialalnosci' => '',
+                    'fiz_dataWznowieniaDzialalnosci' => '',
+                    'fiz_dataZaistnieniaZmianyDzialalnosci' => '2011-08-16',
+                    'fiz_dataZakonczeniaDzialalnosci' => '',
+                    'fiz_dataSkresleniazRegonDzialalnosci' => '',
+                    'fiz_adSiedzKraj_Symbol' => '',
+                    'fiz_adSiedzWojewodztwo_Symbol' => '30',
+                    'fiz_adSiedzPowiat_Symbol' => '22',
+                    'fiz_adSiedzGmina_Symbol' => '059',
+                    'fiz_adSiedzKodPocztowy' => '69000',
+                    'fiz_adSiedzMiejscowoscPoczty_Symbol' => '0198380',
+                    'fiz_adSiedzMiejscowosc_Symbol' => '0198380',
+                    'fiz_adSiedzUlica_Symbol' => '1240',
+                    'fiz_adSiedzNumerNieruchomosci' => '99',
+                    'fiz_adSiedzNumerLokalu' => '',
+                    'fiz_adSiedzNietypoweMiejsceLokalizacji' => '',
+                    'fiz_numerTelefonu' => '',
+                    'fiz_numerWewnetrznyTelefonu' => '',
+                    'fiz_numerFaksu' => '9999999999',
+                    'fiz_adresEmail' => '',
+                    'fiz_adresStronyinternetowej' => '',
+                    'fiz_adresEmail2' => '',
+                    'fiz_adSiedzKraj_Nazwa' => '',
+                    'fiz_adSiedzWojewodztwo_Nazwa' => 'WIELKOPOLSKIE',
+                    'fiz_adSiedzPowiat_Nazwa' => 'xxxxxxxxxx',
+                    'fiz_adSiedzGmina_Nazwa' => 'Yyyyyyyy',
+                    'fiz_adSiedzMiejscowosc_Nazwa' => 'Yyyyyyyy',
+                    'fiz_adSiedzMiejscowoscPoczty_Nazwa' => 'Yyyyyyyy',
+                    'fiz_adSiedzUlica_Nazwa' => 'ul. Adama Mickiewicza',
+                    'fizP_dataWpisuDoRejestruEwidencji' => '',
+                    'fizP_numerwRejestrzeEwidencji' => '',
+                    'fizP_OrganRejestrowy_Symbol' => '',
+                    'fizP_OrganRejestrowy_Nazwa' => '',
+                    'fizP_RodzajRejestru_Symbol' => '099',
+                    'fizP_RodzajRejestru_Nazwa' => 'PODMIOTY NIE PODLEGAJĄCE WPISOM DO REJESTRU LUB EWIDENCJI',
+                ],
+            ]))
         ;
 
         $this->login();
         $fullReport = $this->api->getFullReport($searchReport, ReportTypes::REPORT_PUBLIC_LAW);
-        $this->assertInstanceOf(\SimpleXMLElement::class, $fullReport);
-        $this->assertXmlStringEqualsXmlString($response, $fullReport->asXML());
+        $this->assertInternalType('array', $fullReport);
     }
 
     public function testTooManyNipsRaisesAnException()

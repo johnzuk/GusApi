@@ -96,8 +96,10 @@ class GusApiTest extends TestCase
         $report = $this->createMock(SearchReport::class);
         $report->method('getRegon14')->willReturn('61018820100000');
         $result = self::$apiClient->getFullReport($report, ReportTypes::REPORT_PUBLIC_LAW);
-        $this->assertEquals('61018820100000', $result->praw_regon14);
-        $this->assertEquals('1993-07-01', $result->praw_dataPowstania);
+        $this->assertInternalType('array', $result);
+        $this->assertInternalType('array', $result[0]);
+        $this->assertEquals('61018820100000', $result[0]['praw_regon14']);
+        $this->assertEquals('1993-07-01', $result[0]['praw_dataPowstania']);
     }
 
     public function testInvalidKey()
