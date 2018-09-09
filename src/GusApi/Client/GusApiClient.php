@@ -195,7 +195,7 @@ class GusApiClient
             'user_agent' => 'PHP GusApi',
         ]);
 
-        return $this->soapClient->__soapCall($functionName, $arguments, null, $soapHeaders);
+        return $this->soapClient->__soapCall($functionName, $arguments, [], $soapHeaders);
     }
 
     /**

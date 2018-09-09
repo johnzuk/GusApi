@@ -221,7 +221,7 @@ class GusApiClientTest extends TestCase
         $this->soap
             ->expects($this->once())
             ->method('__soapCall')
-            ->with($action, $arguments, null, $headers)
+            ->with($action, $arguments, [], $headers)
             ->willReturn($result);
     }
 }
