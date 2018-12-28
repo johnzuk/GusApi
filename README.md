@@ -9,7 +9,7 @@ PHP GUS API library
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johnzuk/GusApi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johnzuk/GusApi/?branch=master)
 
 PHP GUS API is an object-oriented library to get information from [REGON site](https://api.stat.gov.pl/Home/RegonApi) based on **official** REGON SOAP API.
-Official GUS docs [here](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/).
+Official GUS docs [here](https://api.stat.gov.pl/Home/RegonApi).
 
 Installation
 ======================
