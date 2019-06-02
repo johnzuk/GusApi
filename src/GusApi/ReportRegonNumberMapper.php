@@ -8,7 +8,8 @@ class ReportRegonNumberMapper
 {
     /**
      * @param SearchReport $report
-     * @param string $reportName
+     * @param string       $reportName
+     *
      * @throws InvalidReportTypeException
      *
      * @return string

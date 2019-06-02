@@ -43,7 +43,7 @@ class SearchReportTest extends TestCase
             'nipStatus' => 'U',
             'propertyNumber' => '33',
             'apartmentNumber' => '34B',
-            'activityEndDate' => '2029-02-22'
+            'activityEndDate' => '2029-02-22',
         ], json_decode(json_encode(new SearchReport($companyData)), true));
     }
 }

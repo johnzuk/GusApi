@@ -142,7 +142,7 @@ class GusApiTest extends TestCase
             )
             ->willReturn([
                 '000111234',
-                '111999023'
+                '111999023',
             ]);
 
         $this->login();

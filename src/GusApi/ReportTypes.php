@@ -21,7 +21,6 @@ final class ReportTypes
     public const REPORT_COMMON_LAW_PUBLIC = 'BIR11OsPrawnaSpCywilnaWspolnicy';
     public const REPORT_UNIT_TYPE_PUBLIC = 'BIR11TypPodmiotu';
 
-
     public const REPORTS = [
         self::REPORT_ACTIVITY_PHYSIC_PERSON,
         self::REPORT_ACTIVITY_PHYSIC_CEIDG,

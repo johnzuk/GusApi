@@ -180,13 +180,13 @@ class GusApiClient
 
     /**
      * @param GetBulkReport $getBulkReport
-     * @param string $sessionId
+     * @param string        $sessionId
      * @return array
      */
     public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array
     {
         $rawResponse = $this->call('DanePobierzRaportZbiorczy', [
-            $getBulkReport
+            $getBulkReport,
         ], $sessionId);
 
         return BulkReportResponseDecoder::decode($rawResponse);

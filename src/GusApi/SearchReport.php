@@ -2,8 +2,8 @@
 
 namespace GusApi;
 
-use JsonSerializable;
 use GusApi\Type\Response\SearchResponseCompanyData;
+use JsonSerializable;
 
 class SearchReport implements JsonSerializable
 {

@@ -141,8 +141,9 @@ class GusApi
     }
 
     /**
-     * @return DateTimeImmutable
      * @throws InvalidServerResponseException
+     *
+     * @return DateTimeImmutable
      */
     public function dataStatus(): DateTimeImmutable
     {
@@ -311,7 +312,8 @@ class GusApi
 
     /**
      * @param DateTimeImmutable $date
-     * @param string $reportName
+     * @param string            $reportName
+     *
      * @throws InvalidReportTypeException
      *
      * @return array

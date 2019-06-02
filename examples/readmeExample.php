@@ -2,11 +2,11 @@
 
 require_once '../vendor/autoload.php';
 
+use GusApi\BulkReportTypes;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
-use GusApi\BulkReportTypes;
 
 $gus = new GusApi('your api key here');
 //for development server use:
@@ -27,7 +27,7 @@ try {
         //you can change report type to other one
         $reportType = ReportTypes::REPORT_ACTIVITY_PHYSIC_PERSON;
         echo $gusReport->getName();
-        echo 'Address: '. $gusReport->getStreet(). ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
+        echo 'Address: '.$gusReport->getStreet().' '.$gusReport->getPropertyNumber().'/'.$gusReport->getApartmentNumber();
 
         $fullReport = $gus->getFullReport($gusReport, $reportType);
         var_dump($fullReport);

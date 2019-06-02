@@ -37,8 +37,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return GusApiClient
      * @throws SoapFault
+     *
+     * @return GusApiClient
      */
     public function build(): GusApiClient
     {

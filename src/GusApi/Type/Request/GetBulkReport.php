@@ -16,6 +16,7 @@ class GetBulkReport
 
     /**
      * GetBulkReport constructor.
+     *
      * @param string $pDataRaportu
      * @param string $pNazwaRaportu
      */

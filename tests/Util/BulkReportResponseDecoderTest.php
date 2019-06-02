@@ -19,7 +19,7 @@ class BulkReportResponseDecoderTest extends TestCase
             '022399999',
             '147210456',
             '243544401',
-            '341568222'
+            '341568222',
         ];
         $this->assertEquals($expected, $decodedResponse);
     }
