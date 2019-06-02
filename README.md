@@ -22,7 +22,7 @@ Supported Versions
 ==================
 |Version|PHP version | BRI service version | Support                           | Doc  |
 |-------|------------|--------|----------------------------------|------|
-|5.x    | >= 7.1     | BRI1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc]((https://github.com/johnzuk/GusApi/blob/master/README.md))|
+|5.x    | >= 7.1     | BRI1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
 |4.x    | >= 7.1     | BRI1  | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/tree/4.0.2/README.md)|
 |3.3.x  | >= 5.6     | BRI1  | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
 |3.2.x  | >= 5.4     | BRI1  | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
