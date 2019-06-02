@@ -1,50 +1,43 @@
-# UPGRADE FROM 3.x to 4.0
+# UPGRADE FROM 4.x to 5.0
 
 Installation
 ------------
-Before upgrading this package make sure you are using [PHP 7.1](http://php.net/migration71) or newer as it is required to run version 4.0 of this library.
+Before upgrading this package make sure you are using [PHP 7.1](http://php.net/migration71) or newer as it is required to run version 5.0 of this library.
 
 To upgrade, simply run:
 ```bash
-composer require gusapi/gusapi ^4.0
+composer require gusapi/gusapi ^5.0
 ``` 
 
-Creating the client
--------------------
-Before:
-```php
-$gus = new GusApi(
-    'abcde12345abcde12345',
-    new \GusApi\Adapter\Soap\SoapAdapter(
-        RegonConstantsInterface::BASE_WSDL_URL,
-        RegonConstantsInterface::BASE_WSDL_ADDRESS
-    )
-);
-```
+Everything should work the same as in versions 4.x - 
 
-After:
-```php
-$gus = new GusApi(
-    'abcde12345abcde12345',
-    'prod' // or 'dev'
-);
-```
+GusApi
+-------
+* The `GusApi::getFullReport` now throws `InvalidReportTypeException` for invalid report name.
 
-Calling API methods
--------------------
-The GusApi class now handles the session so you don't need to pass SID to every method.
+* The `getBulkReport` method added.
 
-Before:
-```php
-$sessionId = $gus->login(); // returns SID on success
-$gusReports = $gus->getByNip($sessionId, '7740001454');
-```
+* The `GusApi::dataStatus` now returns `DateTimeImmutable` instead of `DateTime`.
 
-After:
-```php
-$loggedIn = $gus->login(); // returns true on success
-$gusReports = $gus->getByNip('7740001454');
+* The `GusApi::dataStatus` now throws `InvalidServerResponseException` exception.
 
-// You can still fetch SID by calling:
-$sessionId = $gus->getSessionId();
-```
+SearchReport
+-----
+
+* Property `SearchReport::$regon14` has been removed.
+
+* The `SearchReport::$nip` `$nipStatus` `$propertyNumber` `$apartmentNumber` `$activityEndDate` properties have been added.
+
+BulkReportTypes
+------
+* The `BulkReportTypes` has been added.
+
+ReportTypeMapper
+------
+* The `ReportTypeMapper` has been removed.
+
+Request
+-----
+* The `GetValue::setPNazwaParametru` method has been removed.
+
+* The `GetFullReport::setPRegon` and `setPNazwaRaportu` methods have been removed.

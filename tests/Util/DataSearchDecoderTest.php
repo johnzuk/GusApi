@@ -2,6 +2,7 @@
 
 namespace GusApi\Tests\Util;
 
+use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseCompanyData;
 use GusApi\Type\Response\SearchResponseRaw;
@@ -10,15 +11,16 @@ use PHPUnit\Framework\TestCase;
 
 class DataSearchDecoderTest extends TestCase
 {
-    public function testDecode()
+    public function testDecode(): void
     {
-        $content = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResult.xsd');
+        $content = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
         $rawResponse = new SearchResponseRaw($content);
         $decodedResponse = DataSearchDecoder::decode($rawResponse);
 
         $companyData = new SearchResponseCompanyData();
         $companyData->Regon = '02092251199990';
-        $companyData->RegonLink = 'Link Dane';
+        $companyData->Nip = '0099112233';
+        $companyData->StatusNip = '';
         $companyData->Nazwa = 'ZAKŁAD MALARSKI TEST';
         $companyData->Wojewodztwo = 'DOLNOŚLĄSKIE';
         $companyData->Powiat = 'm. Wrocław';
@@ -26,8 +28,11 @@ class DataSearchDecoderTest extends TestCase
         $companyData->Miejscowosc = 'Wrocław';
         $companyData->KodPocztowy = '50-038';
         $companyData->Ulica = 'ul. Test-Krucza';
+        $companyData->NrNieruchomosci = '208';
+        $companyData->NrLokalu = '';
         $companyData->Typ = 'P';
-        $companyData->SilosID = '6';
+        $companyData->SilosID = 6;
+        $companyData->DataZakonczeniaDzialalnosci = '';
 
         $expected = new SearchDataResponse([
             $companyData,
@@ -36,17 +41,15 @@ class DataSearchDecoderTest extends TestCase
         $this->assertEquals($expected, $decodedResponse);
     }
 
-    /**
-     * @expectedException \GusApi\Exception\InvalidServerResponseException
-     */
-    public function testDecodeWithInvalidStringStructure()
+    public function testDecodeWithInvalidStringStructure(): void
     {
+        $this->expectException(InvalidServerResponseException::class);
         $content = 'Invalid XML structure';
         $rawResponse = new SearchResponseRaw($content);
         DataSearchDecoder::decode($rawResponse);
     }
 
-    public function testDecodeEmptyServerResponse()
+    public function testDecodeEmptyServerResponse(): void
     {
         $rawResponse = new SearchResponseRaw('');
         $decodedResponse = DataSearchDecoder::decode($rawResponse);

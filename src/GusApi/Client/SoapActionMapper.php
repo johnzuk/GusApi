@@ -10,15 +10,12 @@ class SoapActionMapper
     public const NAMESPACE = 'http://CIS/BIR/2014/07/IUslugaBIR/';
 
     public const ACTIONS = [
-        'PobierzCaptcha' => self::NAMESPACE,
-        'SprawdzCaptcha' => self::NAMESPACE,
         'GetValue' => self::NAMESPACE,
-        'SetValue' => self::NAMESPACE,
         'Zaloguj' => self::PUBLIC_NAMESPACE,
         'Wyloguj' => self::PUBLIC_NAMESPACE,
-        'DaneSzukaj' => self::PUBLIC_NAMESPACE,
+        'DaneSzukajPodmioty' => self::PUBLIC_NAMESPACE,
         'DanePobierzPelnyRaport' => self::PUBLIC_NAMESPACE,
-        'DaneKomunikat' => self::PUBLIC_NAMESPACE,
+        'DanePobierzRaportZbiorczy' => self::PUBLIC_NAMESPACE,
     ];
 
     /**

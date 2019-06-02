@@ -2,11 +2,16 @@
 
 namespace GusApi;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GusApi\Client\Builder;
 use GusApi\Client\BuilderInterface;
 use GusApi\Client\GusApiClient;
+use GusApi\Exception\InvalidReportTypeException;
+use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
+use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
@@ -21,7 +26,11 @@ use GusApi\Type\SearchParameters;
  */
 class GusApi
 {
-    const MAX_IDENTIFIERS = 20;
+    protected const MAX_IDENTIFIERS = 20;
+
+    protected const SERVICE_TIME_ZONE = 'Europe/Warsaw';
+
+    protected const SERVICE_STATUS_DATE_FORMAT = 'd-m-Y';
 
     /**
      * @var string user key
@@ -132,16 +141,34 @@ class GusApi
     }
 
     /**
-     * @return \DateTime
+     * @throws InvalidServerResponseException
+     *
+     * @return DateTimeImmutable
      */
-    public function dataStatus(): \DateTime
+    public function dataStatus(): DateTimeImmutable
     {
         $result = $this->apiClient->getValue(
             new GetValue(ParamName::STATUS_DATE_STATE),
             $this->sessionId
         );
 
-        return new \DateTime($result->getGetValueResult());
+        $dataStatus = DateTimeImmutable::createFromFormat(
+            self::SERVICE_STATUS_DATE_FORMAT,
+            $result->getGetValueResult(),
+            new DateTimeZone(self::SERVICE_TIME_ZONE)
+        );
+
+        if (false === $dataStatus) {
+            throw new InvalidServerResponseException(
+                sprintf(
+                    'Invalid response, expected date in format "%s" given %s',
+                    self::SERVICE_STATUS_DATE_FORMAT,
+                    $result->getGetValueResult()
+                )
+            );
+        }
+
+        return $dataStatus;
     }
 
     /**
@@ -265,18 +292,49 @@ class GusApi
 
     /**
      * @param SearchReport $searchReport
-     * @param string       $reportType
+     * @param string       $reportName
+     *
+     * @throws InvalidReportTypeException
      *
      * @return array[]
      */
-    public function getFullReport(SearchReport $searchReport, string $reportType): array
+    public function getFullReport(SearchReport $searchReport, string $reportName): array
     {
         $result = $this->apiClient->getFullReport(
-            new GetFullReport($searchReport->getRegon14(), $reportType),
+            new GetFullReport(
+                ReportRegonNumberMapper::getRegonNumberByReportName($searchReport, $reportName),
+                $reportName
+            ),
             $this->sessionId
         );
 
         return $result->getReport();
+    }
+
+    /**
+     * @param DateTimeImmutable $date
+     * @param string            $reportName
+     *
+     * @throws InvalidReportTypeException
+     *
+     * @return array
+     */
+    public function getBulkReport(DateTimeImmutable $date, string $reportName): array
+    {
+        if (!in_array($reportName, BulkReportTypes::REPORTS, true)) {
+            throw new InvalidReportTypeException(
+                sprintf(
+                    'Invalid report type: "%s", use one of allowed type: (%s)',
+                    $reportName,
+                    implode(', ', BulkReportTypes::REPORTS)
+                )
+            );
+        }
+
+        return $this->apiClient->getBulkReport(
+            new GetBulkReport($date->format('Y-m-d'), $reportName),
+            $this->sessionId
+        );
     }
 
     /**

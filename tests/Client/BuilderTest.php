@@ -13,7 +13,7 @@ class BuilderTest extends TestCase
     /**
      * @dataProvider envProvider
      */
-    public function testBuildWithValidEnvironmentName(string $env, string $location)
+    public function testBuildWithValidEnvironmentName(string $env, string $location): void
     {
         $builder = new Builder($env);
         $client = $builder->build();

@@ -4,6 +4,13 @@ namespace GusApi\Client;
 
 use GusApi\Context\Context;
 use GusApi\Environment\EnvironmentFactory;
+use GusApi\Type\Response\GetBulkReportResponseRaw;
+use GusApi\Type\Response\GetFullReportResponseRaw;
+use GusApi\Type\Response\GetValueResponse;
+use GusApi\Type\Response\LoginResponse;
+use GusApi\Type\Response\LogoutResponse;
+use GusApi\Type\Response\SearchResponseRaw;
+use SoapFault;
 
 class Builder implements BuilderInterface
 {
@@ -30,6 +37,8 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * @throws SoapFault
+     *
      * @return GusApiClient
      */
     public function build(): GusApiClient
@@ -47,11 +56,12 @@ class Builder implements BuilderInterface
             'style' => SOAP_DOCUMENT,
             'stream_context' => $context->getContext(),
             'classmap' => [
-                'ZalogujResponse' => \GusApi\Type\Response\LoginResponse::class,
-                'WylogujResponse' => \GusApi\Type\Response\LogoutResponse::class,
-                'GetValueResponse' => \GusApi\Type\Response\GetValueResponse::class,
-                'DaneSzukajResponse' => \GusApi\Type\Response\SearchResponseRaw::class,
-                'DanePobierzPelnyRaportResponse' => \GusApi\Type\Response\GetFullReportResponseRaw::class,
+                'ZalogujResponse' => LoginResponse::class,
+                'WylogujResponse' => LogoutResponse::class,
+                'GetValueResponse' => GetValueResponse::class,
+                'DaneSzukajPodmiotyResponse' => SearchResponseRaw::class,
+                'DanePobierzPelnyRaportResponse' => GetFullReportResponseRaw::class,
+                'DanePobierzRaportZbiorczyResponse' => GetBulkReportResponseRaw::class,
             ],
         ];
 

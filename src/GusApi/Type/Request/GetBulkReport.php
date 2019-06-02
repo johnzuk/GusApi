@@ -2,12 +2,12 @@
 
 namespace GusApi\Type\Request;
 
-class GetFullReport
+class GetBulkReport
 {
     /**
      * @var string
      */
-    protected $pRegon;
+    protected $pDataRaportu;
 
     /**
      * @var string
@@ -15,21 +15,23 @@ class GetFullReport
     protected $pNazwaRaportu;
 
     /**
-     * @param string $pRegon
+     * GetBulkReport constructor.
+     *
+     * @param string $pDataRaportu
      * @param string $pNazwaRaportu
      */
-    public function __construct(string $pRegon, string $pNazwaRaportu)
+    public function __construct(string $pDataRaportu, string $pNazwaRaportu)
     {
-        $this->pRegon = $pRegon;
+        $this->pDataRaportu = $pDataRaportu;
         $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
     /**
      * @return string
      */
-    public function getPRegon(): string
+    public function getPDataRaportu(): string
     {
-        return $this->pRegon;
+        return $this->pDataRaportu;
     }
 
     /**
