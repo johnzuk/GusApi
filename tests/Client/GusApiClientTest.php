@@ -5,11 +5,13 @@ namespace GusApi\Tests\Client;
 use GusApi\Client\GusApiClient;
 use GusApi\Context\Context;
 use GusApi\ParamName;
+use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
 use GusApi\Type\Request\SearchData;
+use GusApi\Type\Response\GetBulkReportResponseRaw;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
 use GusApi\Type\Response\GetValueResponse;
@@ -69,23 +71,30 @@ class GusApiClientTest extends TestCase
         $this->assertTrue($logoutResult->getWylogujResult());
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
-        $this->expectSoapCall('GetValue', [new GetValue('StanDanych')], new GetValueResponse('stan danych response'), false);
+        $this->expectSoapCall(
+            'GetValue',
+            [new GetValue('StanDanych')],
+            new GetValueResponse('stan danych response'),
+            false
+        );
+
         $value = $this->gusApiClient->getValue(new GetValue(ParamName::STATUS_DATE_STATE));
 
         $this->assertSame('stan danych response', $value->getGetValueResult());
     }
 
-    public function testSearchData()
+    public function testSearchDataWithSingleResponse(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResult.xsd');
-        $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
-        $this->expectSoapCall('DaneSzukaj', [$searchData], new SearchResponseRaw($searchRawResponse));
+        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
+        $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
+        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
 
         $companyData = new SearchResponseCompanyData();
         $companyData->Regon = '02092251199990';
-        $companyData->RegonLink = 'Link Dane';
+        $companyData->Nip = '0099112233';
+        $companyData->StatusNip = '';
         $companyData->Nazwa = 'ZAKŁAD MALARSKI TEST';
         $companyData->Wojewodztwo = 'DOLNOŚLĄSKIE';
         $companyData->Powiat = 'm. Wrocław';
@@ -93,8 +102,11 @@ class GusApiClientTest extends TestCase
         $companyData->Miejscowosc = 'Wrocław';
         $companyData->KodPocztowy = '50-038';
         $companyData->Ulica = 'ul. Test-Krucza';
+        $companyData->NrNieruchomosci = '208';
+        $companyData->NrLokalu = '';
         $companyData->Typ = 'P';
         $companyData->SilosID = 6;
+        $companyData->DataZakonczeniaDzialalnosci = '';
 
         $expected = new SearchDataResponse([
             $companyData,
@@ -103,18 +115,85 @@ class GusApiClientTest extends TestCase
         $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
+    public function testSearchDataWithMultipleResponse(): void
+    {
+        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataReponseResultMulti.xsd');
+        $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
+        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
+
+        $firstCompanyData = new SearchResponseCompanyData();
+        $firstCompanyData->Regon = '02092251199990';
+        $firstCompanyData->Nip = '0099112233';
+        $firstCompanyData->StatusNip = '';
+        $firstCompanyData->Nazwa = 'ZAKŁAD MALARSKI TEST';
+        $firstCompanyData->Wojewodztwo = 'DOLNOŚLĄSKIE';
+        $firstCompanyData->Powiat = 'm. Wrocław';
+        $firstCompanyData->Gmina = 'Wrocław-Stare Miasto';
+        $firstCompanyData->Miejscowosc = 'Wrocław';
+        $firstCompanyData->KodPocztowy = '50-038';
+        $firstCompanyData->Ulica = 'ul. Test-Krucza';
+        $firstCompanyData->NrNieruchomosci = '208';
+        $firstCompanyData->NrLokalu = '';
+        $firstCompanyData->Typ = 'P';
+        $firstCompanyData->SilosID = 6;
+        $firstCompanyData->DataZakonczeniaDzialalnosci = '';
+
+        $secondCompanyData = new SearchResponseCompanyData();
+        $secondCompanyData->Regon = '02092251199990';
+        $secondCompanyData->Nip = '0099112233';
+        $secondCompanyData->StatusNip = '';
+        $secondCompanyData->Nazwa = 'GOSPODARSTWO ROLNE';
+        $secondCompanyData->Wojewodztwo = 'LUBELSKIE';
+        $secondCompanyData->Powiat = 'kraśnicki';
+        $secondCompanyData->Gmina = 'Zakrzówek';
+        $secondCompanyData->Miejscowosc = 'Sulów';
+        $secondCompanyData->KodPocztowy = '23-213';
+        $secondCompanyData->Ulica = 'ul. Test-Krucza';
+        $secondCompanyData->NrNieruchomosci = '12';
+        $secondCompanyData->NrLokalu = '33';
+        $secondCompanyData->Typ = 'F';
+        $secondCompanyData->SilosID = 2;
+        $secondCompanyData->DataZakonczeniaDzialalnosci = '';
+
+        $expected = new SearchDataResponse([
+            $firstCompanyData,
+            $secondCompanyData
+        ]);
+
+        $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
+    }
+
     /**
      * @expectedException  \GusApi\Exception\NotFoundException
      */
-    public function testSearchDataNotFound()
+    public function testSearchDataNotFound(): void
     {
         $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
-        $this->expectSoapCall('DaneSzukaj', [$searchData], new SearchResponseRaw(''));
+        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw(''));
 
         $this->gusApiClient->searchData($searchData, '1234567890');
     }
 
-    public function testGetFullReport()
+    public function testGetBulkReport(): void
+    {
+        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
+        $searchData = new GetBulkReport('2019-01-01', 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych');
+
+        $this->expectSoapCall(
+            'DanePobierzRaportZbiorczy',
+            [$searchData],
+            new GetBulkReportResponseRaw($searchRawResponse)
+        );
+
+        $this->assertEquals([
+            '022399999',
+            '147210456',
+            '243544401',
+            '341568222',
+        ], $this->gusApiClient->getBulkReport($searchData, '1234567890'));
+    }
+
+    public function testGetFullReport(): void
     {
         $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/fullSearchResponse.xsd');
         $searchData = new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki');

@@ -8,11 +8,12 @@ use PHPUnit\Framework\TestCase;
 
 class SearchReportTest extends TestCase
 {
-    public function testIsJsonSerializable()
+    public function testIsJsonSerializable(): void
     {
         $companyData = new SearchResponseCompanyData();
         $companyData->Regon = '02092251199990';
-        $companyData->RegonLink = 'Link Dane';
+        $companyData->Nip = '9988660000';
+        $companyData->StatusNip = 'U';
         $companyData->Nazwa = 'ZAKŁAD MALARSKI TEST';
         $companyData->Wojewodztwo = 'DOLNOŚLĄSKIE';
         $companyData->Powiat = 'm. Wrocław';
@@ -20,8 +21,11 @@ class SearchReportTest extends TestCase
         $companyData->Miejscowosc = 'Wrocław';
         $companyData->KodPocztowy = '50-038';
         $companyData->Ulica = 'ul. Test-Krucza';
+        $companyData->NrNieruchomosci = '33';
+        $companyData->NrLokalu = '34B';
         $companyData->Typ = 'P';
         $companyData->SilosID = '6';
+        $companyData->DataZakonczeniaDzialalnosci = '2029-02-22';
 
         $this->assertEquals([
             'regon' => '02092251199990',
@@ -35,6 +39,11 @@ class SearchReportTest extends TestCase
             'street' => 'ul. Test-Krucza',
             'type' => 'p',
             'silo' => '6',
+            'nip' => '9988660000',
+            'nipStatus' => 'U',
+            'propertyNumber' => '33',
+            'apartmentNumber' => '34B',
+            'activityEndDate' => '2029-02-22'
         ], json_decode(json_encode(new SearchReport($companyData)), true));
     }
 }

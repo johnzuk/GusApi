@@ -2,9 +2,10 @@
 
 namespace GusApi;
 
+use JsonSerializable;
 use GusApi\Type\Response\SearchResponseCompanyData;
 
-class SearchReport implements \JsonSerializable
+class SearchReport implements JsonSerializable
 {
     const TYPE_JURIDICAL_PERSON = 'p';
 
@@ -18,6 +19,16 @@ class SearchReport implements \JsonSerializable
      * @var string
      */
     private $regon;
+
+    /**
+     * @var string
+     */
+    private $nip;
+
+    /**
+     * @var string
+     */
+    private $nipStatus;
 
     /**
      * @var string
@@ -52,6 +63,16 @@ class SearchReport implements \JsonSerializable
     /**
      * @var string
      */
+    private $propertyNumber;
+
+    /**
+     * @var string
+     */
+    private $apartmentNumber;
+
+    /**
+     * @var string
+     */
     private $zipCode;
 
     /**
@@ -70,6 +91,11 @@ class SearchReport implements \JsonSerializable
     private $silo;
 
     /**
+     * @var string
+     */
+    private $activityEndDate;
+
+    /**
      * SearchReport constructor.
      *
      * @param SearchResponseCompanyData $data
@@ -77,6 +103,8 @@ class SearchReport implements \JsonSerializable
     public function __construct(SearchResponseCompanyData $data)
     {
         $this->regon = $data->getRegon();
+        $this->nip = $data->getNip();
+        $this->nipStatus = $data->getStatusNip();
         $this->name = $data->getNazwa();
         $this->province = $data->getWojewodztwo();
         $this->district = $data->getPowiat();
@@ -84,9 +112,12 @@ class SearchReport implements \JsonSerializable
         $this->city = $data->getMiejscowosc();
         $this->zipCode = $data->getKodPocztowy();
         $this->street = $data->getUlica();
+        $this->propertyNumber = $data->getNrNieruchomosci();
+        $this->apartmentNumber = $data->getNrLokalu();
         $this->type = $this->makeType($data->getTyp());
         $this->regon14 = $this->makeRegon14($this->getRegon());
         $this->silo = $data->getSilosID();
+        $this->activityEndDate = $data->getDataZakonczeniaDzialalnosci();
     }
 
     /**
@@ -193,6 +224,46 @@ class SearchReport implements \JsonSerializable
     public function getSilo(): int
     {
         return $this->silo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNip(): string
+    {
+        return $this->nip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNipStatus(): string
+    {
+        return $this->nipStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPropertyNumber(): string
+    {
+        return $this->propertyNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApartmentNumber(): string
+    {
+        return $this->apartmentNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActivityEndDate(): string
+    {
+        return $this->activityEndDate;
     }
 
     /**

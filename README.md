@@ -20,30 +20,59 @@ composer require gusapi/gusapi
 
 Supported Versions
 ==================
-|Version|PHP version |Support                           | Doc  |
-|-------|------------|----------------------------------|------|
-|4.x    | >= 7.1     | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
-|3.3.x  | >= 5.6     | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
-|3.2.x  | >= 5.4     | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
+|Version|PHP version | BRI service version | Support                           | Doc  |
+|-------|------------|--------|----------------------------------|------|
+|5.x    | >= 7.1     | BRI1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc]((https://github.com/johnzuk/GusApi/blob/master/README.md))|
+|4.x    | >= 7.1     | BRI1  | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/tree/4.0.2/README.md)|
+|3.3.x  | >= 5.6     | BRI1  | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
+|3.2.x  | >= 5.4     | BRI1  | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
 
-If you use PHP <= 7.0 see documentation for 3.3.x version [HERE](https://github.com/johnzuk/GusApi/blob/3.3/README.md)
+If you still use PHP <= 7.0 see documentation for 3.3.x version [HERE](https://github.com/johnzuk/GusApi/blob/3.3/README.md)
 -------------------
+New in 5.x (this version support BRI1.1)
+========================================
+* New properties in `SearchReport`:
+  * nip
+  * nipStatus
+  * propertyNumber
+  * apartmentNumber
+  * activityEndDate
 
-Upgrade from 3.x to 4.x
+    **Till version 5.x you dont need to get full report to find property number and apartment number**
+
+* New supported report types (based on BRI1.1 documentation):
+    ```php
+        public const REPORT_NEW_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych';
+        public const REPORT_UPDATED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych';
+        public const REPORT_DELETED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych';
+        public const REPORT_NEW_LOCAL_UNITS = 'BIR11NoweJednostkiLokalne';
+        public const REPORT_UPDATED_LOCAL_UNITS = 'BIR11AktualizowaneJednostkiLokalne';
+        public const REPORT_DELETED_LOCAL_UNITS = 'BIR11SkresloneJednostkiLokalne';
+    ```
+* Method getFullReport throws `InvalidReportTypeException` for invalid report name
+* Method dataStatus now return `DateTimeImmutable` instead of `DateTime` and throws `InvalidServerResponseException`
+* New method getBulkReport - new search type in BRI1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
+  with `BulkReportTypes`
+* Remove  `ReportTypeMapper`
+ 
+Upgrade from 4.x to 5.x
 =========================
 For more information see [UPGRADE.md](UPGRADE.md).
 
 
-Example for 4.x
+Example for 5.x
 ======================
 See file [examples/readmeExample.php](examples/readmeExample.php).
 
 ```php
+
 require_once '../vendor/autoload.php';
 
 use GusApi\Exception\InvalidUserKeyException;
+use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
+use GusApi\BulkReportTypes;
 
 $gus = new GusApi('your api key here');
 //for development server use:
@@ -55,16 +84,23 @@ try {
 
     $gusReports = $gus->getByNip($nipToCheck);
 
+    var_dump($gus->dataStatus());
+    var_dump($gus->getBulkReport(
+        new DateTimeImmutable('2019-05-31'),
+        BulkReportTypes::REPORT_DELETED_LOCAL_UNITS));
+
     foreach ($gusReports as $gusReport) {
         //you can change report type to other one
-        $reportType = ReportTypes::REPORT_PUBLIC_LAW;
+        $reportType = ReportTypes::REPORT_ACTIVITY_PHYSIC_PERSON;
         echo $gusReport->getName();
+        echo 'Address: '. $gusReport->getStreet(). ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
+        
         $fullReport = $gus->getFullReport($gusReport, $reportType);
         var_dump($fullReport);
     }
 } catch (InvalidUserKeyException $e) {
     echo 'Bad user key';
-} catch (\GusApi\Exception\NotFoundException $e) {
+} catch (NotFoundException $e) {
     echo 'No data found <br>';
     echo 'For more information read server message below: <br>';
     echo $gus->getResultSearchMessage();

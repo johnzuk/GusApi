@@ -3,6 +3,7 @@ language: php
 php:
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 allow_failures:
@@ -18,7 +19,7 @@ install:
 script:
   - composer validate --strict
   - vendor/bin/phpstan analyze -c phpstan.neon -l max src
-  - vendor/bin/phpcs src
+  - vendor/bin/phpcs src tests
   - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_success:

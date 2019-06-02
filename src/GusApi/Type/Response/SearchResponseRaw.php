@@ -7,21 +7,21 @@ class SearchResponseRaw
     /**
      * @var string
      */
-    protected $DaneSzukajResult = '';
+    protected $DaneSzukajPodmiotyResult = '';
 
     /**
-     * @param string $DaneSzukajResult
+     * @param string $DaneSzukajPodmiotyResult
      */
-    public function __construct(string $DaneSzukajResult)
+    public function __construct(string $DaneSzukajPodmiotyResult)
     {
-        $this->DaneSzukajResult = $DaneSzukajResult;
+        $this->DaneSzukajPodmiotyResult = $DaneSzukajPodmiotyResult;
     }
 
     /**
      * @return string
      */
-    public function getDaneSzukajResult(): string
+    public function getDaneSzukajPodmiotyResult(): string
     {
-        return $this->DaneSzukajResult;
+        return $this->DaneSzukajPodmiotyResult;
     }
 }

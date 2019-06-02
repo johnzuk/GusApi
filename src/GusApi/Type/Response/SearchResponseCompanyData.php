@@ -12,8 +12,12 @@ class SearchResponseCompanyData
     /**
      * @var string
      */
-    public $RegonLink = '';
+    public $Nip = '';
 
+    /**
+     * @var string
+     */
+    public $StatusNip = '';
     /**
      * @var string
      */
@@ -52,12 +56,27 @@ class SearchResponseCompanyData
     /**
      * @var string
      */
+    public $NrNieruchomosci = '';
+
+    /**
+     * @var string
+     */
+    public $NrLokalu = '';
+
+    /**
+     * @var string
+     */
     public $Typ = '';
 
     /**
      * @var int
      */
     public $SilosID = 0;
+
+    /**
+     * @var string
+     */
+    public $DataZakonczeniaDzialalnosci = '';
 
     /**
      * @return string
@@ -70,9 +89,17 @@ class SearchResponseCompanyData
     /**
      * @return string
      */
-    public function getRegonLink(): string
+    public function getNip(): string
     {
-        return $this->RegonLink;
+        return $this->Nip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusNip(): string
+    {
+        return $this->StatusNip;
     }
 
     /**
@@ -134,6 +161,22 @@ class SearchResponseCompanyData
     /**
      * @return string
      */
+    public function getNrNieruchomosci(): string
+    {
+        return $this->NrNieruchomosci;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNrLokalu(): string
+    {
+        return $this->NrLokalu;
+    }
+
+    /**
+     * @return string
+     */
     public function getTyp(): string
     {
         return $this->Typ;
@@ -145,5 +188,13 @@ class SearchResponseCompanyData
     public function getSilosID(): int
     {
         return $this->SilosID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDataZakonczeniaDzialalnosci(): string
+    {
+        return $this->DataZakonczeniaDzialalnosci;
     }
 }

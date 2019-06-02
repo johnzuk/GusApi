@@ -5,6 +5,7 @@ namespace GusApi\Util;
 use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
+use SimpleXMLElement;
 
 class FullReportResponseDecoder
 {
@@ -24,7 +25,7 @@ class FullReportResponseDecoder
         }
 
         try {
-            $xmlElementsResponse = new \SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
+            $xmlElementsResponse = new SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
 
             foreach ($xmlElementsResponse->dane as $resultData) {
                 $element = [];

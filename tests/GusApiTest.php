@@ -2,11 +2,16 @@
 
 namespace GusApi\Tests;
 
+use DateTimeImmutable;
+use GusApi\BulkReportTypes;
 use GusApi\Client\GusApiClient;
+use GusApi\Exception\InvalidReportTypeException;
+use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\GusApi;
 use GusApi\ReportTypes;
 use GusApi\SearchReport;
+use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
@@ -108,15 +113,61 @@ class GusApiTest extends TestCase
         $this->assertValidExampleCompany($result[0]);
     }
 
-    public function testGetFullReport()
+    public function testGetFullReportWithInvalidReportType(): void
+    {
+        $this->expectException(InvalidReportTypeException::class);
+        $searchReport = $this->createMock(SearchReport::class);
+        $searchReport->method('getRegon')->willReturn('610188201');
+
+        $this->api->getFullReport($searchReport, 'invalid-report-name');
+    }
+
+    public function testGetFullReportWithRegon14ReportType(): void
     {
         $searchReport = $this->createMock(SearchReport::class);
         $searchReport->method('getRegon14')->willReturn('61018820100000');
-        $response = file_get_contents(__DIR__.'/resources/response/fullSearchResponse.xsd');
+
+        $this->login();
+        $this->api->getFullReport($searchReport, ReportTypes::REPORT_UNIT_TYPE_PUBLIC);
+    }
+
+    public function testGetBulkReport(): void
+    {
+        $this->apiClient
+            ->expects($this->once())
+            ->method('getBulkReport')
+            ->with(
+                new GetBulkReport('2019-01-01', BulkReportTypes::REPORT_NEW_LOCAL_UNITS),
+                $this->sessionId
+            )
+            ->willReturn([
+                '000111234',
+                '111999023'
+            ]);
+
+        $this->login();
+        $actual = $this->api->getBulkReport(
+            new DateTimeImmutable('2019-01-01'),
+            BulkReportTypes::REPORT_NEW_LOCAL_UNITS
+        );
+        $this->assertEquals(['000111234', '111999023'], $actual);
+    }
+
+    public function testGetGetBulkReportWithInvalidReportName(): void
+    {
+        $this->expectException(InvalidReportTypeException::class);
+        $this->api->getBulkReport(new DateTimeImmutable('2019-01-01'), 'invalid-report-name');
+    }
+
+    public function testGetFullReport(): void
+    {
+        $searchReport = $this->createMock(SearchReport::class);
+        $searchReport->method('getRegon')->willReturn('610188201');
+
         $this->apiClient
             ->expects($this->once())
             ->method('getFullReport')
-            ->with(new GetFullReport('61018820100000', 'PublDaneRaportPrawna'), $this->sessionId)
+            ->with(new GetFullReport('610188201', 'BIR11OsPrawna'), $this->sessionId)
             ->willReturn(new GetFullReportResponse([
                 [
                     'fiz_regon9' => '666666666',
@@ -166,6 +217,7 @@ class GusApiTest extends TestCase
 
         $this->login();
         $fullReport = $this->api->getFullReport($searchReport, ReportTypes::REPORT_PUBLIC_LAW);
+
         $this->assertInternalType('array', $fullReport);
     }
 
@@ -175,10 +227,45 @@ class GusApiTest extends TestCase
         $this->api->getByNips(array_fill(0, 21, '7740001454'));
     }
 
-    public function testGetDataStatus()
+    public function testGetResultSearchMessage(): void
     {
-        $this->expectGetValueCall('StanDanych', '2014-12-31');
-        $this->assertInstanceOf(\DateTime::class, $this->api->dataStatus());
+        $this->apiClient
+            ->expects($this->at(0))
+            ->method('getValue')
+            ->with(new GetValue('StatusSesji'), $this->sessionId)
+            ->willReturn(new GetValueResponse('1'));
+
+        $this->apiClient
+            ->expects($this->at(1))
+            ->method('getValue')
+            ->with(new GetValue('KomunikatKod'), $this->sessionId)
+            ->willReturn(new GetValueResponse('1'));
+
+        $this->apiClient
+            ->expects($this->at(2))
+            ->method('getValue')
+            ->with(new GetValue('KomunikatTresc'), $this->sessionId)
+            ->willReturn(new GetValueResponse('Server Test Error'));
+
+
+        $this->api->setSessionId($this->sessionId);
+        $message = $this->api->getResultSearchMessage();
+        $expects = "StatusSesji:1\nKomunikatKod:1\nKomunikatTresc:Server Test Error\n";
+        $this->assertSame($expects, $message);
+    }
+
+    public function testGetDataStatus(): void
+    {
+        $this->expectGetValueCall('StanDanych', '31-12-2014');
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->api->dataStatus());
+    }
+
+    public function testGetDataStatusWithInvalidDateFormat(): void
+    {
+        $this->expectException(InvalidServerResponseException::class);
+
+        $this->expectGetValueCall('StanDanych', 'random-format');
+        $this->api->dataStatus();
     }
 
     public function testGetServiceStatus()

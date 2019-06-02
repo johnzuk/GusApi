@@ -1,0 +1,36 @@
+<root>
+    <dane>
+        <Regon>02092251199990</Regon>
+        <Nip>0099112233</Nip>
+        <StatusNip />
+        <Nazwa>ZAKŁAD MALARSKI TEST</Nazwa>
+        <Wojewodztwo>DOLNOŚLĄSKIE</Wojewodztwo>
+        <Powiat>m. Wrocław</Powiat>
+        <Gmina>Wrocław-Stare Miasto</Gmina>
+        <Miejscowosc>Wrocław</Miejscowosc>
+        <KodPocztowy>50-038</KodPocztowy>
+        <Ulica>ul. Test-Krucza</Ulica>
+        <NrNieruchomosci>208</NrNieruchomosci>
+        <NrLokalu />
+        <Typ>P</Typ>
+        <SilosID>6</SilosID>
+        <DataZakonczeniaDzialalnosci />
+    </dane>
+    <dane>
+        <Regon>02092251199990</Regon>
+        <Nip>0099112233</Nip>
+        <StatusNip />
+        <Nazwa>GOSPODARSTWO ROLNE</Nazwa>
+        <Wojewodztwo>LUBELSKIE</Wojewodztwo>
+        <Powiat>kraśnicki</Powiat>
+        <Gmina>Zakrzówek</Gmina>
+        <Miejscowosc>Sulów</Miejscowosc>
+        <KodPocztowy>23-213</KodPocztowy>
+        <Ulica>ul. Test-Krucza</Ulica>
+        <NrNieruchomosci>12</NrNieruchomosci>
+        <NrLokalu>33</NrLokalu>
+        <Typ>F</Typ>
+        <SilosID>2</SilosID>
+        <DataZakonczeniaDzialalnosci />
+    </dane>
+</root>

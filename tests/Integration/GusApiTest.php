@@ -2,6 +2,7 @@
 
 namespace GusApi\Tests\Integration;
 
+use DateTimeImmutable;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
@@ -10,9 +11,6 @@ use GusApi\SearchReport;
 use GusApi\Tests\ExampleCompanyTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group risky
- */
 class GusApiTest extends TestCase
 {
     use ExampleCompanyTrait;
@@ -31,6 +29,7 @@ class GusApiTest extends TestCase
     public function testGetExampleCompanyByNip()
     {
         $result = self::$apiClient->getByNip('7740001454');
+
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
     }
@@ -64,7 +63,6 @@ class GusApiTest extends TestCase
 
     public function testGetExampleCompanyByRegons()
     {
-        $this->markTestSkipped('API probably does not work.');
         $result = self::$apiClient->getByRegons9(['610188201']);
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
@@ -86,20 +84,22 @@ class GusApiTest extends TestCase
 
     public function testGetStatus()
     {
-        $this->assertInstanceOf(\DateTime::class, self::$apiClient->dataStatus());
+        $this->assertInstanceOf(DateTimeImmutable::class, self::$apiClient->dataStatus());
         $this->assertSame(1, self::$apiClient->serviceStatus());
         $this->assertSame('Usluga dostepna', self::$apiClient->serviceMessage());
     }
 
-    public function testGetFullReport()
+    public function testGetFullReport(): void
     {
         $report = $this->createMock(SearchReport::class);
-        $report->method('getRegon14')->willReturn('61018820100000');
+        $report->method('getRegon')->willReturn('610188201');
         $result = self::$apiClient->getFullReport($report, ReportTypes::REPORT_PUBLIC_LAW);
-        $this->assertInternalType('array', $result);
-        $this->assertInternalType('array', $result[0]);
-        $this->assertEquals('61018820100000', $result[0]['praw_regon14']);
+
+        $this->assertContainsOnly('array', $result);
+        $this->assertEquals('610188201', $result[0]['praw_regon9']);
         $this->assertEquals('1993-07-01', $result[0]['praw_dataPowstania']);
+        $this->assertEquals('', $result[0]['praw_dataOrzeczeniaOUpadlosci']);
+        $this->assertEquals('', $result[0]['praw_dataZakonczeniaPostepowaniaUpadlosciowego']);
     }
 
     public function testInvalidKey()

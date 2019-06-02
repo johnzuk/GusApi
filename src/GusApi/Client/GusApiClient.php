@@ -4,6 +4,7 @@ namespace GusApi\Client;
 
 use GusApi\Context\ContextInterface;
 use GusApi\Exception\NotFoundException;
+use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
@@ -15,6 +16,7 @@ use GusApi\Type\Response\LoginResponse;
 use GusApi\Type\Response\LogoutResponse;
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseRaw;
+use GusApi\Util\BulkReportResponseDecoder;
 use GusApi\Util\DataSearchDecoder;
 use GusApi\Util\FullReportResponseDecoder;
 
@@ -150,11 +152,11 @@ class GusApiClient
         /**
          * @var SearchResponseRaw
          */
-        $result = $this->call('DaneSzukaj', [
+        $result = $this->call('DaneSzukajPodmioty', [
             $searchData,
         ], $sessionId);
 
-        if ('' === $result->getDaneSzukajResult()) {
+        if ('' === $result->getDaneSzukajPodmiotyResult()) {
             throw new NotFoundException('No data found');
         }
 
@@ -174,6 +176,20 @@ class GusApiClient
         ], $sessionId);
 
         return FullReportResponseDecoder::decode($rawResponse);
+    }
+
+    /**
+     * @param GetBulkReport $getBulkReport
+     * @param string $sessionId
+     * @return array
+     */
+    public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array
+    {
+        $rawResponse = $this->call('DanePobierzRaportZbiorczy', [
+            $getBulkReport
+        ], $sessionId);
+
+        return BulkReportResponseDecoder::decode($rawResponse);
     }
 
     /**

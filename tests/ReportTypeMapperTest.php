@@ -17,7 +17,7 @@ class ReportTypeMapperTest extends TestCase
      * @param int    $silo
      * @param string $reportName
      */
-    public function testGetReportType(string $type, int $silo, string $reportName)
+    public function testGetReportType(string $type, int $silo, string $reportName): void
     {
         $report = $this->getSearchReport($type, $silo);
         $typeMapper = new ReportTypeMapper();
@@ -44,14 +44,14 @@ class ReportTypeMapperTest extends TestCase
     public function reportTypeProvider(): array
     {
         return [
-            ['p', 1, 'PublDaneRaportPrawna'],
-            ['p', 2, 'PublDaneRaportPrawna'],
-            ['f', 1, 'PublDaneRaportDzialalnoscFizycznejCeidg'],
-            ['f', 2, 'PublDaneRaportDzialalnoscFizycznejRolnicza'],
-            ['f', 3, 'PublDaneRaportDzialalnoscFizycznejPozostala'],
-            ['f', 4, 'PublDaneRaportDzialalnoscFizycznejWKrupgn'],
-            ['lp', 1, 'PublDaneRaportLokalnaPrawnej'],
-            ['lf', 1, 'PublDaneRaportLokalnaFizycznej'],
+            ['p', 1, 'BIR11OsPrawna'],
+            ['p', 2, 'BIR11OsPrawna'],
+            ['f', 1, 'BIR11OsFizycznaDzialalnoscCeidg'],
+            ['f', 2, 'BIR11OsFizycznaDzialalnoscRolnicza'],
+            ['f', 3, 'BIR11OsFizycznaDzialalnoscPozostala'],
+            ['f', 4, 'BIR11OsFizycznaDzialalnoscSkreslonaDo20141108'],
+            ['lp', 1, 'BIR11JednLokalnaOsPrawnej'],
+            ['lf', 1, 'BIR11OsFizycznaListaJednLokalnych'],
         ];
     }
 
