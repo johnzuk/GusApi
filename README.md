@@ -40,7 +40,11 @@ New in 5.x (this version support BRI1.1)
 
     **Till version 5.x you dont need to get full report to find property number and apartment number**
 
-* New supported report types (based on BRI1.1 documentation):
+* Method getFullReport throws `InvalidReportTypeException` for invalid report name
+* Method dataStatus now return `DateTimeImmutable` instead of `DateTime` and throws `InvalidServerResponseException`
+* New method getBulkReport - new search type in BRI1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
+  with `BulkReportTypes`
+* New supported report types for `getBulkReport` method (based on BRI1.1 documentation):
     ```php
         public const REPORT_NEW_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych';
         public const REPORT_UPDATED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych';
@@ -48,11 +52,8 @@ New in 5.x (this version support BRI1.1)
         public const REPORT_NEW_LOCAL_UNITS = 'BIR11NoweJednostkiLokalne';
         public const REPORT_UPDATED_LOCAL_UNITS = 'BIR11AktualizowaneJednostkiLokalne';
         public const REPORT_DELETED_LOCAL_UNITS = 'BIR11SkresloneJednostkiLokalne';
-    ```
-* Method getFullReport throws `InvalidReportTypeException` for invalid report name
-* Method dataStatus now return `DateTimeImmutable` instead of `DateTime` and throws `InvalidServerResponseException`
-* New method getBulkReport - new search type in BRI1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
-  with `BulkReportTypes`
+    ```  
+  
 * Remove  `ReportTypeMapper`
  
 Upgrade from 4.x to 5.x
