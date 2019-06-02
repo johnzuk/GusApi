@@ -20,16 +20,16 @@ composer require gusapi/gusapi
 
 Supported Versions
 ==================
-|Version|PHP version | BRI service version | Support                           | Doc  |
+|Version|PHP version | BIR service version | Support                           | Doc  |
 |-------|------------|--------|----------------------------------|------|
-|5.x    | >= 7.1     | BRI1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
-|4.x    | >= 7.1     | BRI1  | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/tree/4.0.2/README.md)|
-|3.3.x  | >= 5.6     | BRI1  | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
-|3.2.x  | >= 5.4     | BRI1  | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
+|5.x    | >= 7.1     | BIR1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
+|4.x    | >= 7.1     | BIR1  | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/tree/4.0.2/README.md)|
+|3.3.x  | >= 5.6     | BIR1  | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
+|3.2.x  | >= 5.4     | BIR1  | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
 
 If you still use PHP <= 7.0 see documentation for 3.3.x version [HERE](https://github.com/johnzuk/GusApi/blob/3.3/README.md)
 -------------------
-New in 5.x (this version support BRI1.1)
+New in 5.x (this version support BIR1.1)
 ========================================
 * New properties in `SearchReport`:
   * nip
@@ -42,9 +42,9 @@ New in 5.x (this version support BRI1.1)
 
 * Method getFullReport throws `InvalidReportTypeException` for invalid report name
 * Method dataStatus now return `DateTimeImmutable` instead of `DateTime` and throws `InvalidServerResponseException`
-* New method getBulkReport - new search type in BRI1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
+* New method getBulkReport - new search type in BIR1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
   with `BulkReportTypes`
-* New supported report types for `getBulkReport` method (based on BRI1.1 documentation):
+* New supported report types for `getBulkReport` method (based on BIR1.1 documentation):
     ```php
         public const REPORT_NEW_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych';
         public const REPORT_UPDATED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych';
