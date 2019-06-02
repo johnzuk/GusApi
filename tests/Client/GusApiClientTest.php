@@ -157,7 +157,7 @@ class GusApiClientTest extends TestCase
 
         $expected = new SearchDataResponse([
             $firstCompanyData,
-            $secondCompanyData
+            $secondCompanyData,
         ]);
 
         $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));

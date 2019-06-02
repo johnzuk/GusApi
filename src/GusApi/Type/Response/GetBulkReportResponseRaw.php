@@ -10,8 +10,6 @@ class GetBulkReportResponseRaw
     public $DanePobierzRaportZbiorczyResult;
 
     /**
-     * GetBulkReportResponseRaw constructor.
-     * 
      * @param string $DanePobierzRaportZbiorczyResult
      */
     public function __construct(string $DanePobierzRaportZbiorczyResult)

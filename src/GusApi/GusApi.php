@@ -293,6 +293,7 @@ class GusApi
     /**
      * @param SearchReport $searchReport
      * @param string       $reportName
+     *
      * @throws InvalidReportTypeException
      *
      * @return array[]

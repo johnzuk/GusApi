@@ -181,6 +181,7 @@ class GusApiClient
     /**
      * @param GetBulkReport $getBulkReport
      * @param string        $sessionId
+     *
      * @return array
      */
     public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array

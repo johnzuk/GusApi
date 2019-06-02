@@ -247,7 +247,6 @@ class GusApiTest extends TestCase
             ->with(new GetValue('KomunikatTresc'), $this->sessionId)
             ->willReturn(new GetValueResponse('Server Test Error'));
 
-
         $this->api->setSessionId($this->sessionId);
         $message = $this->api->getResultSearchMessage();
         $expects = "StatusSesji:1\nKomunikatKod:1\nKomunikatTresc:Server Test Error\n";
