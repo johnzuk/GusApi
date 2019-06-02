@@ -24,16 +24,4 @@ class GetValue
     {
         return $this->pNazwaParametru;
     }
-
-    /**
-     * @param string $pNazwaParametru
-     *
-     * @return GetValue
-     */
-    public function setPNazwaParametru(string $pNazwaParametru)
-    {
-        $this->pNazwaParametru = $pNazwaParametru;
-
-        return $this;
-    }
 }

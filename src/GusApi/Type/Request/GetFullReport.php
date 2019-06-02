@@ -33,34 +33,10 @@ class GetFullReport
     }
 
     /**
-     * @param string $pRegon
-     *
-     * @return GetFullReport
-     */
-    public function setPRegon(string $pRegon)
-    {
-        $this->pRegon = $pRegon;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getPNazwaRaportu(): string
     {
         return $this->pNazwaRaportu;
-    }
-
-    /**
-     * @param string $pNazwaRaportu
-     *
-     * @return GetFullReport
-     */
-    public function setPNazwaRaportu(string $pNazwaRaportu)
-    {
-        $this->pNazwaRaportu = $pNazwaRaportu;
-
-        return $this;
     }
 }
