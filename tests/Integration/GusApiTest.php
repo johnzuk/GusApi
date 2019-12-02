@@ -20,7 +20,7 @@ class GusApiTest extends TestCase
      */
     protected static $apiClient;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$apiClient = new GusApi('abcde12345abcde12345', 'dev');
         self::$apiClient->login();

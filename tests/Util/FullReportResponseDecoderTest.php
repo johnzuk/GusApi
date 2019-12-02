@@ -2,6 +2,7 @@
 
 namespace GusApi\Tests\Util;
 
+use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
 use GusApi\Util\FullReportResponseDecoder;
@@ -72,12 +73,10 @@ class FullReportResponseDecoderTest extends TestCase
         ], $reportDecoded->getReport());
     }
 
-    /**
-     * @expectedException \GusApi\Exception\InvalidServerResponseException
-     */
     public function testInvalidServerResponse()
     {
         $rawReport = new GetFullReportResponseRaw('Invalid XML structure');
+        $this->expectException(InvalidServerResponseException::class);
         FullReportResponseDecoder::decode($rawReport);
     }
 }

@@ -3,6 +3,7 @@
 namespace GusApi\Tests\Client;
 
 use GusApi\Client\SoapActionMapper;
+use GusApi\Exception\InvalidActionNameException;
 use PHPUnit\Framework\TestCase;
 
 final class SoapActionMapperTest extends TestCase
@@ -19,11 +20,9 @@ final class SoapActionMapperTest extends TestCase
         $this->assertSame($expected, $action);
     }
 
-    /**
-     * @expectedException \GusApi\Exception\InvalidActionNameException
-     */
     public function testGetActionWithInvalidName()
     {
+        $this->expectException(InvalidActionNameException::class);
         SoapActionMapper::getAction('BadFunctionName');
     }
 

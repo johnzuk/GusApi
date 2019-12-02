@@ -4,6 +4,7 @@ namespace GusApi\Tests\Client;
 
 use GusApi\Client\GusApiClient;
 use GusApi\Context\Context;
+use GusApi\Exception\NotFoundException;
 use GusApi\ParamName;
 use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
@@ -36,7 +37,7 @@ class GusApiClientTest extends TestCase
      */
     protected $soap;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->soap = $this->getMockFromWsdl(__DIR__.'/../UslugaBIRzewnPubl.xsd');
 
@@ -163,14 +164,12 @@ class GusApiClientTest extends TestCase
         $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
-    /**
-     * @expectedException  \GusApi\Exception\NotFoundException
-     */
     public function testSearchDataNotFound(): void
     {
         $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
         $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw(''));
 
+        $this->expectException(NotFoundException::class);
         $this->gusApiClient->searchData($searchData, '1234567890');
     }
 

@@ -6,6 +6,7 @@ use GusApi\Client\Builder;
 use GusApi\Client\GusApiClient;
 use GusApi\Client\SoapClient;
 use GusApi\Context\Context;
+use GusApi\Exception\InvalidEnvironmentNameException;
 use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
@@ -21,17 +22,15 @@ class BuilderTest extends TestCase
 
         $this->assertInstanceOf(GusApiClient::class, $client);
         $this->assertSame($location, $client->getLocation());
-        $this->assertAttributeSame(2, '_soap_version', $soapClient);
-        $this->assertAttributeInternalType('resource', '_stream_context', $soapClient);
-        $this->assertAttributeSame($client->getStreamContext()->getContext(), '_stream_context', $soapClient);
+        $this->assertSame(2, $soapClient->_soap_version);
+        $this->assertIsResource($soapClient->_stream_context);
+        $this->assertSame($client->getStreamContext()->getContext(), $soapClient->_stream_context);
     }
 
-    /**
-     * @expectedException \GusApi\Exception\InvalidEnvironmentNameException
-     */
     public function testBuildWithInvalidEnvironmentName()
     {
         $builder = new Builder('random');
+        $this->expectException(InvalidEnvironmentNameException::class);
         $builder->build();
     }
 

@@ -9,11 +9,7 @@ use SimpleXMLElement;
 class BulkReportResponseDecoder
 {
     /**
-     * @param GetBulkReportResponseRaw $bulkReportResponseRaw
-     *
      * @throws InvalidServerResponseException
-     *
-     * @return array
      */
     public static function decode(GetBulkReportResponseRaw $bulkReportResponseRaw): array
     {
