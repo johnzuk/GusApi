@@ -20,6 +20,6 @@ class EnvironmentFactory
             return new DevEnvironment();
         }
 
-        throw new InvalidEnvironmentNameException(sprintf('Invalid environment %s', $environment));
+        throw new InvalidEnvironmentNameException(\sprintf('Invalid environment %s', $environment));
     }
 }

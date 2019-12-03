@@ -11,7 +11,7 @@ class BulkReportResponseDecoderTest extends TestCase
 {
     public function testDecode(): void
     {
-        $content = file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
+        $content = \file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
         $rawResponse = new GetBulkReportResponseRaw($content);
         $decodedResponse = BulkReportResponseDecoder::decode($rawResponse);
 

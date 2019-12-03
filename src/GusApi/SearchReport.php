@@ -273,7 +273,7 @@ class SearchReport implements JsonSerializable
      */
     private function makeRegon14(string $regon): string
     {
-        return str_pad($regon, 14, '0');
+        return \str_pad($regon, 14, '0');
     }
 
     /**
@@ -283,7 +283,7 @@ class SearchReport implements JsonSerializable
      */
     private function makeType($type): string
     {
-        return trim(strtolower($type));
+        return \trim(\strtolower($type));
     }
 
     /**
@@ -291,6 +291,6 @@ class SearchReport implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return get_object_vars($this);
+        return \get_object_vars($this);
     }
 }

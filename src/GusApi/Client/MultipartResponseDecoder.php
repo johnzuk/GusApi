@@ -11,6 +11,6 @@ class MultipartResponseDecoder
      */
     public static function decode(string $response): string
     {
-        return stristr(stristr($response, '<s:'), '</s:Envelope>', true).'</s:Envelope>';
+        return \stristr((string) \stristr($response, '<s:'), '</s:Envelope>', true).'</s:Envelope>';
     }
 }

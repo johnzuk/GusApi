@@ -27,7 +27,7 @@ class ContextTest extends TestCase
 
         $this->context->setOptions($options);
         $this->assertSame($options, $this->context->getOptions());
-        $this->assertSame($options, stream_context_get_options($this->context->getContext()));
+        $this->assertSame($options, \stream_context_get_options($this->context->getContext()));
     }
 
     public function testSetParameters()
@@ -41,6 +41,6 @@ class ContextTest extends TestCase
 
         $this->context->setParameters($params);
         $this->assertSame($params, $this->context->getParameters());
-        $this->assertSame($params, stream_context_get_params($this->context->getContext()));
+        $this->assertSame($params, \stream_context_get_params($this->context->getContext()));
     }
 }

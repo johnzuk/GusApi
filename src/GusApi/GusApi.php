@@ -114,7 +114,7 @@ class GusApi
         $result = $this->apiClient->login(new Login($this->userKey));
 
         if (empty($result->getZalogujResult())) {
-            throw new InvalidUserKeyException(sprintf("User key '%s' is invalid", $this->userKey));
+            throw new InvalidUserKeyException(\sprintf("User key '%s' is invalid", $this->userKey));
         }
 
         $this->sessionId = $result->getZalogujResult();
@@ -160,7 +160,7 @@ class GusApi
 
         if (false === $dataStatus) {
             throw new InvalidServerResponseException(
-                sprintf(
+                \sprintf(
                     'Invalid response, expected date in format "%s" given %s',
                     self::SERVICE_STATUS_DATE_FORMAT,
                     $result->getGetValueResult()
@@ -245,7 +245,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($nips);
 
-        return $this->search(SearchType::NIPS, implode(',', $nips));
+        return $this->search(SearchType::NIPS, \implode(',', $nips));
     }
 
     /**
@@ -259,7 +259,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($krses);
 
-        return $this->search(SearchType::KRSES, implode(',', $krses));
+        return $this->search(SearchType::KRSES, \implode(',', $krses));
     }
 
     /**
@@ -273,7 +273,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_9, implode(',', $regons));
+        return $this->search(SearchType::REGONS_9, \implode(',', $regons));
     }
 
     /**
@@ -287,7 +287,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_14, implode(',', $regons));
+        return $this->search(SearchType::REGONS_14, \implode(',', $regons));
     }
 
     /**
@@ -321,12 +321,12 @@ class GusApi
      */
     public function getBulkReport(DateTimeImmutable $date, string $reportName): array
     {
-        if (!in_array($reportName, BulkReportTypes::REPORTS, true)) {
+        if (!\in_array($reportName, BulkReportTypes::REPORTS, true)) {
             throw new InvalidReportTypeException(
-                sprintf(
+                \sprintf(
                     'Invalid report type: "%s", use one of allowed type: (%s)',
                     $reportName,
-                    implode(', ', BulkReportTypes::REPORTS)
+                    \implode(', ', BulkReportTypes::REPORTS)
                 )
             );
         }
@@ -344,7 +344,7 @@ class GusApi
      */
     public function getResultSearchMessage(): string
     {
-        return sprintf(
+        return \sprintf(
             "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
             $this->getSessionStatus(),
             $this->getMessageCode(),
@@ -399,8 +399,8 @@ class GusApi
      */
     protected function checkIdentifiersCount(array $identifiers)
     {
-        if (count($identifiers) > self::MAX_IDENTIFIERS) {
-            throw new \InvalidArgumentException(sprintf(
+        if (\count($identifiers) > self::MAX_IDENTIFIERS) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Too many identifiers. Maximum allowed is %d.',
                 self::MAX_IDENTIFIERS
             ));
@@ -423,7 +423,7 @@ class GusApi
 
         $result = $this->apiClient->searchData(new SearchData($searchParameters), $this->sessionId);
 
-        return array_map(function (SearchResponseCompanyData $company) {
+        return \array_map(function (SearchResponseCompanyData $company) {
             return new SearchReport($company);
         }, $result->getDaneSzukajResult());
     }
