@@ -14,5 +14,6 @@ return PhpCsFixer\Config::create()
         'phpdoc_order' => true,
         'phpdoc_align' => true,
         'ordered_imports' => true,
+        'native_function_invocation' => true,
     ])
     ->setFinder($finder);

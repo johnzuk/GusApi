@@ -12,17 +12,11 @@ use SimpleXMLElement;
 class DataSearchDecoder
 {
     /**
-     * @param SearchResponseRaw $searchResponseRaw
-     *
      * @throws InvalidServerResponseException
      * @throws NotFoundException
-     *
-     * @return SearchDataResponse
      */
     public static function decode(SearchResponseRaw $searchResponseRaw): SearchDataResponse
     {
-        $elements = [];
-
         if ('' === $searchResponseRaw->getDaneSzukajPodmiotyResult()) {
             return new SearchDataResponse();
         }
@@ -33,17 +27,30 @@ class DataSearchDecoder
             throw new InvalidServerResponseException('Invalid server response');
         }
 
+        $elements = [];
+
         foreach ($xmlElementsResponse->dane as $resultData) {
-            $element = new SearchResponseCompanyData();
-            foreach ($resultData as $key => $item) {
-                if ($key === 'ErrorCode' && (int) $item === 4) {
-                    throw new NotFoundException('No data found');
-                }
-                $element->$key = (string) $item;
-            }
-            $elements[] = $element;
+            $elements[] = static::decodeSingleResult($resultData);
         }
 
         return new SearchDataResponse($elements);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    protected static function decodeSingleResult(SimpleXMLElement $element): SearchResponseCompanyData
+    {
+        $result = new SearchResponseCompanyData();
+
+        foreach ($element as $key => $item) {
+            if ('ErrorCode' === $key && 4 === (int) $item) {
+                throw new NotFoundException('No data found');
+            }
+
+            $result->$key = (string) $item;
+        }
+
+        return $result;
     }
 }

@@ -44,6 +44,6 @@ class SearchReportTest extends TestCase
             'propertyNumber' => '33',
             'apartmentNumber' => '34B',
             'activityEndDate' => '2029-02-22',
-        ], json_decode(json_encode(new SearchReport($companyData)), true));
+        ], \json_decode(\json_encode(new SearchReport($companyData)), true));
     }
 }

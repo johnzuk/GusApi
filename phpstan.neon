@@ -1,6 +1,2 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
-    ignoreErrors:
-        - '#stream_context_set_option invoked with 2 parameters, 4#'
-        - '#GusApi\\Client\\SoapClient does not have a constructor#'
-        - '#Parameter \#1 $haystack of function stristr expects string, string|false given.#'

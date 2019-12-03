@@ -10,11 +10,7 @@ use SimpleXMLElement;
 class FullReportResponseDecoder
 {
     /**
-     * @param GetFullReportResponseRaw $fullReportResponseRaw
-     *
      * @throws InvalidServerResponseException
-     *
-     * @return GetFullReportResponse
      */
     public static function decode(GetFullReportResponseRaw $fullReportResponseRaw): GetFullReportResponse
     {

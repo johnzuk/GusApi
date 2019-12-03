@@ -43,7 +43,7 @@ trait ExampleCompanyTrait
         $responseData->method('getNrNieruchomosci')->willReturn('7');
         $responseData->method('getNrLokalu')->willReturn('');
         $responseData->method('getTyp')->willReturn('p');
-        $responseData->method('getSilosID')->willReturn('6');
+        $responseData->method('getSilosID')->willReturn(6);
         $responseData->method('getDataZakonczeniaDzialalnosci')->willReturn('');
 
         return $responseData;

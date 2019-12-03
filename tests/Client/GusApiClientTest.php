@@ -4,6 +4,7 @@ namespace GusApi\Tests\Client;
 
 use GusApi\Client\GusApiClient;
 use GusApi\Context\Context;
+use GusApi\Exception\NotFoundException;
 use GusApi\ParamName;
 use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
@@ -36,7 +37,7 @@ class GusApiClientTest extends TestCase
      */
     protected $soap;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->soap = $this->getMockFromWsdl(__DIR__.'/../UslugaBIRzewnPubl.xsd');
 
@@ -87,7 +88,7 @@ class GusApiClientTest extends TestCase
 
     public function testSearchDataWithSingleResponse(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
+        $searchRawResponse = \file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
         $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
         $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
 
@@ -117,7 +118,7 @@ class GusApiClientTest extends TestCase
 
     public function testSearchDataWithMultipleResponse(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/searchDataReponseResultMulti.xsd');
+        $searchRawResponse = \file_get_contents(__DIR__.'/../resources/response/searchDataReponseResultMulti.xsd');
         $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
         $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
 
@@ -163,20 +164,18 @@ class GusApiClientTest extends TestCase
         $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
-    /**
-     * @expectedException  \GusApi\Exception\NotFoundException
-     */
     public function testSearchDataNotFound(): void
     {
         $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
         $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw(''));
 
+        $this->expectException(NotFoundException::class);
         $this->gusApiClient->searchData($searchData, '1234567890');
     }
 
     public function testGetBulkReport(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
+        $searchRawResponse = \file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
         $searchData = new GetBulkReport('2019-01-01', 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych');
 
         $this->expectSoapCall(
@@ -195,7 +194,7 @@ class GusApiClientTest extends TestCase
 
     public function testGetFullReport(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/fullSearchResponse.xsd');
+        $searchRawResponse = \file_get_contents(__DIR__.'/../resources/response/fullSearchResponse.xsd');
         $searchData = new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki');
         $this->expectSoapCall(
             'DanePobierzPelnyRaport',
@@ -255,7 +254,7 @@ class GusApiClientTest extends TestCase
 
     public function testGetFullReportMultiple()
     {
-        $searchRawResponse = file_get_contents(__DIR__.'/../resources/response/fullSearchMultipleResponse.xsd');
+        $searchRawResponse = \file_get_contents(__DIR__.'/../resources/response/fullSearchMultipleResponse.xsd');
         $searchData = new GetFullReport('00112233445566', 'PublDaneRaportDzialalnosciPrawnej');
         $this->expectSoapCall(
             'DanePobierzPelnyRaport',
@@ -296,7 +295,7 @@ class GusApiClientTest extends TestCase
     protected function expectSoapCall(string $action, array $arguments, $result, bool $public = true)
     {
         $baseUrl = $public ? 'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl' : 'http://CIS/BIR/2014/07/IUslugaBIR';
-        $headers = $this->getHeaders(sprintf('%s/%s', $baseUrl, $action), 'Location');
+        $headers = $this->getHeaders(\sprintf('%s/%s', $baseUrl, $action), 'Location');
         $this->soap
             ->expects($this->once())
             ->method('__soapCall')

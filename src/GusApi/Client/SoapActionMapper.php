@@ -28,7 +28,7 @@ class SoapActionMapper
     public static function getAction(string $functionName): string
     {
         if (!isset(self::ACTIONS[$functionName])) {
-            throw new InvalidActionNameException(sprintf('Invalid action %s', $functionName));
+            throw new InvalidActionNameException(\sprintf('Invalid action %s', $functionName));
         }
 
         return self::ACTIONS[$functionName].$functionName;

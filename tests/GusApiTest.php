@@ -43,7 +43,7 @@ class GusApiTest extends TestCase
      */
     protected $api;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->apiClient = $this->createMock(GusApiClient::class);
         $this->api = GusApi::createWithApiClient($this->userKey, $this->apiClient);
@@ -218,13 +218,13 @@ class GusApiTest extends TestCase
         $this->login();
         $fullReport = $this->api->getFullReport($searchReport, ReportTypes::REPORT_PUBLIC_LAW);
 
-        $this->assertInternalType('array', $fullReport);
+        $this->assertIsArray($fullReport);
     }
 
     public function testTooManyNipsRaisesAnException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->api->getByNips(array_fill(0, 21, '7740001454'));
+        $this->api->getByNips(\array_fill(0, 21, '7740001454'));
     }
 
     public function testGetResultSearchMessage(): void
@@ -314,15 +314,12 @@ class GusApiTest extends TestCase
     }
 
     /**
-     * @param string $parameter
-     * @param mixed  $value
-     *
-     * @return SearchParameters
+     * @param mixed $value
      */
     protected function getSearchParameters(string $parameter, $value): SearchParameters
     {
-        $setter = 'set'.ucfirst($parameter);
-        $value = is_array($value) ? implode(',', $value) : $value;
+        $setter = 'set'.\ucfirst($parameter);
+        $value = \is_array($value) ? \implode(',', $value) : $value;
 
         return (new SearchParameters())->$setter($value);
     }
