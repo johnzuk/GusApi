@@ -96,6 +96,11 @@ class SearchReport implements JsonSerializable
     private $activityEndDate;
 
     /**
+     * @var string
+     */
+    private $postCity;
+
+    /**
      * SearchReport constructor.
      *
      * @param SearchResponseCompanyData $data
@@ -118,6 +123,7 @@ class SearchReport implements JsonSerializable
         $this->regon14 = $this->makeRegon14($this->getRegon());
         $this->silo = $data->getSilosID();
         $this->activityEndDate = $data->getDataZakonczeniaDzialalnosci();
+        $this->postCity = $data->getMiejscowoscPoczty();
     }
 
     /**
@@ -264,6 +270,14 @@ class SearchReport implements JsonSerializable
     public function getActivityEndDate(): string
     {
         return $this->activityEndDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostCity(): string
+    {
+        return $this->postCity;
     }
 
     /**

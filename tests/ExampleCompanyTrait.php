@@ -7,7 +7,7 @@ use GusApi\Type\Response\SearchResponseCompanyData;
 
 trait ExampleCompanyTrait
 {
-    protected function assertValidExampleCompany(SearchReport $report)
+    protected function assertValidExampleCompany(SearchReport $report, bool $checkPostCity = true)
     {
         $this->assertSame('610188201', $report->getRegon());
         $this->assertSame('61018820100000', $report->getRegon14());
@@ -25,6 +25,9 @@ trait ExampleCompanyTrait
         $this->assertSame(SearchReport::TYPE_JURIDICAL_PERSON, $report->getType());
         $this->assertSame(6, $report->getSilo());
         $this->assertSame('', $report->getActivityEndDate());
+        if ($checkPostCity) {
+            $this->assertSame('Płock', $report->getPostCity());
+        }
     }
 
     protected function getExampleResponseData(): SearchResponseCompanyData
@@ -45,6 +48,7 @@ trait ExampleCompanyTrait
         $responseData->method('getTyp')->willReturn('p');
         $responseData->method('getSilosID')->willReturn(6);
         $responseData->method('getDataZakonczeniaDzialalnosci')->willReturn('');
+        $responseData->method('getMiejscowoscPoczty')->willReturn('Płock');
 
         return $responseData;
     }
