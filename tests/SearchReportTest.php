@@ -26,6 +26,7 @@ class SearchReportTest extends TestCase
         $companyData->Typ = 'P';
         $companyData->SilosID = '6';
         $companyData->DataZakonczeniaDzialalnosci = '2029-02-22';
+        $companyData->MiejscowoscPoczty = 'Płock';
 
         $this->assertEquals([
             'regon' => '02092251199990',
@@ -38,12 +39,13 @@ class SearchReportTest extends TestCase
             'zipCode' => '50-038',
             'street' => 'ul. Test-Krucza',
             'type' => 'p',
-            'silo' => '6',
+            'silo' => 6,
             'nip' => '9988660000',
             'nipStatus' => 'U',
             'propertyNumber' => '33',
             'apartmentNumber' => '34B',
             'activityEndDate' => '2029-02-22',
+            'postCity' => 'Płock',
         ], \json_decode(\json_encode(new SearchReport($companyData)), true));
     }
 }

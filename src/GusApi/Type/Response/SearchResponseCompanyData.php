@@ -79,6 +79,11 @@ class SearchResponseCompanyData
     public $DataZakonczeniaDzialalnosci = '';
 
     /**
+     * @var string
+     */
+    public $MiejscowoscPoczty = '';
+
+    /**
      * @return string
      */
     public function getRegon(): string
@@ -196,5 +201,13 @@ class SearchResponseCompanyData
     public function getDataZakonczeniaDzialalnosci(): string
     {
         return $this->DataZakonczeniaDzialalnosci;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMiejscowoscPoczty(): string
+    {
+        return $this->MiejscowoscPoczty;
     }
 }

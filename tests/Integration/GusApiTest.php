@@ -38,7 +38,7 @@ class GusApiTest extends TestCase
     {
         $result = self::$apiClient->getByNips(['7740001454']);
         $this->assertCount(1, $result);
-        $this->assertValidExampleCompany($result[0]);
+        $this->assertValidExampleCompany($result[0], false);
     }
 
     public function testGetByInvalidNipAndGetMessage()
@@ -65,21 +65,21 @@ class GusApiTest extends TestCase
     {
         $result = self::$apiClient->getByRegons9(['610188201']);
         $this->assertCount(1, $result);
-        $this->assertValidExampleCompany($result[0]);
+        $this->assertValidExampleCompany($result[0], false);
     }
 
     public function testGetExampleCompanyByKrs()
     {
         $result = self::$apiClient->getByKrs('0000028860');
         $this->assertCount(1, $result);
-        $this->assertValidExampleCompany($result[0]);
+        $this->assertValidExampleCompany($result[0], false);
     }
 
     public function testGetExampleCompanyByKrses()
     {
         $result = self::$apiClient->getByKrses(['0000028860']);
         $this->assertCount(1, $result);
-        $this->assertValidExampleCompany($result[0]);
+        $this->assertValidExampleCompany($result[0], false);
     }
 
     public function testGetStatus()
