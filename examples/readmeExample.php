@@ -21,7 +21,8 @@ try {
     var_dump($gus->dataStatus());
     var_dump($gus->getBulkReport(
         new DateTimeImmutable('2019-05-31'),
-        BulkReportTypes::REPORT_DELETED_LOCAL_UNITS));
+        BulkReportTypes::REPORT_DELETED_LOCAL_UNITS
+    ));
 
     foreach ($gusReports as $gusReport) {
         //you can change report type to other one
