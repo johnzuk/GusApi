@@ -1,2 +1,7 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false
+    excludes_analyse:
+    	- src/GusApi/Client/SoapClient.php
+    ignoreErrors:
+        - '#Method GusApi\\Client\\GusApiClient::call\(\) has no return typehint specified#'

@@ -203,7 +203,7 @@ class GusApiClient
         ]);
     }
 
-    protected function call(string $functionName, $arguments, ?string $sid = null)
+    protected function call(string $functionName, array $arguments, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
         $soapHeaders = $this->getRequestHeaders($action, $this->location);
