@@ -46,11 +46,11 @@ class GusApiTest extends TestCase
         $this->expectException(NotFoundException::class);
 
         try {
-            self::$apiClient->getByNip('0123456789');
+            self::$apiClient->getByNip('0123456700');
         } finally {
             $this->assertSame(1, self::$apiClient->getSessionStatus());
-            $this->assertSame('Nie znaleziono podmiotów.', self::$apiClient->getMessage());
-            $this->assertSame(4, self::$apiClient->getMessageCode());
+            $this->assertSame('', self::$apiClient->getMessage());
+            $this->assertSame(0, self::$apiClient->getMessageCode());
         }
     }
 

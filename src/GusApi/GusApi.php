@@ -397,7 +397,7 @@ class GusApi
      *
      * @throws \InvalidArgumentException
      */
-    protected function checkIdentifiersCount(array $identifiers)
+    protected function checkIdentifiersCount(array $identifiers): void
     {
         if (\count($identifiers) > self::MAX_IDENTIFIERS) {
             throw new \InvalidArgumentException(\sprintf(
