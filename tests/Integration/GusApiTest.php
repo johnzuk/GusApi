@@ -49,8 +49,8 @@ class GusApiTest extends TestCase
             self::$apiClient->getByNip('0123456700');
         } finally {
             $this->assertSame(1, self::$apiClient->getSessionStatus());
-            $this->assertSame('', self::$apiClient->getMessage());
-            $this->assertSame(0, self::$apiClient->getMessageCode());
+            $this->assertSame('Nie znaleziono podmiotów.', self::$apiClient->getMessage());
+            $this->assertSame(4, self::$apiClient->getMessageCode());
         }
     }
 
