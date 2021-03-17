@@ -9,9 +9,9 @@ final class ReportTypes
     public const REPORT_ACTIVITY_PHYSIC_AGRO = 'BIR11OsFizycznaDzialalnoscRolnicza';
     public const REPORT_ACTIVITY_PHYSIC_OTHER_PUBLIC = 'BIR11OsFizycznaDzialalnoscPozostala';
     public const REPORT_ACTIVITY_LOCAL_PHYSIC_WKR_PUBLIC = 'BIR11OsFizycznaDzialalnoscSkreslonaDo20141108';
-    public const REPORT_LOCALS_PHYSIC_PUBLIC = 'BIR11OsFizycznaPkd';
-    public const REPORT_LOCAL_PHYSIC_PUBLIC = 'BIR11OsFizycznaListaJednLokalnych';
-    public const REPORT_ACTIVITY_PHYSIC_PUBLIC = 'BIR11JednLokalnaOsFizycznej';
+    public const REPORT_LOCALS_PHYSIC_PUBLIC = 'BIR11OsFizycznaListaJednLokalnych';
+    public const REPORT_LOCAL_PHYSIC_PUBLIC = 'BIR11JednLokalnaOsFizycznej';
+    public const REPORT_ACTIVITY_PHYSIC_PUBLIC = 'BIR11OsFizycznaPkd';
     public const REPORT_ACTIVITY_LOCAL_PHYSIC_PUBLIC = 'BIR11JednLokalnaOsFizycznejPkd';
     public const REPORT_PUBLIC_LAW = 'BIR11OsPrawna';
     public const REPORT_ACTIVITY_LAW_PUBLIC = 'BIR11OsPrawnaPkd';
