@@ -93,7 +93,7 @@ class GusApiTest extends TestCase
     {
         $report = $this->createMock(SearchReport::class);
         $report->method('getRegon')->willReturn('610188201');
-        $result = self::$apiClient->getFullReport($report, ReportTypes::REPORT_PUBLIC_LAW);
+        $result = self::$apiClient->getFullReport($report, ReportTypes::REPORT_ORGANIZATION);
 
         $this->assertContainsOnly('array', $result);
         $this->assertEquals('610188201', $result[0]['praw_regon9']);

@@ -92,7 +92,7 @@ try {
 
     foreach ($gusReports as $gusReport) {
         //you can change report type to other one
-        $reportType = ReportTypes::REPORT_ACTIVITY_PHYSIC_PERSON;
+        $reportType = ReportTypes::REPORT_PERSON;
         echo $gusReport->getName();
         echo 'Address: '. $gusReport->getStreet(). ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
         
