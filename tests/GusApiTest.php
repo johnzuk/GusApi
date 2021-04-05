@@ -216,7 +216,7 @@ class GusApiTest extends TestCase
         ;
 
         $this->login();
-        $fullReport = $this->api->getFullReport($searchReport, ReportTypes::REPORT_PUBLIC_LAW);
+        $fullReport = $this->api->getFullReport($searchReport, ReportTypes::REPORT_ORGANIZATION);
 
         $this->assertIsArray($fullReport);
     }
