@@ -80,6 +80,7 @@ final class ReportTypes
         self::REPORT_PERSON_OTHER,
         self::REPORT_PERSON_DELETED_BEFORE_20141108,
         self::REPORT_PERSON_LOCALS,
+        self::REPORT_PERSON_ACTIVITY,
         self::REPORT_PERSON_LOCAL,
         self::REPORT_ORGANIZATION,
         self::REPORT_ORGANIZATION_ACTIVITY,
