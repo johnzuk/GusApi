@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi;
 
 use GusApi\Type\Response\SearchResponseCompanyData;
@@ -7,13 +9,13 @@ use JsonSerializable;
 
 class SearchReport implements JsonSerializable
 {
-    const TYPE_JURIDICAL_PERSON = 'p';
+    public const TYPE_JURIDICAL_PERSON = 'p';
 
-    const TYPE_NATURAL_PERSON = 'f';
+    public const TYPE_NATURAL_PERSON = 'f';
 
-    const TYPE_LOCAL_ENTITY_JURIDICAL_PERSON = 'lp';
+    public const TYPE_LOCAL_ENTITY_JURIDICAL_PERSON = 'lp';
 
-    const TYPE_LOCAL_ENTITY_NATURAL_PERSON = 'lf';
+    public const TYPE_LOCAL_ENTITY_NATURAL_PERSON = 'lf';
 
     /**
      * @var string
@@ -102,8 +104,6 @@ class SearchReport implements JsonSerializable
 
     /**
      * SearchReport constructor.
-     *
-     * @param SearchResponseCompanyData $data
      */
     public function __construct(SearchResponseCompanyData $data)
     {
@@ -216,95 +216,61 @@ class SearchReport implements JsonSerializable
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getRegon14(): string
     {
         return $this->regon14;
     }
 
-    /**
-     * @return int
-     */
     public function getSilo(): int
     {
         return $this->silo;
     }
 
-    /**
-     * @return string
-     */
     public function getNip(): string
     {
         return $this->nip;
     }
 
-    /**
-     * @return string
-     */
     public function getNipStatus(): string
     {
         return $this->nipStatus;
     }
 
-    /**
-     * @return string
-     */
     public function getPropertyNumber(): string
     {
         return $this->propertyNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getApartmentNumber(): string
     {
         return $this->apartmentNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getActivityEndDate(): string
     {
         return $this->activityEndDate;
     }
 
-    /**
-     * @return string
-     */
     public function getPostCity(): string
     {
         return $this->postCity;
     }
 
-    /**
-     * @param string $regon
-     *
-     * @return string
-     */
     private function makeRegon14(string $regon): string
     {
-        return \str_pad($regon, 14, '0');
+        return str_pad($regon, 14, '0');
     }
 
     /**
      * @param string $type
-     *
-     * @return string
      */
     private function makeType($type): string
     {
-        return \trim(\strtolower($type));
+        return trim(strtolower($type));
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
-        return \get_object_vars($this);
+        return get_object_vars($this);
     }
 }

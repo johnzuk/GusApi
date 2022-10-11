@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -11,7 +13,7 @@ class BulkReportResponseDecoderTest extends TestCase
 {
     public function testDecode(): void
     {
-        $content = \file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
+        $content = file_get_contents(__DIR__ . '/../resources/response/bulkReportResponse.xsd');
         $rawResponse = new GetBulkReportResponseRaw($content);
         $decodedResponse = BulkReportResponseDecoder::decode($rawResponse);
 

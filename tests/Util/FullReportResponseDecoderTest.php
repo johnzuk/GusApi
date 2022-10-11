@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -21,7 +23,7 @@ class FullReportResponseDecoderTest extends TestCase
 
     public function testDecodeWithValidXMLObject()
     {
-        $content = \file_get_contents(__DIR__.'/../resources/response/fullSearchResponse.xsd');
+        $content = file_get_contents(__DIR__ . '/../resources/response/fullSearchResponse.xsd');
         $rawReport = new GetFullReportResponseRaw($content);
         $reportDecoded = FullReportResponseDecoder::decode($rawReport);
 

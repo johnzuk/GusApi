@@ -1,16 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Environment;
 
 interface EnvironmentInterface
 {
-    /**
-     * @return string
-     */
     public function getWSDLUrl(): string;
 
-    /**
-     * @return string
-     */
     public function getServerLocationUrl(): string;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Client;
 
 use GusApi\Context\Context;
@@ -26,9 +28,6 @@ class Builder implements BuilderInterface
 
     /**
      * Builder constructor.
-     *
-     * @param string            $environment
-     * @param GusApiClient|null $gusApiClient
      */
     public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
     {
@@ -38,8 +37,6 @@ class Builder implements BuilderInterface
 
     /**
      * @throws SoapFault
-     *
-     * @return GusApiClient
      */
     public function build(): GusApiClient
     {

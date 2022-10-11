@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class LogoutResponse
@@ -9,17 +11,11 @@ class LogoutResponse
      */
     public $WylogujResult;
 
-    /**
-     * @param bool $WylogujResult
-     */
     public function __construct(bool $WylogujResult)
     {
         $this->WylogujResult = $WylogujResult;
     }
 
-    /**
-     * @return bool
-     */
     public function getWylogujResult(): bool
     {
         return $this->WylogujResult;

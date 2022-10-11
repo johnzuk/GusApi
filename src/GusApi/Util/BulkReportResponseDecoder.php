@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Util;
 
 use GusApi\Exception\InvalidServerResponseException;

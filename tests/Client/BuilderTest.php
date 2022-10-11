@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Client;
 
 use GusApi\Client\Builder;
@@ -40,7 +42,7 @@ class BuilderTest extends TestCase
             'soap_version' => SOAP_1_1,
         ];
         $client = new GusApiClient(
-            new SoapClient(__DIR__.'/../UslugaBIRzewnPubl.xsd', $options),
+            new SoapClient(__DIR__ . '/../UslugaBIRzewnPubl.xsd', $options),
             'Location',
             new Context()
         );

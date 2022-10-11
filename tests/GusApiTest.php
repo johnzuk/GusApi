@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests;
 
 use DateTimeImmutable;
@@ -224,7 +226,7 @@ class GusApiTest extends TestCase
     public function testTooManyNipsRaisesAnException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->api->getByNips(\array_fill(0, 21, '7740001454'));
+        $this->api->getByNips(array_fill(0, 21, '7740001454'));
     }
 
     public function testGetResultSearchMessage(): void
@@ -318,8 +320,8 @@ class GusApiTest extends TestCase
      */
     protected function getSearchParameters(string $parameter, $value): SearchParameters
     {
-        $setter = 'set'.\ucfirst($parameter);
-        $value = \is_array($value) ? \implode(',', $value) : $value;
+        $setter = 'set' . ucfirst($parameter);
+        $value = \is_array($value) ? implode(',', $value) : $value;
 
         return (new SearchParameters())->$setter($value);
     }

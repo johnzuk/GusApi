@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Client;
 
 interface BuilderInterface
 {
-    /**
-     * @return GusApiClient
-     */
     public function build(): GusApiClient;
 }

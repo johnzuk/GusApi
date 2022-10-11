@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class LoginResponse
@@ -9,17 +11,11 @@ class LoginResponse
      */
     public $ZalogujResult = '';
 
-    /**
-     * @param string $ZalogujResult
-     */
     public function __construct(string $ZalogujResult)
     {
         $this->ZalogujResult = $ZalogujResult;
     }
 
-    /**
-     * @return string
-     */
     public function getZalogujResult(): string
     {
         return $this->ZalogujResult;

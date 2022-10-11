@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Environment;
 
 class DevEnvironment implements EnvironmentInterface

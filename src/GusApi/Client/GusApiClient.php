@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Client;
 
 use GusApi\Context\ContextInterface;
@@ -22,7 +24,7 @@ use GusApi\Util\FullReportResponseDecoder;
 
 class GusApiClient
 {
-    const ADDRESSING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
+    public const ADDRESSING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
 
     /**
      * @var \SoapClient
@@ -41,10 +43,6 @@ class GusApiClient
 
     /**
      * GusApiClient constructor.
-     *
-     * @param \SoapClient      $soapClient
-     * @param string           $location
-     * @param ContextInterface $streamContext
      */
     public function __construct(\SoapClient $soapClient, string $location, ContextInterface $streamContext)
     {
@@ -53,60 +51,37 @@ class GusApiClient
         $this->setLocation($location);
     }
 
-    /**
-     * @return string
-     */
     public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * @param string $location
-     */
     public function setLocation(string $location): void
     {
         $this->location = $location;
         $this->soapClient->__setLocation($location);
     }
 
-    /**
-     * @return \SoapClient
-     */
     public function getSoapClient(): \SoapClient
     {
         return $this->soapClient;
     }
 
-    /**
-     * @param \SoapClient $soapClient
-     */
     public function setSoapClient(\SoapClient $soapClient): void
     {
         $this->soapClient = $soapClient;
     }
 
-    /**
-     * @return ContextInterface
-     */
     public function getStreamContext(): ContextInterface
     {
         return $this->streamContext;
     }
 
-    /**
-     * @param ContextInterface $streamContext
-     */
     public function setStreamContext(ContextInterface $streamContext): void
     {
         $this->streamContext = $streamContext;
     }
 
-    /**
-     * @param Login $login
-     *
-     * @return LoginResponse
-     */
     public function login(Login $login): LoginResponse
     {
         return $this->call('Zaloguj', [
@@ -114,11 +89,6 @@ class GusApiClient
         ]);
     }
 
-    /**
-     * @param Logout $logout
-     *
-     * @return LogoutResponse
-     */
     public function logout(Logout $logout): LogoutResponse
     {
         return $this->call('Wyloguj', [
@@ -126,12 +96,6 @@ class GusApiClient
         ]);
     }
 
-    /**
-     * @param GetValue    $getValue
-     * @param null|string $sessionId
-     *
-     * @return GetValueResponse
-     */
     public function getValue(GetValue $getValue, ?string $sessionId = null): GetValueResponse
     {
         return $this->call('GetValue', [
@@ -140,12 +104,7 @@ class GusApiClient
     }
 
     /**
-     * @param SearchData $searchData
-     * @param string     $sessionId
-     *
      * @throws NotFoundException
-     *
-     * @return SearchDataResponse
      */
     public function searchData(SearchData $searchData, string $sessionId): SearchDataResponse
     {
@@ -163,12 +122,6 @@ class GusApiClient
         return DataSearchDecoder::decode($result);
     }
 
-    /**
-     * @param GetFullReport $getFullReport
-     * @param string        $sessionId
-     *
-     * @return GetFullReportResponse
-     */
     public function getFullReport(GetFullReport $getFullReport, string $sessionId): GetFullReportResponse
     {
         $rawResponse = $this->call('DanePobierzPelnyRaport', [
@@ -178,12 +131,6 @@ class GusApiClient
         return FullReportResponseDecoder::decode($rawResponse);
     }
 
-    /**
-     * @param GetBulkReport $getBulkReport
-     * @param string        $sessionId
-     *
-     * @return array
-     */
     public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array
     {
         $rawResponse = $this->call('DanePobierzRaportZbiorczy', [
@@ -193,9 +140,6 @@ class GusApiClient
         return BulkReportResponseDecoder::decode($rawResponse);
     }
 
-    /**
-     * @param array $options
-     */
     public function setHttpOptions(array $options): void
     {
         $this->streamContext->setOptions([
@@ -208,7 +152,7 @@ class GusApiClient
         $action = SoapActionMapper::getAction($functionName);
         $soapHeaders = $this->getRequestHeaders($action, $this->location);
         $this->setHttpOptions([
-            'header' => 'sid: '.$sid,
+            'header' => 'sid: ' . $sid,
             'user_agent' => 'PHP GusApi',
         ]);
 
@@ -216,9 +160,6 @@ class GusApiClient
     }
 
     /**
-     * @param string $action
-     * @param string $to
-     *
      * @return \SoapHeader[]
      */
     protected function getRequestHeaders(string $action, string $to): array

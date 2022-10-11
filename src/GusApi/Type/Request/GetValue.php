@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
 class GetValue
@@ -9,17 +11,11 @@ class GetValue
      */
     protected $pNazwaParametru;
 
-    /**
-     * @param string $pNazwaParametru
-     */
     public function __construct(string $pNazwaParametru)
     {
         $this->pNazwaParametru = $pNazwaParametru;
     }
 
-    /**
-     * @return string
-     */
     public function getPNazwaParametru(): string
     {
         return $this->pNazwaParametru;

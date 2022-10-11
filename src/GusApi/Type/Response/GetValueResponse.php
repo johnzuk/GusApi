@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class GetValueResponse
@@ -9,17 +11,11 @@ class GetValueResponse
      */
     public $GetValueResult;
 
-    /**
-     * @param string $GetValueResult
-     */
     public function __construct(string $GetValueResult)
     {
         $this->GetValueResult = $GetValueResult;
     }
 
-    /**
-     * @return string
-     */
     public function getGetValueResult(): string
     {
         return $this->GetValueResult;

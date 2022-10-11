@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi;
 
 use DateTimeImmutable;
@@ -49,10 +51,6 @@ class GusApi
 
     /**
      * GusApi constructor.
-     *
-     * @param string                $userKey
-     * @param string                $env
-     * @param BuilderInterface|null $builder
      */
     public function __construct(string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
     {
@@ -61,44 +59,26 @@ class GusApi
         $this->userKey = $userKey;
     }
 
-    /**
-     * @param string       $userKey
-     * @param GusApiClient $apiClient
-     *
-     * @return GusApi
-     */
     public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
     {
         return new self($userKey, 'prod', new Builder('prod', $apiClient));
     }
 
-    /**
-     * @return string
-     */
     public function getUserKey(): string
     {
         return $this->userKey;
     }
 
-    /**
-     * @param string $userKey
-     */
     public function setUserKey(string $userKey): void
     {
         $this->userKey = $userKey;
     }
 
-    /**
-     * @return string
-     */
     public function getSessionId(): string
     {
         return $this->sessionId;
     }
 
-    /**
-     * @param string $sessionId
-     */
     public function setSessionId(string $sessionId): void
     {
         $this->sessionId = $sessionId;
@@ -106,15 +86,13 @@ class GusApi
 
     /**
      * @throws InvalidUserKeyException
-     *
-     * @return bool
      */
     public function login(): bool
     {
         $result = $this->apiClient->login(new Login($this->userKey));
 
         if (empty($result->getZalogujResult())) {
-            throw new InvalidUserKeyException(\sprintf("User key '%s' is invalid", $this->userKey));
+            throw new InvalidUserKeyException(sprintf("User key '%s' is invalid", $this->userKey));
         }
 
         $this->sessionId = $result->getZalogujResult();
@@ -122,9 +100,6 @@ class GusApi
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function logout(): bool
     {
         $response = $this->apiClient->logout(new Logout($this->sessionId));
@@ -132,9 +107,6 @@ class GusApi
         return $response->getWylogujResult();
     }
 
-    /**
-     * @return bool
-     */
     public function isLogged(): bool
     {
         return (bool) $this->getSessionStatus();
@@ -142,8 +114,6 @@ class GusApi
 
     /**
      * @throws InvalidServerResponseException
-     *
-     * @return DateTimeImmutable
      */
     public function dataStatus(): DateTimeImmutable
     {
@@ -159,13 +129,7 @@ class GusApi
         );
 
         if (false === $dataStatus) {
-            throw new InvalidServerResponseException(
-                \sprintf(
-                    'Invalid response, expected date in format "%s" given %s',
-                    self::SERVICE_STATUS_DATE_FORMAT,
-                    $result->getGetValueResult()
-                )
-            );
+            throw new InvalidServerResponseException(sprintf('Invalid response, expected date in format "%s" given %s', self::SERVICE_STATUS_DATE_FORMAT, $result->getGetValueResult()));
         }
 
         return $dataStatus;
@@ -188,9 +152,6 @@ class GusApi
         return (int) $result->getGetValueResult();
     }
 
-    /**
-     * @return string
-     */
     public function serviceMessage(): string
     {
         $result = $this->apiClient->getValue(new GetValue(ParamName::SERVICE_MESSAGE));
@@ -199,8 +160,6 @@ class GusApi
     }
 
     /**
-     * @param string $nip
-     *
      * @throws NotFoundException
      *
      * @return SearchReport[]
@@ -211,8 +170,6 @@ class GusApi
     }
 
     /**
-     * @param string $regon
-     *
      * @throws NotFoundException
      *
      * @return array|SearchReport[]
@@ -223,8 +180,6 @@ class GusApi
     }
 
     /**
-     * @param string $krs
-     *
      * @throws NotFoundException
      *
      * @return array|SearchReport[]
@@ -245,7 +200,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($nips);
 
-        return $this->search(SearchType::NIPS, \implode(',', $nips));
+        return $this->search(SearchType::NIPS, implode(',', $nips));
     }
 
     /**
@@ -259,7 +214,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($krses);
 
-        return $this->search(SearchType::KRSES, \implode(',', $krses));
+        return $this->search(SearchType::KRSES, implode(',', $krses));
     }
 
     /**
@@ -273,7 +228,7 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_9, \implode(',', $regons));
+        return $this->search(SearchType::REGONS_9, implode(',', $regons));
     }
 
     /**
@@ -287,13 +242,10 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_14, \implode(',', $regons));
+        return $this->search(SearchType::REGONS_14, implode(',', $regons));
     }
 
     /**
-     * @param SearchReport $searchReport
-     * @param string       $reportName
-     *
      * @throws InvalidReportTypeException
      *
      * @return array[]
@@ -312,23 +264,12 @@ class GusApi
     }
 
     /**
-     * @param DateTimeImmutable $date
-     * @param string            $reportName
-     *
      * @throws InvalidReportTypeException
-     *
-     * @return array
      */
     public function getBulkReport(DateTimeImmutable $date, string $reportName): array
     {
         if (!\in_array($reportName, BulkReportTypes::REPORTS, true)) {
-            throw new InvalidReportTypeException(
-                \sprintf(
-                    'Invalid report type: "%s", use one of allowed type: (%s)',
-                    $reportName,
-                    \implode(', ', BulkReportTypes::REPORTS)
-                )
-            );
+            throw new InvalidReportTypeException(sprintf('Invalid report type: "%s", use one of allowed type: (%s)', $reportName, implode(', ', BulkReportTypes::REPORTS)));
         }
 
         return $this->apiClient->getBulkReport(
@@ -339,12 +280,10 @@ class GusApi
 
     /**
      * Get message about search if you don't get data.
-     *
-     * @return string
      */
     public function getResultSearchMessage(): string
     {
-        return \sprintf(
+        return sprintf(
             "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
             $this->getSessionStatus(),
             $this->getMessageCode(),
@@ -354,8 +293,6 @@ class GusApi
 
     /**
      * Return message code if search not found record.
-     *
-     * @return int
      */
     public function getMessageCode(): int
     {
@@ -369,8 +306,6 @@ class GusApi
 
     /**
      * Return message text id search not found record.
-     *
-     * @return string
      */
     public function getMessage(): string
     {
@@ -379,9 +314,6 @@ class GusApi
         return $result->getGetValueResult();
     }
 
-    /**
-     * @return int
-     */
     public function getSessionStatus(): int
     {
         $response = $this->apiClient->getValue(
@@ -400,30 +332,24 @@ class GusApi
     protected function checkIdentifiersCount(array $identifiers): void
     {
         if (\count($identifiers) > self::MAX_IDENTIFIERS) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Too many identifiers. Maximum allowed is %d.',
-                self::MAX_IDENTIFIERS
-            ));
+            throw new \InvalidArgumentException(sprintf('Too many identifiers. Maximum allowed is %d.', self::MAX_IDENTIFIERS));
         }
     }
 
     /**
-     * @param string $searchType
-     * @param string $parameters
-     *
      * @throws NotFoundException
      *
      * @return SearchReport[]
      */
     private function search(string $searchType, string $parameters): array
     {
-        $method = 'set'.$searchType;
+        $method = 'set' . $searchType;
         $searchParameters = new SearchParameters();
         $searchParameters->$method($parameters);
 
         $result = $this->apiClient->searchData(new SearchData($searchParameters), $this->sessionId);
 
-        return \array_map(function (SearchResponseCompanyData $company) {
+        return array_map(function (SearchResponseCompanyData $company) {
             return new SearchReport($company);
         }, $result->getDaneSzukajResult());
     }

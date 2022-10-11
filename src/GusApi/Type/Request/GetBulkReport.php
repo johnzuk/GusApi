@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
 class GetBulkReport
@@ -16,9 +18,6 @@ class GetBulkReport
 
     /**
      * GetBulkReport constructor.
-     *
-     * @param string $pDataRaportu
-     * @param string $pNazwaRaportu
      */
     public function __construct(string $pDataRaportu, string $pNazwaRaportu)
     {
@@ -26,17 +25,11 @@ class GetBulkReport
         $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    /**
-     * @return string
-     */
     public function getPDataRaportu(): string
     {
         return $this->pDataRaportu;
     }
 
-    /**
-     * @return string
-     */
     public function getPNazwaRaportu(): string
     {
         return $this->pNazwaRaportu;

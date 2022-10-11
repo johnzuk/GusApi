@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
 class GetFullReport
@@ -14,27 +16,17 @@ class GetFullReport
      */
     protected $pNazwaRaportu;
 
-    /**
-     * @param string $pRegon
-     * @param string $pNazwaRaportu
-     */
     public function __construct(string $pRegon, string $pNazwaRaportu)
     {
         $this->pRegon = $pRegon;
         $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    /**
-     * @return string
-     */
     public function getPRegon(): string
     {
         return $this->pRegon;
     }
 
-    /**
-     * @return string
-     */
     public function getPNazwaRaportu(): string
     {
         return $this->pNazwaRaportu;

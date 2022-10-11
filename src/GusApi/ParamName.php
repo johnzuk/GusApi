@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi;
 
 interface ParamName
 {
-    const USER_KEY = 'pKluczUzytkownika';
-    const SESSION_ID = 'pIdentyfikatorSesji';
-    const CAPTCHA = 'pCaptcha';
-    const SEARCH = 'pParametryWyszukiwania';
-    const REGON = 'pRegon';
-    const REPORT_NAME = 'pNazwaRaportu';
-    const PARAM_NAME = 'pNazwaParametru';
+    public const USER_KEY = 'pKluczUzytkownika';
+    public const SESSION_ID = 'pIdentyfikatorSesji';
+    public const CAPTCHA = 'pCaptcha';
+    public const SEARCH = 'pParametryWyszukiwania';
+    public const REGON = 'pRegon';
+    public const REPORT_NAME = 'pNazwaRaportu';
+    public const PARAM_NAME = 'pNazwaParametru';
 
-    const STATUS_DATE_STATE = 'StanDanych';
-    const MESSAGE_CODE = 'KomunikatKod';
-    const MESSAGE = 'KomunikatTresc';
-    const SESSION_STATUS = 'StatusSesji';
-    const SERVICE_STATUS = 'StatusUslugi';
-    const SERVICE_MESSAGE = 'KomunikatUslugi';
+    public const STATUS_DATE_STATE = 'StanDanych';
+    public const MESSAGE_CODE = 'KomunikatKod';
+    public const MESSAGE = 'KomunikatTresc';
+    public const SESSION_STATUS = 'StatusSesji';
+    public const SERVICE_STATUS = 'StatusUslugi';
+    public const SERVICE_MESSAGE = 'KomunikatUslugi';
 }

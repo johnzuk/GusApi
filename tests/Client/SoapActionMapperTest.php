@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Client;
 
 use GusApi\Client\SoapActionMapper;

@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Environment;
 
 use GusApi\Exception\InvalidEnvironmentNameException;
 
 class EnvironmentFactory
 {
-    /**
-     * @param string $environment
-     *
-     * @return EnvironmentInterface
-     */
     public static function create(string $environment): EnvironmentInterface
     {
         if ('prod' === $environment) {
@@ -20,6 +17,6 @@ class EnvironmentFactory
             return new DevEnvironment();
         }
 
-        throw new InvalidEnvironmentNameException(\sprintf('Invalid environment %s', $environment));
+        throw new InvalidEnvironmentNameException(sprintf('Invalid environment %s', $environment));
     }
 }

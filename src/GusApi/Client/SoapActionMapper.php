@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Client;
 
 use GusApi\Exception\InvalidActionNameException;
@@ -19,18 +21,14 @@ class SoapActionMapper
     ];
 
     /**
-     * @param string $functionName
-     *
      * @throws InvalidActionNameException
-     *
-     * @return string
      */
     public static function getAction(string $functionName): string
     {
         if (!isset(self::ACTIONS[$functionName])) {
-            throw new InvalidActionNameException(\sprintf('Invalid action %s', $functionName));
+            throw new InvalidActionNameException(sprintf('Invalid action %s', $functionName));
         }
 
-        return self::ACTIONS[$functionName].$functionName;
+        return self::ACTIONS[$functionName] . $functionName;
     }
 }

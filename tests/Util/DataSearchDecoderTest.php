@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -13,7 +15,7 @@ class DataSearchDecoderTest extends TestCase
 {
     public function testDecode(): void
     {
-        $content = \file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
+        $content = file_get_contents(__DIR__ . '/../resources/response/searchDataResponseResultSingle.xsd');
         $rawResponse = new SearchResponseRaw($content);
         $decodedResponse = DataSearchDecoder::decode($rawResponse);
 

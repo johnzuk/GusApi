@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class GetFullReportResponseRaw
@@ -9,17 +11,11 @@ class GetFullReportResponseRaw
      */
     public $DanePobierzPelnyRaportResult = '';
 
-    /**
-     * @param string $DanePobierzPelnyRaportResult
-     */
     public function __construct(string $DanePobierzPelnyRaportResult)
     {
         $this->DanePobierzPelnyRaportResult = $DanePobierzPelnyRaportResult;
     }
 
-    /**
-     * @return string
-     */
     public function getDanePobierzPelnyRaportResult(): string
     {
         return $this->DanePobierzPelnyRaportResult;
