@@ -6,19 +6,10 @@ namespace GusApi\Type\Request;
 
 class GetBulkReport
 {
-    /**
-     * @var string
-     */
-    protected $pDataRaportu;
+    private string $pDataRaportu;
 
-    /**
-     * @var string
-     */
-    protected $pNazwaRaportu;
+    private string $pNazwaRaportu;
 
-    /**
-     * GetBulkReport constructor.
-     */
     public function __construct(string $pDataRaportu, string $pNazwaRaportu)
     {
         $this->pDataRaportu = $pDataRaportu;

@@ -26,60 +26,15 @@ class GusApiClient
 {
     public const ADDRESSING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
 
-    /**
-     * @var \SoapClient
-     */
-    protected $soapClient;
+    private \SoapClient $soapClient;
+    private ContextInterface $streamContext;
+    private string $location;
 
-    /**
-     * @var ContextInterface
-     */
-    protected $streamContext;
-
-    /**
-     * @var string
-     */
-    protected $location;
-
-    /**
-     * GusApiClient constructor.
-     */
     public function __construct(\SoapClient $soapClient, string $location, ContextInterface $streamContext)
     {
         $this->soapClient = $soapClient;
         $this->streamContext = $streamContext;
         $this->setLocation($location);
-    }
-
-    public function getLocation(): string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): void
-    {
-        $this->location = $location;
-        $this->soapClient->__setLocation($location);
-    }
-
-    public function getSoapClient(): \SoapClient
-    {
-        return $this->soapClient;
-    }
-
-    public function setSoapClient(\SoapClient $soapClient): void
-    {
-        $this->soapClient = $soapClient;
-    }
-
-    public function getStreamContext(): ContextInterface
-    {
-        return $this->streamContext;
-    }
-
-    public function setStreamContext(ContextInterface $streamContext): void
-    {
-        $this->streamContext = $streamContext;
     }
 
     public function login(Login $login): LoginResponse
@@ -109,7 +64,7 @@ class GusApiClient
     public function searchData(SearchData $searchData, string $sessionId): SearchDataResponse
     {
         /**
-         * @var SearchResponseRaw
+         * @var SearchResponseRaw $result
          */
         $result = $this->call('DaneSzukajPodmioty', [
             $searchData,
@@ -140,14 +95,20 @@ class GusApiClient
         return BulkReportResponseDecoder::decode($rawResponse);
     }
 
-    public function setHttpOptions(array $options): void
+    private function setLocation(string $location): void
+    {
+        $this->location = $location;
+        $this->soapClient->__setLocation($location);
+    }
+
+    private function setHttpOptions(array $options): void
     {
         $this->streamContext->setOptions([
             'http' => $options,
         ]);
     }
 
-    protected function call(string $functionName, array $arguments, ?string $sid = null)
+    private function call(string $functionName, array $arguments, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
         $soapHeaders = $this->getRequestHeaders($action, $this->location);
@@ -162,7 +123,7 @@ class GusApiClient
     /**
      * @return \SoapHeader[]
      */
-    protected function getRequestHeaders(string $action, string $to): array
+    private function getRequestHeaders(string $action, string $to): array
     {
         return [
             new \SoapHeader(self::ADDRESSING_NAMESPACE, 'Action', $action),
