@@ -9,7 +9,7 @@ class SearchDataResponse
     /**
      * @var SearchResponseCompanyData[]
      */
-    public $DaneSzukajResult = [];
+    public array $DaneSzukajResult = [];
 
     /**
      * @param SearchResponseCompanyData[] $DaneSzukajResult

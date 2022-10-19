@@ -23,39 +23,6 @@ final class ReportTypes
     public const REPORT_ORGANIZATION_PARTNERS = 'BIR11OsPrawnaSpCywilnaWspolnicy';
     public const REPORT_UNIT_TYPE = 'BIR11TypPodmiotu';
 
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON" instead */
-    public const REPORT_ACTIVITY_PHYSIC_PERSON = self::REPORT_PERSON;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_CEIDG" instead */
-    public const REPORT_ACTIVITY_PHYSIC_CEIDG = self::REPORT_PERSON_CEIDG;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_AGRO" instead */
-    public const REPORT_ACTIVITY_PHYSIC_AGRO = self::REPORT_PERSON_AGRO;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_OTHER" instead */
-    public const REPORT_ACTIVITY_PHYSIC_OTHER_PUBLIC = self::REPORT_PERSON_OTHER;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_DELETED_BEFORE_20141108" instead */
-    public const REPORT_ACTIVITY_LOCAL_PHYSIC_WKR_PUBLIC = self::REPORT_PERSON_DELETED_BEFORE_20141108;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_LOCALS" instead */
-    public const REPORT_LOCALS_PHYSIC_PUBLIC = self::REPORT_PERSON_LOCALS;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_LOCAL" instead */
-    public const REPORT_LOCAL_PHYSIC_PUBLIC = self::REPORT_PERSON_LOCAL;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_ACTIVITY" instead */
-    public const REPORT_ACTIVITY_PHYSIC_PUBLIC = self::REPORT_PERSON_ACTIVITY;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_PERSON_LOCAL_ACTIVITY" instead */
-    public const REPORT_ACTIVITY_LOCAL_PHYSIC_PUBLIC = self::REPORT_PERSON_LOCAL_ACTIVITY;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION" instead */
-    public const REPORT_PUBLIC_LAW = self::REPORT_ORGANIZATION;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION_ACTIVITY" instead */
-    public const REPORT_ACTIVITY_LAW_PUBLIC = self::REPORT_ORGANIZATION_ACTIVITY;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION_LOCALS" instead */
-    public const REPORT_LOCALS_LAW_PUBLIC = self::REPORT_ORGANIZATION_LOCALS;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION_LOCAL" instead */
-    public const REPORT_LOCAL_LAW_PUBLIC = self::REPORT_ORGANIZATION_LOCAL;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION_LOCAL_ACTIVITY" instead */
-    public const REPORT_ACTIVITY_LOCAL_LAW_PUBLIC = self::REPORT_ORGANIZATION_LOCAL_ACTIVITY;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_ORGANIZATION_PARTNERS" instead */
-    public const REPORT_COMMON_LAW_PUBLIC = self::REPORT_ORGANIZATION_PARTNERS;
-    /** @deprecated deprecated since version 5.3 and will be removed in 6.0, use "REPORT_UNIT_TYPE" instead */
-    public const REPORT_UNIT_TYPE_PUBLIC = self::REPORT_UNIT_TYPE;
-
     public const REPORTS = [
         self::REPORT_PERSON,
         self::REPORT_PERSON_CEIDG,

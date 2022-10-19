@@ -14,21 +14,11 @@ use GusApi\Type\Response\LogoutResponse;
 use GusApi\Type\Response\SearchResponseRaw;
 use SoapFault;
 
-class Builder implements BuilderInterface
+final class Builder implements BuilderInterface
 {
-    /**
-     * @var string
-     */
-    protected $environment;
+    private string $environment;
+    private ?GusApiClient $gusApiClient;
 
-    /**
-     * @var GusApiClient|null
-     */
-    protected $gusApiClient;
-
-    /**
-     * Builder constructor.
-     */
     public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
     {
         $this->environment = $environment;

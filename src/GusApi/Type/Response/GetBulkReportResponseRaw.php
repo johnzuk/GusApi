@@ -6,10 +6,7 @@ namespace GusApi\Type\Response;
 
 class GetBulkReportResponseRaw
 {
-    /**
-     * @var string
-     */
-    public $DanePobierzRaportZbiorczyResult;
+    public string $DanePobierzRaportZbiorczyResult;
 
     public function __construct(string $DanePobierzRaportZbiorczyResult)
     {

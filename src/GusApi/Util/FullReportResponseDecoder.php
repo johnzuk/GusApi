@@ -16,6 +16,7 @@ class FullReportResponseDecoder
      */
     public static function decode(GetFullReportResponseRaw $fullReportResponseRaw): GetFullReportResponse
     {
+        /** @var array<int, array<string, string>> $elements */
         $elements = [];
 
         if ('' === $fullReportResponseRaw->getDanePobierzPelnyRaportResult()) {
@@ -26,6 +27,7 @@ class FullReportResponseDecoder
             $xmlElementsResponse = new SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
 
             foreach ($xmlElementsResponse->dane as $resultData) {
+                /** @var array<string, string> $element */
                 $element = [];
                 foreach ($resultData as $key => $item) {
                     $element[$key] = (string) $item;

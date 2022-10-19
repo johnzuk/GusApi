@@ -6,84 +6,22 @@ namespace GusApi\Type\Response;
 
 class SearchResponseCompanyData
 {
-    /**
-     * @var string
-     */
-    public $Regon = '';
-
-    /**
-     * @var string
-     */
-    public $Nip = '';
-
-    /**
-     * @var string
-     */
-    public $StatusNip = '';
-    /**
-     * @var string
-     */
-    public $Nazwa = '';
-
-    /**
-     * @var string
-     */
-    public $Wojewodztwo = '';
-
-    /**
-     * @var string
-     */
-    public $Powiat = '';
-
-    /**
-     * @var string
-     */
-    public $Gmina = '';
-
-    /**
-     * @var string
-     */
-    public $Miejscowosc = '';
-
-    /**
-     * @var string
-     */
-    public $KodPocztowy = '';
-
-    /**
-     * @var string
-     */
-    public $Ulica = '';
-
-    /**
-     * @var string
-     */
-    public $NrNieruchomosci = '';
-
-    /**
-     * @var string
-     */
-    public $NrLokalu = '';
-
-    /**
-     * @var string
-     */
-    public $Typ = '';
-
-    /**
-     * @var int
-     */
-    public $SilosID = 0;
-
-    /**
-     * @var string
-     */
-    public $DataZakonczeniaDzialalnosci = '';
-
-    /**
-     * @var string
-     */
-    public $MiejscowoscPoczty = '';
+    public string $Regon = '';
+    public string $Nip = '';
+    public string $StatusNip = '';
+    public string $Nazwa = '';
+    public string $Wojewodztwo = '';
+    public string $Powiat = '';
+    public string $Gmina = '';
+    public string $Miejscowosc = '';
+    public string $KodPocztowy = '';
+    public string $Ulica = '';
+    public string $NrNieruchomosci = '';
+    public string $NrLokalu = '';
+    public string $Typ = '';
+    public string $SilosID = '0';
+    public string $DataZakonczeniaDzialalnosci = '';
+    public string $MiejscowoscPoczty = '';
 
     public function getRegon(): string
     {
@@ -150,7 +88,7 @@ class SearchResponseCompanyData
         return $this->Typ;
     }
 
-    public function getSilosID(): int
+    public function getSilosID(): string
     {
         return $this->SilosID;
     }

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace GusApi\Type\Request;
 
-class GetBulkReport
+use GusApi\ParamName;
+
+final class GetBulkReport implements RequestInterface
 {
     private string $pDataRaportu;
-
     private string $pNazwaRaportu;
 
     public function __construct(string $pDataRaportu, string $pNazwaRaportu)
@@ -16,13 +17,11 @@ class GetBulkReport
         $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    public function getPDataRaportu(): string
+    public function toArray(): array
     {
-        return $this->pDataRaportu;
-    }
-
-    public function getPNazwaRaportu(): string
-    {
-        return $this->pNazwaRaportu;
+        return [
+            ParamName::REPORT_DATE => $this->pDataRaportu,
+            ParamName::REPORT_NAME => $this->pNazwaRaportu,
+        ];
     }
 }

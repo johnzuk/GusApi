@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace GusApi\Type\Request;
 
-use GusApi\Type\SearchParameters;
+use GusApi\ParamName;
 
-class SearchData
+final class SearchData implements RequestInterface
 {
-    /**
-     * @var SearchParameters
-     */
-    protected $pParametryWyszukiwania;
+    public SearchParameters $pParametryWyszukiwania;
 
     public function __construct(SearchParameters $pParametryWyszukiwania)
     {
         $this->pParametryWyszukiwania = $pParametryWyszukiwania;
     }
 
-    public function getPParametryWyszukiwania(): SearchParameters
+    public function toArray(): array
     {
-        return $this->pParametryWyszukiwania;
+        return [
+            ParamName::SEARCH => $this->pParametryWyszukiwania->toArray(),
+        ];
     }
 }

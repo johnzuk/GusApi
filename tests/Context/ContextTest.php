@@ -7,19 +7,16 @@ namespace GusApi\Tests\Context;
 use GusApi\Context\Context;
 use PHPUnit\Framework\TestCase;
 
-class ContextTest extends TestCase
+final class ContextTest extends TestCase
 {
-    /**
-     * @var Context
-     */
-    protected $context;
+    private Context $context;
 
     protected function setUp(): void
     {
         $this->context = new Context();
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $options = [
             'http' => [
@@ -32,7 +29,7 @@ class ContextTest extends TestCase
         $this->assertSame($options, stream_context_get_options($this->context->getContext()));
     }
 
-    public function testSetParameters()
+    public function testSetParameters(): void
     {
         $params = [
             'notification' => function () {

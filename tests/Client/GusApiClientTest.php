@@ -8,12 +8,14 @@ use GusApi\Client\GusApiClient;
 use GusApi\Context\Context;
 use GusApi\Exception\NotFoundException;
 use GusApi\ParamName;
+use GusApi\Tests\GetContentTrait;
 use GusApi\Type\Request\GetBulkReport;
 use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
 use GusApi\Type\Request\SearchData;
+use GusApi\Type\Request\SearchParameters;
 use GusApi\Type\Response\GetBulkReportResponseRaw;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
@@ -23,76 +25,98 @@ use GusApi\Type\Response\LogoutResponse;
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseCompanyData;
 use GusApi\Type\Response\SearchResponseRaw;
-use GusApi\Type\SearchParameters;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use SoapClient;
 
-class GusApiClientTest extends TestCase
+final class GusApiClientTest extends TestCase
 {
-    /**
-     * @var GusApiClient
-     */
-    protected $gusApiClient;
+    use GetContentTrait;
 
-    /**
-     * @var MockObject
-     */
-    protected $soap;
+    private GusApiClient $gusApiClient;
+    /** @var SoapClient|MockObject */
+    private SoapClient|MockObject $soap;
 
     public function setUp(): void
     {
-        $this->soap = $this->getMockFromWsdl(__DIR__ . '/../UslugaBIRzewnPubl.xsd');
-
+        $this->soap = $this->getMockFromWsdl(__DIR__ . '/../UslugaBIRzewnPubl.xsd', SoapClient::class);
         $this->gusApiClient = new GusApiClient($this->soap, 'Location', new Context());
     }
 
-    public function testCallWithValidFunctionName()
+    public function testLogin(): void
     {
-        $this->expectSoapCall('Zaloguj', [new Login('1234567890')], new LoginResponse('0987654321'));
+        $this->expectSoapCall(
+            'Zaloguj',
+            [
+                [
+                    'pKluczUzytkownika' => '1234567890',
+                ],
+            ],
+            new LoginResponse('0987654321')
+        );
 
-        $this->assertEquals(
+        self::assertEquals(
             new LoginResponse('0987654321'),
             $this->gusApiClient->login(new Login('1234567890'))
         );
     }
 
-    public function testLogin()
+    public function testLogout(): void
     {
-        $this->expectSoapCall('Zaloguj', [new Login('1234567890')], new LoginResponse('0987654321'));
-
-        $this->assertEquals(
-            new LoginResponse('0987654321'),
-            $this->gusApiClient->login(new Login('1234567890'))
+        $this->expectSoapCall(
+            'Wyloguj',
+            [
+                [
+                    'pIdentyfikatorSesji' => '1234567890',
+                ],
+            ],
+            new LogoutResponse(true)
         );
-    }
 
-    public function testLogout()
-    {
-        $this->expectSoapCall('Wyloguj', [new Logout('1234567890')], new LogoutResponse(true));
         $logoutResult = $this->gusApiClient->logout(new Logout('1234567890'));
-
-        $this->assertTrue($logoutResult->getWylogujResult());
+        self::assertTrue($logoutResult->getWylogujResult());
     }
 
     public function testGetValue(): void
     {
         $this->expectSoapCall(
             'GetValue',
-            [new GetValue('StanDanych')],
+            [
+                [
+                    'pNazwaParametru' => 'StanDanych',
+                ]
+            ],
             new GetValueResponse('stan danych response'),
             false
         );
 
         $value = $this->gusApiClient->getValue(new GetValue(ParamName::STATUS_DATE_STATE));
 
-        $this->assertSame('stan danych response', $value->getGetValueResult());
+        self::assertSame('stan danych response', $value->getGetValueResult());
     }
 
     public function testSearchDataWithSingleResponse(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__ . '/../resources/response/searchDataResponseResultSingle.xsd');
-        $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
-        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
+        $searchRawResponse = self::getContent(__DIR__ . '/../resources/response/searchDataResponseResultSingle.xsd');
+        $searchData = new SearchData(new SearchParameters(null, null, '0099112233', null, null, null, null));
+
+        $this->expectSoapCall(
+            'DaneSzukajPodmioty',
+            [
+                [
+                    'pParametryWyszukiwania' => [
+                        'Krs' => null,
+                        'Krsy' => null,
+                        'Nip' => '0099112233',
+                        'Nipy' => null,
+                        'Regon' => null,
+                        'Regony9zn' => null,
+                        'Regony14zn' => null,
+                    ],
+                ],
+            ],
+            new SearchResponseRaw($searchRawResponse)
+        );
 
         $companyData = new SearchResponseCompanyData();
         $companyData->Regon = '02092251199990';
@@ -108,21 +132,37 @@ class GusApiClientTest extends TestCase
         $companyData->NrNieruchomosci = '208';
         $companyData->NrLokalu = '';
         $companyData->Typ = 'P';
-        $companyData->SilosID = 6;
+        $companyData->SilosID = '6';
         $companyData->DataZakonczeniaDzialalnosci = '';
 
         $expected = new SearchDataResponse([
             $companyData,
         ]);
 
-        $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
+        self::assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
     public function testSearchDataWithMultipleResponse(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__ . '/../resources/response/searchDataReponseResultMulti.xsd');
-        $searchData = new SearchData((new SearchParameters())->setNip('0099112233'));
-        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw($searchRawResponse));
+        $searchRawResponse = self::getContent(__DIR__ . '/../resources/response/searchDataReponseResultMulti.xsd');
+        $searchData = new SearchData(new SearchParameters(null, null, '0099112233', null, null, null, null));
+        $this->expectSoapCall(
+            'DaneSzukajPodmioty',
+            [
+                [
+                    'pParametryWyszukiwania' => [
+                        'Krs' => null,
+                        'Krsy' => null,
+                        'Nip' => '0099112233',
+                        'Nipy' => null,
+                        'Regon' => null,
+                        'Regony9zn' => null,
+                        'Regony14zn' => null,
+                    ],
+                ],
+            ],
+            new SearchResponseRaw($searchRawResponse)
+        );
 
         $firstCompanyData = new SearchResponseCompanyData();
         $firstCompanyData->Regon = '02092251199990';
@@ -138,7 +178,7 @@ class GusApiClientTest extends TestCase
         $firstCompanyData->NrNieruchomosci = '208';
         $firstCompanyData->NrLokalu = '';
         $firstCompanyData->Typ = 'P';
-        $firstCompanyData->SilosID = 6;
+        $firstCompanyData->SilosID = '6';
         $firstCompanyData->DataZakonczeniaDzialalnosci = '';
 
         $secondCompanyData = new SearchResponseCompanyData();
@@ -155,7 +195,7 @@ class GusApiClientTest extends TestCase
         $secondCompanyData->NrNieruchomosci = '12';
         $secondCompanyData->NrLokalu = '33';
         $secondCompanyData->Typ = 'F';
-        $secondCompanyData->SilosID = 2;
+        $secondCompanyData->SilosID = '2';
         $secondCompanyData->DataZakonczeniaDzialalnosci = '';
 
         $expected = new SearchDataResponse([
@@ -163,13 +203,29 @@ class GusApiClientTest extends TestCase
             $secondCompanyData,
         ]);
 
-        $this->assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
+        self::assertEquals($expected, $this->gusApiClient->searchData($searchData, '1234567890'));
     }
 
     public function testSearchDataNotFound(): void
     {
-        $searchData = new SearchData((new SearchParameters())->setNip('0011223344'));
-        $this->expectSoapCall('DaneSzukajPodmioty', [$searchData], new SearchResponseRaw(''));
+        $searchData = new SearchData(new SearchParameters(null, null, '0099112233', null, null, null, null));
+        $this->expectSoapCall(
+            'DaneSzukajPodmioty',
+            [
+                [
+                    'pParametryWyszukiwania' => [
+                        'Krs' => null,
+                        'Krsy' => null,
+                        'Nip' => '0099112233',
+                        'Nipy' => null,
+                        'Regon' => null,
+                        'Regony9zn' => null,
+                        'Regony14zn' => null,
+                    ],
+                ],
+            ],
+            new SearchResponseRaw('')
+        );
 
         $this->expectException(NotFoundException::class);
         $this->gusApiClient->searchData($searchData, '1234567890');
@@ -177,16 +233,21 @@ class GusApiClientTest extends TestCase
 
     public function testGetBulkReport(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__ . '/../resources/response/bulkReportResponse.xsd');
+        $searchRawResponse = self::getContent(__DIR__ . '/../resources/response/bulkReportResponse.xsd');
         $searchData = new GetBulkReport('2019-01-01', 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych');
 
         $this->expectSoapCall(
             'DanePobierzRaportZbiorczy',
-            [$searchData],
+            [
+                [
+                    'pDataRaportu' => '2019-01-01',
+                    'pNazwaRaportu' => 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych',
+                ],
+            ],
             new GetBulkReportResponseRaw($searchRawResponse)
         );
 
-        $this->assertEquals([
+        self::assertEquals([
             '022399999',
             '147210456',
             '243544401',
@@ -196,15 +257,20 @@ class GusApiClientTest extends TestCase
 
     public function testGetFullReport(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__ . '/../resources/response/fullSearchResponse.xsd');
+        $searchRawResponse = self::getContent(__DIR__ . '/../resources/response/fullSearchResponse.xsd');
         $searchData = new GetFullReport('00112233445566', 'PublDaneRaportTypJednostki');
         $this->expectSoapCall(
             'DanePobierzPelnyRaport',
-            [$searchData],
+            [
+                [
+                    'pRegon' => '00112233445566',
+                    'pNazwaRaportu' => 'PublDaneRaportTypJednostki',
+                ],
+            ],
             new GetFullReportResponseRaw($searchRawResponse)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             new GetFullReportResponse([
                 [
                     'fiz_regon9' => '666666666',
@@ -254,13 +320,18 @@ class GusApiClientTest extends TestCase
         );
     }
 
-    public function testGetFullReportMultiple()
+    public function testGetFullReportMultiple(): void
     {
-        $searchRawResponse = file_get_contents(__DIR__ . '/../resources/response/fullSearchMultipleResponse.xsd');
+        $searchRawResponse = self::getContent(__DIR__ . '/../resources/response/fullSearchMultipleResponse.xsd');
         $searchData = new GetFullReport('00112233445566', 'PublDaneRaportDzialalnosciPrawnej');
         $this->expectSoapCall(
             'DanePobierzPelnyRaport',
-            [$searchData],
+            [
+                [
+                    'pRegon' => '00112233445566',
+                    'pNazwaRaportu' => 'PublDaneRaportDzialalnosciPrawnej',
+                ],
+            ],
             new GetFullReportResponseRaw($searchRawResponse)
         );
 
@@ -286,7 +357,7 @@ class GusApiClientTest extends TestCase
         );
     }
 
-    protected function getHeaders($action, $to)
+    private function getHeaders(string $action, string $to): array
     {
         return [
             new \SoapHeader('http://www.w3.org/2005/08/addressing', 'Action', $action),
@@ -294,12 +365,12 @@ class GusApiClientTest extends TestCase
         ];
     }
 
-    protected function expectSoapCall(string $action, array $arguments, $result, bool $public = true)
+    private function expectSoapCall(string $action, array $arguments, object $result, bool $public = true): void
     {
         $baseUrl = $public ? 'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl' : 'http://CIS/BIR/2014/07/IUslugaBIR';
         $headers = $this->getHeaders(sprintf('%s/%s', $baseUrl, $action), 'Location');
         $this->soap
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('__soapCall')
             ->with($action, $arguments, [], $headers)
             ->willReturn($result);

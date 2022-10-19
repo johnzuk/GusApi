@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GusApi\Tests\Integration;
 
-use DateTimeImmutable;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\Exception\NotFoundException;
 use GusApi\GusApi;
@@ -13,14 +12,11 @@ use GusApi\SearchReport;
 use GusApi\Tests\ExampleCompanyTrait;
 use PHPUnit\Framework\TestCase;
 
-class GusApiTest extends TestCase
+final class GusApiTest extends TestCase
 {
     use ExampleCompanyTrait;
 
-    /**
-     * @var GusApi
-     */
-    protected static $apiClient;
+    private static GusApi $apiClient;
 
     public static function setUpBeforeClass(): void
     {
@@ -28,7 +24,7 @@ class GusApiTest extends TestCase
         self::$apiClient->login();
     }
 
-    public function testGetExampleCompanyByNip()
+    public function testGetExampleCompanyByNip(): void
     {
         $result = self::$apiClient->getByNip('7740001454');
 
@@ -36,14 +32,14 @@ class GusApiTest extends TestCase
         $this->assertValidExampleCompany($result[0]);
     }
 
-    public function testGetExampleCompanyByNips()
+    public function testGetExampleCompanyByNips(): void
     {
         $result = self::$apiClient->getByNips(['7740001454']);
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0], false);
     }
 
-    public function testGetByInvalidNipAndGetMessage()
+    public function testGetByInvalidNipAndGetMessage(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -56,37 +52,36 @@ class GusApiTest extends TestCase
         }
     }
 
-    public function testGetExampleCompanyByRegon()
+    public function testGetExampleCompanyByRegon(): void
     {
         $result = self::$apiClient->getByRegon('610188201');
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0]);
     }
 
-    public function testGetExampleCompanyByRegons()
+    public function testGetExampleCompanyByRegons(): void
     {
         $result = self::$apiClient->getByRegons9(['610188201']);
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0], false);
     }
 
-    public function testGetExampleCompanyByKrs()
+    public function testGetExampleCompanyByKrs(): void
     {
         $result = self::$apiClient->getByKrs('0000028860');
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0], false);
     }
 
-    public function testGetExampleCompanyByKrses()
+    public function testGetExampleCompanyByKrses(): void
     {
         $result = self::$apiClient->getByKrses(['0000028860']);
         $this->assertCount(1, $result);
         $this->assertValidExampleCompany($result[0], false);
     }
 
-    public function testGetStatus()
+    public function testGetStatus(): void
     {
-        $this->assertInstanceOf(DateTimeImmutable::class, self::$apiClient->dataStatus());
         $this->assertSame(1, self::$apiClient->serviceStatus());
         $this->assertSame('Usluga dostepna', self::$apiClient->serviceMessage());
     }
@@ -104,16 +99,14 @@ class GusApiTest extends TestCase
         $this->assertEquals('', $result[0]['praw_dataZakonczeniaPostepowaniaUpadlosciowego']);
     }
 
-    public function testInvalidKey()
+    public function testInvalidKey(): void
     {
-        $apiClient = new GusApi('abcde12345abcde12345', 'dev');
-        $apiClient->setUserKey('invalid-key');
-        $this->assertSame('invalid-key', $apiClient->getUserKey());
+        $apiClient = new GusApi('invalid-key', 'dev');
         $this->expectExceptionObject(new InvalidUserKeyException('User key \'invalid-key\' is invalid'));
         $apiClient->login();
     }
 
-    public function testLoginLogout()
+    public function testLoginLogout(): void
     {
         $apiClient = new GusApi('abcde12345abcde12345', 'dev');
         $this->assertTrue($apiClient->login());

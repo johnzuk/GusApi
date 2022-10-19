@@ -6,10 +6,7 @@ namespace GusApi\Type\Response;
 
 class SearchResponseRaw
 {
-    /**
-     * @var string
-     */
-    protected $DaneSzukajPodmiotyResult = '';
+    protected string $DaneSzukajPodmiotyResult = '';
 
     public function __construct(string $DaneSzukajPodmiotyResult)
     {

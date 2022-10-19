@@ -7,14 +7,12 @@ namespace GusApi\Type\Response;
 class GetFullReportResponse
 {
     /**
-     * @var array[]
+     * @var array<int, array<string, string>>
      */
-    public $report;
+    public array $report;
 
     /**
-     * GetFullReportResponse constructor.
-     *
-     * @param array[] $report
+     * @param array<int, array<string, string>> $report
      */
     public function __construct(array $report = [])
     {
@@ -22,7 +20,7 @@ class GetFullReportResponse
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<string, string>>
      */
     public function getReport(): array
     {

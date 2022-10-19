@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GusApi\Environment;
 
-class DevEnvironment implements EnvironmentInterface
+final class DevEnvironment implements EnvironmentInterface
 {
     public function getWSDLUrl(): string
     {

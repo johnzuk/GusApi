@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace GusApi\Type\Request;
 
-class Logout
-{
-    /**
-     * @var string
-     */
-    protected $pIdentyfikatorSesji;
+use GusApi\ParamName;
 
-    public function __construct(string $pIdentyfikatorSesji)
+final class Logout implements RequestInterface
+{
+    public string $sessionId;
+
+    public function __construct(string $sessionId)
     {
-        $this->pIdentyfikatorSesji = $pIdentyfikatorSesji;
+        $this->sessionId = $sessionId;
     }
 
-    public function getPIdentyfikatorSesji(): string
+    public function toArray(): array
     {
-        return $this->pIdentyfikatorSesji;
+        return [
+            ParamName::SESSION_ID => $this->sessionId,
+        ];
     }
 }

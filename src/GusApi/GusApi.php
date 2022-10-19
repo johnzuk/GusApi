@@ -19,8 +19,8 @@ use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
 use GusApi\Type\Request\SearchData;
+use GusApi\Type\Request\SearchParameters;
 use GusApi\Type\Response\SearchResponseCompanyData;
-use GusApi\Type\SearchParameters;
 
 /**
  * @author Janusz Żukowicz <john_zuk@wp.pl>
@@ -34,24 +34,10 @@ class GusApi
 
     protected const SERVICE_STATUS_DATE_FORMAT = 'd-m-Y';
 
-    /**
-     * @var string user key
-     */
-    protected $userKey;
+    private string $userKey;
+    private GusApiClient $apiClient;
+    private string $sessionId;
 
-    /**
-     * @var GusApiClient
-     */
-    protected $apiClient;
-
-    /**
-     * @var string
-     */
-    protected $sessionId;
-
-    /**
-     * GusApi constructor.
-     */
     public function __construct(string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
     {
         $builder = $builder ?: new Builder($env);
@@ -64,24 +50,9 @@ class GusApi
         return new self($userKey, 'prod', new Builder('prod', $apiClient));
     }
 
-    public function getUserKey(): string
-    {
-        return $this->userKey;
-    }
-
-    public function setUserKey(string $userKey): void
-    {
-        $this->userKey = $userKey;
-    }
-
     public function getSessionId(): string
     {
         return $this->sessionId;
-    }
-
-    public function setSessionId(string $sessionId): void
-    {
-        $this->sessionId = $sessionId;
     }
 
     /**
@@ -102,9 +73,7 @@ class GusApi
 
     public function logout(): bool
     {
-        $response = $this->apiClient->logout(new Logout($this->sessionId));
-
-        return $response->getWylogujResult();
+        return $this->apiClient->logout(new Logout($this->sessionId))->getWylogujResult();
     }
 
     public function isLogged(): bool
@@ -154,9 +123,7 @@ class GusApi
 
     public function serviceMessage(): string
     {
-        $result = $this->apiClient->getValue(new GetValue(ParamName::SERVICE_MESSAGE));
-
-        return $result->getGetValueResult();
+        return $this->apiClient->getValue(new GetValue(ParamName::SERVICE_MESSAGE))->getGetValueResult();
     }
 
     /**
@@ -166,7 +133,11 @@ class GusApi
      */
     public function getByNip(string $nip): array
     {
-        return $this->search(SearchType::NIP, $nip);
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, null, $nip, null, null, null, null)
+            )
+        );
     }
 
     /**
@@ -176,7 +147,11 @@ class GusApi
      */
     public function getByRegon(string $regon): array
     {
-        return $this->search(SearchType::REGON, $regon);
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, null, null, null, $regon, null, null)
+            )
+        );
     }
 
     /**
@@ -186,7 +161,11 @@ class GusApi
      */
     public function getByKrs(string $krs): array
     {
-        return $this->search(SearchType::KRS, $krs);
+        return $this->search(
+            new SearchData(
+                new SearchParameters($krs, null, null, null, null, null, null)
+            )
+        );
     }
 
     /**
@@ -200,7 +179,11 @@ class GusApi
     {
         $this->checkIdentifiersCount($nips);
 
-        return $this->search(SearchType::NIPS, implode(',', $nips));
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, null, null, implode(',', $nips), null, null, null)
+            )
+        );
     }
 
     /**
@@ -214,7 +197,11 @@ class GusApi
     {
         $this->checkIdentifiersCount($krses);
 
-        return $this->search(SearchType::KRSES, implode(',', $krses));
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, implode(',', $krses), null, null, null, null, null)
+            )
+        );
     }
 
     /**
@@ -228,7 +215,11 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_9, implode(',', $regons));
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, null, null, null, null, null, implode(',', $regons))
+            )
+        );
     }
 
     /**
@@ -242,13 +233,17 @@ class GusApi
     {
         $this->checkIdentifiersCount($regons);
 
-        return $this->search(SearchType::REGONS_14, implode(',', $regons));
+        return $this->search(
+            new SearchData(
+                new SearchParameters(null, null, null, null, null, implode(',', $regons), null)
+            )
+        );
     }
 
     /**
      * @throws InvalidReportTypeException
      *
-     * @return array[]
+     * @return array<int, array<string, string>>
      */
     public function getFullReport(SearchReport $searchReport, string $reportName): array
     {
@@ -275,19 +270,6 @@ class GusApi
         return $this->apiClient->getBulkReport(
             new GetBulkReport($date->format('Y-m-d'), $reportName),
             $this->sessionId
-        );
-    }
-
-    /**
-     * Get message about search if you don't get data.
-     */
-    public function getResultSearchMessage(): string
-    {
-        return sprintf(
-            "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
-            $this->getSessionStatus(),
-            $this->getMessageCode(),
-            $this->getMessage()
         );
     }
 
@@ -324,12 +306,7 @@ class GusApi
         return (int) $response->getGetValueResult();
     }
 
-    /**
-     * @param string[] $identifiers
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function checkIdentifiersCount(array $identifiers): void
+    private function checkIdentifiersCount(array $identifiers): void
     {
         if (\count($identifiers) > self::MAX_IDENTIFIERS) {
             throw new \InvalidArgumentException(sprintf('Too many identifiers. Maximum allowed is %d.', self::MAX_IDENTIFIERS));
@@ -338,18 +315,13 @@ class GusApi
 
     /**
      * @throws NotFoundException
-     *
      * @return SearchReport[]
      */
-    private function search(string $searchType, string $parameters): array
+    private function search(SearchData $searchData): array
     {
-        $method = 'set' . $searchType;
-        $searchParameters = new SearchParameters();
-        $searchParameters->$method($parameters);
+        $result = $this->apiClient->searchData($searchData, $this->sessionId);
 
-        $result = $this->apiClient->searchData(new SearchData($searchParameters), $this->sessionId);
-
-        return array_map(function (SearchResponseCompanyData $company) {
+        return array_map(static function (SearchResponseCompanyData $company): SearchReport {
             return new SearchReport($company);
         }, $result->getDaneSzukajResult());
     }

@@ -6,10 +6,7 @@ namespace GusApi\Type\Response;
 
 class LoginResponse
 {
-    /**
-     * @var string
-     */
-    public $ZalogujResult = '';
+    public string $ZalogujResult = '';
 
     public function __construct(string $ZalogujResult)
     {

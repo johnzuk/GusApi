@@ -48,6 +48,6 @@ class SearchReportTest extends TestCase
             'apartmentNumber' => '34B',
             'activityEndDate' => '2029-02-22',
             'postCity' => 'Płock',
-        ], json_decode(json_encode(new SearchReport($companyData)), true));
+        ], json_decode((string) json_encode(new SearchReport($companyData)), true));
     }
 }

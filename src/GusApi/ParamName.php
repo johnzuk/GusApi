@@ -8,10 +8,10 @@ interface ParamName
 {
     public const USER_KEY = 'pKluczUzytkownika';
     public const SESSION_ID = 'pIdentyfikatorSesji';
-    public const CAPTCHA = 'pCaptcha';
     public const SEARCH = 'pParametryWyszukiwania';
     public const REGON = 'pRegon';
     public const REPORT_NAME = 'pNazwaRaportu';
+    public const REPORT_DATE = 'pDataRaportu';
     public const PARAM_NAME = 'pNazwaParametru';
 
     public const STATUS_DATE_STATE = 'StanDanych';

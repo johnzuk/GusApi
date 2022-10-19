@@ -6,13 +6,14 @@ namespace GusApi\Environment;
 
 use GusApi\Exception\InvalidEnvironmentNameException;
 
-class EnvironmentFactory
+final class EnvironmentFactory
 {
     public static function create(string $environment): EnvironmentInterface
     {
         if ('prod' === $environment) {
             return new ProdEnvironment();
         }
+
         if ('dev' === $environment) {
             return new DevEnvironment();
         }

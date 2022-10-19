@@ -5,30 +5,31 @@ declare(strict_types=1);
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
+use GusApi\Tests\GetContentTrait;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
 use GusApi\Util\FullReportResponseDecoder;
 use PHPUnit\Framework\TestCase;
 
-class FullReportResponseDecoderTest extends TestCase
+final class FullReportResponseDecoderTest extends TestCase
 {
-    public function testDecodeWithEmptyString()
+    use GetContentTrait;
+
+    public function testDecodeWithEmptyString(): void
     {
         $rawReport = new GetFullReportResponseRaw('');
         $reportDecoded = FullReportResponseDecoder::decode($rawReport);
 
-        $this->assertInstanceOf(GetFullReportResponse::class, $reportDecoded);
-        $this->assertEquals([], $reportDecoded->getReport());
+        self::assertSame([], $reportDecoded->getReport());
     }
 
-    public function testDecodeWithValidXMLObject()
+    public function testDecodeWithValidXMLObject(): void
     {
-        $content = file_get_contents(__DIR__ . '/../resources/response/fullSearchResponse.xsd');
+        $content = self::getContent(__DIR__ . '/../resources/response/fullSearchResponse.xsd');
         $rawReport = new GetFullReportResponseRaw($content);
         $reportDecoded = FullReportResponseDecoder::decode($rawReport);
 
-        $this->assertInstanceOf(GetFullReportResponse::class, $reportDecoded);
-        $this->assertEquals([
+        self::assertSame([
             [
                 'fiz_regon9' => '666666666',
                 'fiz_nazwa' => 'NIEPUBLICZNY ZAKŁAD OPIEKI ZDROWOTNEJ xxxxxxxxxxxxx',
@@ -75,7 +76,7 @@ class FullReportResponseDecoderTest extends TestCase
         ], $reportDecoded->getReport());
     }
 
-    public function testInvalidServerResponse()
+    public function testInvalidServerResponse(): void
     {
         $rawReport = new GetFullReportResponseRaw('Invalid XML structure');
         $this->expectException(InvalidServerResponseException::class);

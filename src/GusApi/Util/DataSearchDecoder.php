@@ -32,7 +32,7 @@ class DataSearchDecoder
         $elements = [];
 
         foreach ($xmlElementsResponse->dane as $resultData) {
-            $elements[] = static::decodeSingleResult($resultData);
+            $elements[] = self::decodeSingleResult($resultData);
         }
 
         return new SearchDataResponse($elements);
@@ -41,7 +41,7 @@ class DataSearchDecoder
     /**
      * @throws NotFoundException
      */
-    protected static function decodeSingleResult(SimpleXMLElement $element): SearchResponseCompanyData
+    private static function decodeSingleResult(SimpleXMLElement $element): SearchResponseCompanyData
     {
         $result = new SearchResponseCompanyData();
 

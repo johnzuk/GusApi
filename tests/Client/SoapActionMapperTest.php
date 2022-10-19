@@ -12,23 +12,20 @@ final class SoapActionMapperTest extends TestCase
 {
     /**
      * @dataProvider actionProvider
-     *
-     * @param mixed $expected
-     * @param mixed $functionName
      */
-    public function testGetActionWithValidName($expected, $functionName): void
+    public function testGetActionWithValidName(string $expected, string $functionName): void
     {
         $action = SoapActionMapper::getAction($functionName);
         $this->assertSame($expected, $action);
     }
 
-    public function testGetActionWithInvalidName()
+    public function testGetActionWithInvalidName(): void
     {
         $this->expectException(InvalidActionNameException::class);
         SoapActionMapper::getAction('BadFunctionName');
     }
 
-    public function actionProvider()
+    public function actionProvider(): array
     {
         return [
             [

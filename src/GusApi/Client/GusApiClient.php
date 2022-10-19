@@ -11,6 +11,7 @@ use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
+use GusApi\Type\Request\RequestInterface;
 use GusApi\Type\Request\SearchData;
 use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetValueResponse;
@@ -34,28 +35,22 @@ class GusApiClient
     {
         $this->soapClient = $soapClient;
         $this->streamContext = $streamContext;
-        $this->setLocation($location);
+        $this->location = $location;
     }
 
     public function login(Login $login): LoginResponse
     {
-        return $this->call('Zaloguj', [
-            $login,
-        ]);
+        return $this->call('Zaloguj', $login);
     }
 
     public function logout(Logout $logout): LogoutResponse
     {
-        return $this->call('Wyloguj', [
-            $logout,
-        ]);
+        return $this->call('Wyloguj', $logout);
     }
 
     public function getValue(GetValue $getValue, ?string $sessionId = null): GetValueResponse
     {
-        return $this->call('GetValue', [
-            $getValue,
-        ], $sessionId);
+        return $this->call('GetValue', $getValue, $sessionId);
     }
 
     /**
@@ -66,9 +61,7 @@ class GusApiClient
         /**
          * @var SearchResponseRaw $result
          */
-        $result = $this->call('DaneSzukajPodmioty', [
-            $searchData,
-        ], $sessionId);
+        $result = $this->call('DaneSzukajPodmioty', $searchData, $sessionId);
 
         if ('' === $result->getDaneSzukajPodmiotyResult()) {
             throw new NotFoundException('No data found');
@@ -79,26 +72,16 @@ class GusApiClient
 
     public function getFullReport(GetFullReport $getFullReport, string $sessionId): GetFullReportResponse
     {
-        $rawResponse = $this->call('DanePobierzPelnyRaport', [
-            $getFullReport,
-        ], $sessionId);
+        $rawResponse = $this->call('DanePobierzPelnyRaport', $getFullReport, $sessionId);
 
         return FullReportResponseDecoder::decode($rawResponse);
     }
 
     public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array
     {
-        $rawResponse = $this->call('DanePobierzRaportZbiorczy', [
-            $getBulkReport,
-        ], $sessionId);
+        $rawResponse = $this->call('DanePobierzRaportZbiorczy', $getBulkReport, $sessionId);
 
         return BulkReportResponseDecoder::decode($rawResponse);
-    }
-
-    private function setLocation(string $location): void
-    {
-        $this->location = $location;
-        $this->soapClient->__setLocation($location);
     }
 
     private function setHttpOptions(array $options): void
@@ -108,16 +91,17 @@ class GusApiClient
         ]);
     }
 
-    private function call(string $functionName, array $arguments, ?string $sid = null)
+    private function call(string $functionName, RequestInterface $request, ?string $sid = null)
     {
         $action = SoapActionMapper::getAction($functionName);
         $soapHeaders = $this->getRequestHeaders($action, $this->location);
+        $this->soapClient->__setLocation($this->location);
         $this->setHttpOptions([
             'header' => 'sid: ' . $sid,
             'user_agent' => 'PHP GusApi',
         ]);
 
-        return $this->soapClient->__soapCall($functionName, $arguments, [], $soapHeaders);
+        return $this->soapClient->__soapCall($functionName, [$request->toArray()], [], $soapHeaders);
     }
 
     /**

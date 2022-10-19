@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace GusApi\Type\Request;
 
-class GetFullReport
-{
-    /**
-     * @var string
-     */
-    protected $pRegon;
+use GusApi\ParamName;
 
-    /**
-     * @var string
-     */
-    protected $pNazwaRaportu;
+final class GetFullReport implements RequestInterface
+{
+    public string $pRegon;
+    public string $pNazwaRaportu;
 
     public function __construct(string $pRegon, string $pNazwaRaportu)
     {
@@ -22,13 +17,11 @@ class GetFullReport
         $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    public function getPRegon(): string
+    public function toArray(): array
     {
-        return $this->pRegon;
-    }
-
-    public function getPNazwaRaportu(): string
-    {
-        return $this->pNazwaRaportu;
+        return [
+            ParamName::REGON => $this->pRegon,
+            ParamName::REPORT_NAME => $this->pNazwaRaportu,
+        ];
     }
 }

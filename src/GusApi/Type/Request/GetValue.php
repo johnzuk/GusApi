@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace GusApi\Type\Request;
 
-class GetValue
+use GusApi\ParamName;
+
+final class GetValue implements RequestInterface
 {
-    /**
-     * @var string
-     */
-    protected $pNazwaParametru;
+    private string $pNazwaParametru;
 
     public function __construct(string $pNazwaParametru)
     {
         $this->pNazwaParametru = $pNazwaParametru;
     }
 
-    public function getPNazwaParametru(): string
+    public function toArray(): array
     {
-        return $this->pNazwaParametru;
+        return [
+            ParamName::PARAM_NAME => $this->pNazwaParametru,
+        ];
     }
 }

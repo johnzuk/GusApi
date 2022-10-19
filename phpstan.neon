@@ -4,3 +4,5 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - "#^Method GusApi\\\\Client\\\\GusApiClient\\:\\:call\\(\\) has no return type specified\\.$#"
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon

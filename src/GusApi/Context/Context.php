@@ -9,11 +9,8 @@ class Context implements ContextInterface
     /**
      * @var resource
      */
-    protected $context;
+    private $context;
 
-    /**
-     * Context constructor.
-     */
     public function __construct()
     {
         $this->context = stream_context_create();
