@@ -318,6 +318,6 @@ class GusApi
     {
         $result = $this->apiClient->searchData($searchData, $this->sessionId);
 
-        return array_map(static fn(SearchResponseCompanyData $company): SearchReport => new SearchReport($company), $result->getDaneSzukajResult());
+        return array_map(static fn (SearchResponseCompanyData $company): SearchReport => new SearchReport($company), $result->getDaneSzukajResult());
     }
 }
