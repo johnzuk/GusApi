@@ -25,8 +25,8 @@ class DataSearchDecoder
 
         try {
             $xmlElementsResponse = new SimpleXMLElement($searchResponseRaw->getDaneSzukajPodmiotyResult());
-        } catch (\Exception) {
-            throw new InvalidServerResponseException('Invalid server response');
+        } catch (\Exception $e) {
+            throw new InvalidServerResponseException('Invalid server response', 0, $e);
         }
 
         $elements = [];
