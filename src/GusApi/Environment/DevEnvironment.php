@@ -13,6 +13,6 @@ final class DevEnvironment implements EnvironmentInterface
 
     public function getServerLocationUrl(): string
     {
-        return 'https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
+        return 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
     }
 }
