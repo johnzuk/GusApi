@@ -27,15 +27,8 @@ class GusApiClient
 {
     public const ADDRESSING_NAMESPACE = 'http://www.w3.org/2005/08/addressing';
 
-    private \SoapClient $soapClient;
-    private ContextInterface $streamContext;
-    private string $location;
-
-    public function __construct(\SoapClient $soapClient, string $location, ContextInterface $streamContext)
+    public function __construct(private \SoapClient $soapClient, private string $location, private ContextInterface $streamContext)
     {
-        $this->soapClient = $soapClient;
-        $this->streamContext = $streamContext;
-        $this->location = $location;
     }
 
     public function login(Login $login): LoginResponse

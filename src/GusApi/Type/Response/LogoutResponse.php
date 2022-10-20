@@ -6,11 +6,8 @@ namespace GusApi\Type\Response;
 
 class LogoutResponse
 {
-    public bool $WylogujResult;
-
-    public function __construct(bool $WylogujResult)
+    public function __construct(public bool $WylogujResult)
     {
-        $this->WylogujResult = $WylogujResult;
     }
 
     public function getWylogujResult(): bool

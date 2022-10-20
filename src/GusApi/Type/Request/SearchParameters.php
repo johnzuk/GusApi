@@ -6,30 +6,8 @@ namespace GusApi\Type\Request;
 
 class SearchParameters implements RequestInterface
 {
-    protected ?string $Krs = null;
-    protected ?string $Krsy = null;
-    protected ?string $Nip = null;
-    protected ?string $Nipy = null;
-    protected ?string $Regon = null;
-    protected ?string $Regony14zn = null;
-    protected ?string $Regony9zn = null;
-
-    public function __construct(
-        ?string $Krs,
-        ?string $Krsy,
-        ?string $Nip,
-        ?string $Nipy,
-        ?string $Regon,
-        ?string $Regony14zn,
-        ?string $Regony9zn
-    ) {
-        $this->Krs = $Krs;
-        $this->Krsy = $Krsy;
-        $this->Nip = $Nip;
-        $this->Nipy = $Nipy;
-        $this->Regon = $Regon;
-        $this->Regony14zn = $Regony14zn;
-        $this->Regony9zn = $Regony9zn;
+    public function __construct(protected ?string $Krs, protected ?string $Krsy, protected ?string $Nip, protected ?string $Nipy, protected ?string $Regon, protected ?string $Regony14zn, protected ?string $Regony9zn)
+    {
     }
 
     public function toArray(): array

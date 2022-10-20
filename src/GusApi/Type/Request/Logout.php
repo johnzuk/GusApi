@@ -8,11 +8,8 @@ use GusApi\ParamName;
 
 final class Logout implements RequestInterface
 {
-    public string $sessionId;
-
-    public function __construct(string $sessionId)
+    public function __construct(public string $sessionId)
     {
-        $this->sessionId = $sessionId;
     }
 
     public function toArray(): array

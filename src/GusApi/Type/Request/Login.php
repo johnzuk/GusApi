@@ -8,11 +8,8 @@ use GusApi\ParamName;
 
 final class Login implements RequestInterface
 {
-    private string $userKey;
-
-    public function __construct(string $userKey)
+    public function __construct(private string $userKey)
     {
-        $this->userKey = $userKey;
     }
 
     public function toArray(): array

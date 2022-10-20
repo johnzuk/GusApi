@@ -8,11 +8,8 @@ use GusApi\ParamName;
 
 final class GetValue implements RequestInterface
 {
-    private string $pNazwaParametru;
-
-    public function __construct(string $pNazwaParametru)
+    public function __construct(private string $pNazwaParametru)
     {
-        $this->pNazwaParametru = $pNazwaParametru;
     }
 
     public function toArray(): array

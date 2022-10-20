@@ -36,7 +36,7 @@ class FullReportResponseDecoder
             }
 
             return new GetFullReportResponse($elements);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw new InvalidServerResponseException('Invalid server response');
         }
     }

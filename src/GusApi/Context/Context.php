@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GusApi\Context;
 
-class Context implements ContextInterface
+final class Context implements ContextInterface
 {
     /**
      * @var resource

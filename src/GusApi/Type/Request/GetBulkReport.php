@@ -8,13 +8,8 @@ use GusApi\ParamName;
 
 final class GetBulkReport implements RequestInterface
 {
-    private string $pDataRaportu;
-    private string $pNazwaRaportu;
-
-    public function __construct(string $pDataRaportu, string $pNazwaRaportu)
+    public function __construct(private string $pDataRaportu, private string $pNazwaRaportu)
     {
-        $this->pDataRaportu = $pDataRaportu;
-        $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
     public function toArray(): array

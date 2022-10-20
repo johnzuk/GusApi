@@ -29,7 +29,7 @@ class BulkReportResponseDecoder
             }
 
             return $regons;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw new InvalidServerResponseException('Invalid server response');
         }
     }

@@ -8,11 +8,8 @@ use GusApi\ParamName;
 
 final class SearchData implements RequestInterface
 {
-    public SearchParameters $pParametryWyszukiwania;
-
-    public function __construct(SearchParameters $pParametryWyszukiwania)
+    public function __construct(public SearchParameters $pParametryWyszukiwania)
     {
-        $this->pParametryWyszukiwania = $pParametryWyszukiwania;
     }
 
     public function toArray(): array

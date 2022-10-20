@@ -33,16 +33,13 @@ class GusApi
     protected const SERVICE_TIME_ZONE = 'Europe/Warsaw';
 
     protected const SERVICE_STATUS_DATE_FORMAT = 'd-m-Y';
-
-    private string $userKey;
     private GusApiClient $apiClient;
     private string $sessionId;
 
-    public function __construct(string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
+    public function __construct(private string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
     {
         $builder = $builder ?: new Builder($env);
         $this->apiClient = $builder->build();
-        $this->userKey = $userKey;
     }
 
     public static function createWithApiClient(string $userKey, GusApiClient $apiClient): self
@@ -321,8 +318,6 @@ class GusApi
     {
         $result = $this->apiClient->searchData($searchData, $this->sessionId);
 
-        return array_map(static function (SearchResponseCompanyData $company): SearchReport {
-            return new SearchReport($company);
-        }, $result->getDaneSzukajResult());
+        return array_map(static fn(SearchResponseCompanyData $company): SearchReport => new SearchReport($company), $result->getDaneSzukajResult());
     }
 }

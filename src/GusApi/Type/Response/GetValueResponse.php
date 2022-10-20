@@ -6,11 +6,8 @@ namespace GusApi\Type\Response;
 
 class GetValueResponse
 {
-    public string $GetValueResult;
-
-    public function __construct(string $GetValueResult)
+    public function __construct(public string $GetValueResult)
     {
-        $this->GetValueResult = $GetValueResult;
     }
 
     public function getGetValueResult(): string

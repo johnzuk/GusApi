@@ -16,13 +16,8 @@ use SoapFault;
 
 final class Builder implements BuilderInterface
 {
-    private string $environment;
-    private ?GusApiClient $gusApiClient;
-
-    public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
+    public function __construct(private string $environment, private ?GusApiClient $gusApiClient = null)
     {
-        $this->environment = $environment;
-        $this->gusApiClient = $gusApiClient;
     }
 
     /**

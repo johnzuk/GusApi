@@ -7,16 +7,10 @@ namespace GusApi\Type\Response;
 class SearchDataResponse
 {
     /**
-     * @var SearchResponseCompanyData[]
-     */
-    public array $DaneSzukajResult = [];
-
-    /**
      * @param SearchResponseCompanyData[] $DaneSzukajResult
      */
-    public function __construct(array $DaneSzukajResult = [])
+    public function __construct(public array $DaneSzukajResult = [])
     {
-        $this->DaneSzukajResult = $DaneSzukajResult;
     }
 
     /**

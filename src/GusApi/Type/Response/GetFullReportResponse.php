@@ -7,16 +7,10 @@ namespace GusApi\Type\Response;
 class GetFullReportResponse
 {
     /**
-     * @var array<int, array<string, string>>
-     */
-    public array $report;
-
-    /**
      * @param array<int, array<string, string>> $report
      */
-    public function __construct(array $report = [])
+    public function __construct(public array $report = [])
     {
-        $this->report = $report;
     }
 
     /**

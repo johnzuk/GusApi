@@ -8,13 +8,8 @@ use GusApi\ParamName;
 
 final class GetFullReport implements RequestInterface
 {
-    public string $pRegon;
-    public string $pNazwaRaportu;
-
-    public function __construct(string $pRegon, string $pNazwaRaportu)
+    public function __construct(public string $pRegon, public string $pNazwaRaportu)
     {
-        $this->pRegon = $pRegon;
-        $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
     public function toArray(): array
