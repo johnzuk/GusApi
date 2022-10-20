@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Client;
 
 use GusApi\Context\Context;
@@ -12,34 +14,14 @@ use GusApi\Type\Response\LogoutResponse;
 use GusApi\Type\Response\SearchResponseRaw;
 use SoapFault;
 
-class Builder implements BuilderInterface
+final class Builder implements BuilderInterface
 {
-    /**
-     * @var string
-     */
-    protected $environment;
-
-    /**
-     * @var GusApiClient|null
-     */
-    protected $gusApiClient;
-
-    /**
-     * Builder constructor.
-     *
-     * @param string            $environment
-     * @param GusApiClient|null $gusApiClient
-     */
-    public function __construct(string $environment, ?GusApiClient $gusApiClient = null)
+    public function __construct(private string $environment, private ?GusApiClient $gusApiClient = null)
     {
-        $this->environment = $environment;
-        $this->gusApiClient = $gusApiClient;
     }
 
     /**
      * @throws SoapFault
-     *
-     * @return GusApiClient
      */
     public function build(): GusApiClient
     {

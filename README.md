@@ -20,48 +20,19 @@ composer require gusapi/gusapi
 
 Supported Versions
 ==================
-|Version|PHP version | BIR service version | Support                           | Doc  |
-|-------|------------|--------|----------------------------------|------|
-|5.x    | >= 7.1     | BIR1.1 (available since May 2019) | Support ends on December 1, 2020 | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
-|4.x    | >= 7.1     | BIR1  | Support ends on December 1, 2019 | [Doc](https://github.com/johnzuk/GusApi/tree/4.0.2/README.md)|
-|3.3.x  | >= 5.6     | BIR1  | Support ends on December 1, 2018 | [Doc](https://github.com/johnzuk/GusApi/blob/3.3/README.md) |
-|3.2.x  | >= 5.4     | BIR1  | Support ended on April 1, 2018   | [Doc](https://github.com/johnzuk/GusApi/blob/3.2/README.md) |
+| Version | PHP version | BIR service version                   | Support                          | Doc  |
+|---------|-------------|---------------------------------------|----------------------------------|------|
+| 6.x     | >= 8.0      | BIR1.1 (available since October 2022) | Support ends on April 1, 2023    | [Doc](https://github.com/johnzuk/GusApi/blob/master/README.md)|
+| 5.x     | >= 7.1      | BIR1.1 (available since May 2019)     | Support ends on December 1, 2020 | [Doc](https://github.com/johnzuk/GusApi/blob/5.0.0/README.md)|
 
-If you still use PHP <= 7.0 see documentation for 3.3.x version [HERE](https://github.com/johnzuk/GusApi/blob/3.3/README.md)
+If you still use PHP <= 8.0 see documentation for 5.x version [HERE](https://github.com/johnzuk/GusApi/blob/5.0.0/README.md)
 -------------------
-New in 5.x (this version support BIR1.1)
-========================================
-* New properties in `SearchReport`:
-  * nip
-  * nipStatus
-  * propertyNumber
-  * apartmentNumber
-  * activityEndDate
-
-    **Till version 5.x you dont need to get full report to find property number and apartment number**
-
-* Method getFullReport throws `InvalidReportTypeException` for invalid report name
-* Method dataStatus now return `DateTimeImmutable` instead of `DateTime` and throws `InvalidServerResponseException`
-* New method getBulkReport - new search type in BIR1.1 (mode documentation [here](https://api.stat.gov.pl/Home/RegonApi)) 
-  with `BulkReportTypes`
-* New supported report types for `getBulkReport` method (based on BIR1.1 documentation):
-    ```php
-    public const REPORT_NEW_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych';
-    public const REPORT_UPDATED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych';
-    public const REPORT_DELETED_LEGAL_ENTITY_AND_NATURAL_PERSON = 'BIR11SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych';
-    public const REPORT_NEW_LOCAL_UNITS = 'BIR11NoweJednostkiLokalne';
-    public const REPORT_UPDATED_LOCAL_UNITS = 'BIR11AktualizowaneJednostkiLokalne';
-    public const REPORT_DELETED_LOCAL_UNITS = 'BIR11SkresloneJednostkiLokalne';
-    ```  
-  
-* Remove  `ReportTypeMapper`
- 
-Upgrade from 4.x to 5.x
+Upgrade from 5.x to 6.x
 =========================
 For more information see [UPGRADE.md](UPGRADE.md).
 
 
-Example for 5.x
+Example for 6.x
 ======================
 See file [examples/readmeExample.php](examples/readmeExample.php).
 
@@ -88,14 +59,15 @@ try {
     var_dump($gus->dataStatus());
     var_dump($gus->getBulkReport(
         new DateTimeImmutable('2019-05-31'),
-        BulkReportTypes::REPORT_DELETED_LOCAL_UNITS));
+        BulkReportTypes::REPORT_DELETED_LOCAL_UNITS
+    ));
 
     foreach ($gusReports as $gusReport) {
         //you can change report type to other one
         $reportType = ReportTypes::REPORT_PERSON;
         echo $gusReport->getName();
-        echo 'Address: '. $gusReport->getStreet(). ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
-        
+        echo 'Address: ' . $gusReport->getStreet() . ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
+
         $fullReport = $gus->getFullReport($gusReport, $reportType);
         var_dump($fullReport);
     }
@@ -104,7 +76,12 @@ try {
 } catch (NotFoundException $e) {
     echo 'No data found <br>';
     echo 'For more information read server message below: <br>';
-    echo $gus->getResultSearchMessage();
+    echo sprintf(
+        "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
+        $gus->getSessionStatus(),
+        $gus->getMessageCode(),
+        $gus->getMessage()
+    );
 }
 
 ```

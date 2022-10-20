@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -14,6 +16,7 @@ class FullReportResponseDecoder
      */
     public static function decode(GetFullReportResponseRaw $fullReportResponseRaw): GetFullReportResponse
     {
+        /** @var array<int, array<string, string>> $elements */
         $elements = [];
 
         if ('' === $fullReportResponseRaw->getDanePobierzPelnyRaportResult()) {
@@ -24,6 +27,7 @@ class FullReportResponseDecoder
             $xmlElementsResponse = new SimpleXMLElement($fullReportResponseRaw->getDanePobierzPelnyRaportResult());
 
             foreach ($xmlElementsResponse->dane as $resultData) {
+                /** @var array<string, string> $element */
                 $element = [];
                 foreach ($resultData as $key => $item) {
                     $element[$key] = (string) $item;
@@ -33,7 +37,7 @@ class FullReportResponseDecoder
 
             return new GetFullReportResponse($elements);
         } catch (\Exception $e) {
-            throw new InvalidServerResponseException('Invalid server response');
+            throw new InvalidServerResponseException('Invalid server response', 0, $e);
         }
     }
 }

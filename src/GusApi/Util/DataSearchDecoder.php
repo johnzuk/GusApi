@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -24,13 +26,13 @@ class DataSearchDecoder
         try {
             $xmlElementsResponse = new SimpleXMLElement($searchResponseRaw->getDaneSzukajPodmiotyResult());
         } catch (\Exception $e) {
-            throw new InvalidServerResponseException('Invalid server response');
+            throw new InvalidServerResponseException('Invalid server response', 0, $e);
         }
 
         $elements = [];
 
         foreach ($xmlElementsResponse->dane as $resultData) {
-            $elements[] = static::decodeSingleResult($resultData);
+            $elements[] = self::decodeSingleResult($resultData);
         }
 
         return new SearchDataResponse($elements);
@@ -39,7 +41,7 @@ class DataSearchDecoder
     /**
      * @throws NotFoundException
      */
-    protected static function decodeSingleResult(SimpleXMLElement $element): SearchResponseCompanyData
+    private static function decodeSingleResult(SimpleXMLElement $element): SearchResponseCompanyData
     {
         $result = new SearchResponseCompanyData();
 

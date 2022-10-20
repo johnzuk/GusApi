@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
+use GusApi\Tests\GetContentTrait;
 use GusApi\Type\Response\GetBulkReportResponseRaw;
 use GusApi\Util\BulkReportResponseDecoder;
 use PHPUnit\Framework\TestCase;
 
 class BulkReportResponseDecoderTest extends TestCase
 {
+    use GetContentTrait;
+
     public function testDecode(): void
     {
-        $content = \file_get_contents(__DIR__.'/../resources/response/bulkReportResponse.xsd');
+        $content = self::getContent(__DIR__ . '/../resources/response/bulkReportResponse.xsd');
         $rawResponse = new GetBulkReportResponseRaw($content);
         $decodedResponse = BulkReportResponseDecoder::decode($rawResponse);
 

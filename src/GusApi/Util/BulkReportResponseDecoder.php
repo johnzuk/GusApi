@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
@@ -28,7 +30,7 @@ class BulkReportResponseDecoder
 
             return $regons;
         } catch (\Exception $e) {
-            throw new InvalidServerResponseException('Invalid server response');
+            throw new InvalidServerResponseException('Invalid server response', 0, $e);
         }
     }
 }

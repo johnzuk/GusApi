@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi;
 
 interface SearchType
 {
-    const NIP = 'Nip';
-    const KRS = 'Krs';
-    const REGON = 'Regon';
+    public const NIP = 'Nip';
+    public const KRS = 'Krs';
+    public const REGON = 'Regon';
 
-    const NIPS = 'Nipy';
-    const KRSES = 'Krsy';
-    const REGONS_9 = 'Regony9zn';
-    const REGONS_14 = 'Regony14zn';
+    public const NIPS = 'Nipy';
+    public const KRSES = 'Krsy';
+    public const REGONS_9 = 'Regony9zn';
+    public const REGONS_14 = 'Regony14zn';
 }

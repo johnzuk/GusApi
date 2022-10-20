@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Environment;
 
-class DevEnvironment implements EnvironmentInterface
+final class DevEnvironment implements EnvironmentInterface
 {
     public function getWSDLUrl(): string
     {
@@ -11,6 +13,6 @@ class DevEnvironment implements EnvironmentInterface
 
     public function getServerLocationUrl(): string
     {
-        return 'https://Wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
+        return 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc';
     }
 }

@@ -1,26 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class GetFullReportResponse
 {
     /**
-     * @var array[]
+     * @param array<int, array<string, string>> $report
      */
-    public $report;
-
-    /**
-     * GetFullReportResponse constructor.
-     *
-     * @param array[] $report
-     */
-    public function __construct(array $report = [])
+    public function __construct(public array $report = [])
     {
-        $this->report = $report;
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<string, string>>
      */
     public function getReport(): array
     {

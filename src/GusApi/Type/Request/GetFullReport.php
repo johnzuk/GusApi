@@ -1,42 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
-class GetFullReport
+use GusApi\ParamName;
+
+final class GetFullReport implements RequestInterface
 {
-    /**
-     * @var string
-     */
-    protected $pRegon;
-
-    /**
-     * @var string
-     */
-    protected $pNazwaRaportu;
-
-    /**
-     * @param string $pRegon
-     * @param string $pNazwaRaportu
-     */
-    public function __construct(string $pRegon, string $pNazwaRaportu)
+    public function __construct(public string $pRegon, public string $pNazwaRaportu)
     {
-        $this->pRegon = $pRegon;
-        $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    /**
-     * @return string
-     */
-    public function getPRegon(): string
+    public function toArray(): array
     {
-        return $this->pRegon;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPNazwaRaportu(): string
-    {
-        return $this->pNazwaRaportu;
+        return [
+            ParamName::REGON => $this->pRegon,
+            ParamName::REPORT_NAME => $this->pNazwaRaportu,
+        ];
     }
 }

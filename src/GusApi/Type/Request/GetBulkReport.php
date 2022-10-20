@@ -1,44 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
-class GetBulkReport
+use GusApi\ParamName;
+
+final class GetBulkReport implements RequestInterface
 {
-    /**
-     * @var string
-     */
-    protected $pDataRaportu;
-
-    /**
-     * @var string
-     */
-    protected $pNazwaRaportu;
-
-    /**
-     * GetBulkReport constructor.
-     *
-     * @param string $pDataRaportu
-     * @param string $pNazwaRaportu
-     */
-    public function __construct(string $pDataRaportu, string $pNazwaRaportu)
+    public function __construct(private string $pDataRaportu, private string $pNazwaRaportu)
     {
-        $this->pDataRaportu = $pDataRaportu;
-        $this->pNazwaRaportu = $pNazwaRaportu;
     }
 
-    /**
-     * @return string
-     */
-    public function getPDataRaportu(): string
+    public function toArray(): array
     {
-        return $this->pDataRaportu;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPNazwaRaportu(): string
-    {
-        return $this->pNazwaRaportu;
+        return [
+            ParamName::REPORT_DATE => $this->pDataRaportu,
+            ParamName::REPORT_NAME => $this->pNazwaRaportu,
+        ];
     }
 }

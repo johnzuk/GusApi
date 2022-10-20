@@ -1,20 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Response;
 
 class SearchDataResponse
 {
     /**
-     * @var SearchResponseCompanyData[]
-     */
-    public $DaneSzukajResult = [];
-
-    /**
      * @param SearchResponseCompanyData[] $DaneSzukajResult
      */
-    public function __construct(array $DaneSzukajResult = [])
+    public function __construct(public array $DaneSzukajResult = [])
     {
-        $this->DaneSzukajResult = $DaneSzukajResult;
     }
 
     /**

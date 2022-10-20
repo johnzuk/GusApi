@@ -28,7 +28,7 @@ try {
         //you can change report type to other one
         $reportType = ReportTypes::REPORT_PERSON;
         echo $gusReport->getName();
-        echo 'Address: '.$gusReport->getStreet().' '.$gusReport->getPropertyNumber().'/'.$gusReport->getApartmentNumber();
+        echo 'Address: ' . $gusReport->getStreet() . ' ' . $gusReport->getPropertyNumber() . '/' . $gusReport->getApartmentNumber();
 
         $fullReport = $gus->getFullReport($gusReport, $reportType);
         var_dump($fullReport);
@@ -38,5 +38,10 @@ try {
 } catch (NotFoundException $e) {
     echo 'No data found <br>';
     echo 'For more information read server message below: <br>';
-    echo $gus->getResultSearchMessage();
+    echo sprintf(
+        "StatusSesji:%s\nKomunikatKod:%s\nKomunikatTresc:%s\n",
+        $gus->getSessionStatus(),
+        $gus->getMessageCode(),
+        $gus->getMessage()
+    );
 }

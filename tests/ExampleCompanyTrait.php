@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests;
 
 use GusApi\SearchReport;
@@ -7,7 +9,7 @@ use GusApi\Type\Response\SearchResponseCompanyData;
 
 trait ExampleCompanyTrait
 {
-    protected function assertValidExampleCompany(SearchReport $report, bool $checkPostCity = true)
+    protected function assertValidExampleCompany(SearchReport $report, bool $checkPostCity = true): void
     {
         $this->assertSame('610188201', $report->getRegon());
         $this->assertSame('61018820100000', $report->getRegon14());

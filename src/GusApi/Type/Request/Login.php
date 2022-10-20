@@ -1,27 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Type\Request;
 
-class Login
-{
-    /**
-     * @var string
-     */
-    protected $pKluczUzytkownika;
+use GusApi\ParamName;
 
-    /**
-     * @param string $pKluczUzytkownika
-     */
-    public function __construct(string $pKluczUzytkownika)
+final class Login implements RequestInterface
+{
+    public function __construct(private string $userKey)
     {
-        $this->pKluczUzytkownika = $pKluczUzytkownika;
     }
 
-    /**
-     * @return string
-     */
-    public function getPKluczUzytkownika(): string
+    public function toArray(): array
     {
-        return $this->pKluczUzytkownika;
+        return [
+            ParamName::USER_KEY => $this->userKey,
+        ];
     }
 }

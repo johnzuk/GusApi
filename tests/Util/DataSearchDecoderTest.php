@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
+use GusApi\Tests\GetContentTrait;
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseCompanyData;
 use GusApi\Type\Response\SearchResponseRaw;
@@ -11,9 +14,11 @@ use PHPUnit\Framework\TestCase;
 
 class DataSearchDecoderTest extends TestCase
 {
+    use GetContentTrait;
+
     public function testDecode(): void
     {
-        $content = \file_get_contents(__DIR__.'/../resources/response/searchDataResponseResultSingle.xsd');
+        $content = self::getContent(__DIR__ . '/../resources/response/searchDataResponseResultSingle.xsd');
         $rawResponse = new SearchResponseRaw($content);
         $decodedResponse = DataSearchDecoder::decode($rawResponse);
 
@@ -31,7 +36,7 @@ class DataSearchDecoderTest extends TestCase
         $companyData->NrNieruchomosci = '208';
         $companyData->NrLokalu = '';
         $companyData->Typ = 'P';
-        $companyData->SilosID = 6;
+        $companyData->SilosID = '6';
         $companyData->DataZakonczeniaDzialalnosci = '';
 
         $expected = new SearchDataResponse([
