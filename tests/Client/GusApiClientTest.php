@@ -39,7 +39,7 @@ final class GusApiClientTest extends TestCase
 
     public function setUp(): void
     {
-        $this->soap = $this->getMockFromWsdl(__DIR__ . '/../UslugaBIRzewnPubl.xsd', SoapClient::class);
+        $this->soap = $this->getMockFromWsdl(__DIR__ . '/../UslugaBIRzewnPubl.xsd', SoapClient::class, '', [], false);
         $this->gusApiClient = new GusApiClient($this->soap, 'Location', new Context());
     }
 
