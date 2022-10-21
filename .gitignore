@@ -3,7 +3,7 @@ build/
 examples/captcha.jpeg
 .idea
 phpunit.xml
-.php_cs.cache
+.php-cs-fixer.cache
 .php_cs
 .phpunit.result.cache
 composer.lock

@@ -1,4 +1,7 @@
 parameters:
+    paths:
+        - src
+        - tests
     level: max
     reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false

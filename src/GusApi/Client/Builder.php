@@ -33,9 +33,9 @@ final class Builder implements BuilderInterface
         $context = new Context();
 
         $options = [
-            'soap_version' => SOAP_1_2,
+            'soap_version' => \SOAP_1_2,
             'trace' => true,
-            'style' => SOAP_DOCUMENT,
+            'style' => \SOAP_DOCUMENT,
             'stream_context' => $context->getContext(),
             'classmap' => [
                 'ZalogujResponse' => LoginResponse::class,

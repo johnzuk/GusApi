@@ -29,11 +29,11 @@ use PHPUnit\Framework\TestCase;
 
 final class GusApiTest extends TestCase
 {
-    /** @var GusApiClient|MockObject */
+    /** @var GusApiClient&MockObject */
     private GusApiClient|MockObject $apiClient;
     private GusApi $api;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->apiClient = $this->createMock(GusApiClient::class);
         $this->api = GusApi::createWithApiClient('123absdefg123', $this->apiClient);
@@ -125,7 +125,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByNip('123123123')
         );
@@ -140,7 +140,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByRegon('123123123')
         );
@@ -155,7 +155,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByKrs('123123123')
         );
@@ -170,7 +170,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByNips(['123123123', '123123124'])
         );
@@ -192,7 +192,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByKrses(['123123123', '123123124'])
         );
@@ -207,7 +207,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByRegons9(['123123123', '123123124'])
         );
@@ -222,7 +222,7 @@ final class GusApiTest extends TestCase
             [
                 new SearchReport(
                     new SearchResponseCompanyData()
-                )
+                ),
             ],
             $this->api->getByregons14(['123123123', '123123124'])
         );
@@ -235,7 +235,6 @@ final class GusApiTest extends TestCase
             ->expects(self::once())
             ->method('getFullReport')
             ->willReturn(new GetFullReportResponse([['test' => '1234']]));
-
 
         self::assertSame(
             [['test' => '1234']],

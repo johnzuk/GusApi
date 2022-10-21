@@ -34,10 +34,10 @@ final class GusApiClientTest extends TestCase
     use GetContentTrait;
 
     private GusApiClient $gusApiClient;
-    /** @var SoapClient|MockObject */
+
     private SoapClient|MockObject $soap;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->soap = $this->getMockFromWsdl(__DIR__ . '/../UslugaBIRzewnPubl.xsd', SoapClient::class, '', [], false);
         $this->gusApiClient = new GusApiClient($this->soap, 'Location', new Context());
@@ -84,7 +84,7 @@ final class GusApiClientTest extends TestCase
             [
                 [
                     'pNazwaParametru' => 'StanDanych',
-                ]
+                ],
             ],
             new GetValueResponse('stan danych response'),
             false

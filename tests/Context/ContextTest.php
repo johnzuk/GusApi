@@ -32,9 +32,7 @@ final class ContextTest extends TestCase
     public function testSetParameters(): void
     {
         $params = [
-            'notification' => function () {
-                return true;
-            },
+            'notification' => fn () => true,
             'options' => [],
         ];
 
