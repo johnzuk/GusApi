@@ -23,7 +23,7 @@ final class BuilderTest extends TestCase
     public function testBuildWithApiClient(): void
     {
         $options = [
-            'soap_version' => SOAP_1_1,
+            'soap_version' => \SOAP_1_1,
         ];
         $client = new GusApiClient(
             new SoapClient(__DIR__ . '/../UslugaBIRzewnPubl.xsd', $options),

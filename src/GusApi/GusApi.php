@@ -38,7 +38,7 @@ class GusApi
 
     public function __construct(private string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
     {
-        $builder = $builder ?: new Builder($env);
+        $builder ??= new Builder($env);
         $this->apiClient = $builder->build();
     }
 
@@ -312,6 +312,7 @@ class GusApi
 
     /**
      * @throws NotFoundException
+     *
      * @return SearchReport[]
      */
     private function search(SearchData $searchData): array

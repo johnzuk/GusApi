@@ -6,7 +6,6 @@ namespace GusApi\Tests\Util;
 
 use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Tests\GetContentTrait;
-use GusApi\Type\Response\GetFullReportResponse;
 use GusApi\Type\Response\GetFullReportResponseRaw;
 use GusApi\Util\FullReportResponseDecoder;
 use PHPUnit\Framework\TestCase;
