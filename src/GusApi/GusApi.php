@@ -49,6 +49,8 @@ class GusApi
 
     public function getSessionId(): string
     {
+        $this->ensureSession();
+
         return $this->sessionId;
     }
 
@@ -75,6 +77,10 @@ class GusApi
 
     public function isLogged(): bool
     {
+        if (!isset($this->sessionId)) {
+            return false;
+        }
+
         return (bool) $this->getSessionStatus();
     }
 
@@ -83,6 +89,7 @@ class GusApi
      */
     public function dataStatus(): DateTimeImmutable
     {
+        $this->ensureSession();
         $result = $this->apiClient->getValue(
             new GetValue(ParamName::STATUS_DATE_STATE),
             $this->sessionId
@@ -244,6 +251,7 @@ class GusApi
      */
     public function getFullReport(SearchReport $searchReport, string $reportName): array
     {
+        $this->ensureSession();
         $result = $this->apiClient->getFullReport(
             new GetFullReport(
                 ReportRegonNumberMapper::getRegonNumberByReportName($searchReport, $reportName),
@@ -260,6 +268,7 @@ class GusApi
      */
     public function getBulkReport(DateTimeImmutable $date, string $reportName): array
     {
+        $this->ensureSession();
         if (!\in_array($reportName, BulkReportTypes::REPORTS, true)) {
             throw new InvalidReportTypeException(sprintf('Invalid report type: "%s", use one of allowed type: (%s)', $reportName, implode(', ', BulkReportTypes::REPORTS)));
         }
@@ -275,6 +284,7 @@ class GusApi
      */
     public function getMessageCode(): int
     {
+        $this->ensureSession();
         $result = $this->apiClient->getValue(
             new GetValue(ParamName::MESSAGE_CODE),
             $this->sessionId
@@ -288,6 +298,7 @@ class GusApi
      */
     public function getMessage(): string
     {
+        $this->ensureSession();
         $result = $this->apiClient->getValue(new GetValue(ParamName::MESSAGE), $this->sessionId);
 
         return $result->getGetValueResult();
@@ -295,6 +306,7 @@ class GusApi
 
     public function getSessionStatus(): int
     {
+        $this->ensureSession();
         $response = $this->apiClient->getValue(
             new GetValue(ParamName::SESSION_STATUS),
             $this->sessionId
@@ -317,8 +329,16 @@ class GusApi
      */
     private function search(SearchData $searchData): array
     {
+        $this->ensureSession();
         $result = $this->apiClient->searchData($searchData, $this->sessionId);
 
         return array_map(static fn (SearchResponseCompanyData $company): SearchReport => new SearchReport($company), $result->getDaneSzukajResult());
+    }
+
+    private function ensureSession(): void
+    {
+        if (!isset($this->sessionId)) {
+            throw new \BadMethodCallException('Session is not started. Call login() first.');
+        }
     }
 }
