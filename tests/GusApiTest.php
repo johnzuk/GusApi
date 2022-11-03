@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GusApi\Tests;
 
+use BadMethodCallException;
 use DateTimeImmutable;
 use DateTimeZone;
 use GusApi\Client\GusApiClient;
@@ -50,7 +51,14 @@ final class GusApiTest extends TestCase
         $this->loginApiWithSessionId('12sessionid21');
         $this->api->login();
 
-        self::assertSame($this->api->getSessionId(), '12sessionid21');
+        self::assertSame('12sessionid21', $this->api->getSessionId());
+    }
+
+    public function testGetSessionIdFailsWhenNotLoggedIn(): void
+    {
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Session is not started. Call login() first.');
+        $this->api->getSessionId();
     }
 
     public function testLoginWillThrowExceptionWhenResponseIsEmpty(): void
@@ -81,6 +89,11 @@ final class GusApiTest extends TestCase
     {
         $this->expectGetValueCall('StatusSesji', '1');
         self::assertTrue($this->api->isLogged());
+    }
+
+    public function testIsLoggedReturnsFalseWhenSessionIdIsEmpty(): void
+    {
+        self::assertFalse($this->api->isLogged());
     }
 
     public function testGetDataStatus(): void
@@ -247,6 +260,7 @@ final class GusApiTest extends TestCase
 
     public function testGetBulkReportWillThrowExceptionWhenInvalidReportTypeProvided(): void
     {
+        $this->loginApiWithSessionId('12sessionid21');
         $this->expectException(InvalidReportTypeException::class);
         $this->api->getBulkReport(new DateTimeImmutable(), 'asdf');
     }
@@ -274,6 +288,13 @@ final class GusApiTest extends TestCase
     {
         $this->expectGetValueCall('KomunikatTresc', 'Invalid Test');
         self::assertSame('Invalid Test', $this->api->getMessage());
+    }
+
+    public function testItThrowsBadMethodCallExceptionWhenLoginWasNotCalled(): void
+    {
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Session is not started. Call login() first.');
+        $this->api->getMessageCode();
     }
 
     public function testGetSessionStatus(): void
