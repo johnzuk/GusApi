@@ -17,8 +17,6 @@ GusApi
 
 * The `GusApi::setUserKey` has been removed.
 
-* The `GusApi::setSessionId` has been removed.
-
 * The `GusApi::getResultSearchMessage` has been removed.
 
 ReportTypes
