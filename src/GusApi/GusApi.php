@@ -54,6 +54,11 @@ class GusApi
         return $this->sessionId;
     }
 
+    public function setSessionId(string $sessionId): void
+    {
+        $this->sessionId = $sessionId;
+    }
+
     /**
      * @throws InvalidUserKeyException
      */

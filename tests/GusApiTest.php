@@ -54,6 +54,13 @@ final class GusApiTest extends TestCase
         self::assertSame('12sessionid21', $this->api->getSessionId());
     }
 
+    public function testSetSessionIdWillSetSession(): void
+    {
+        $this->api->setSessionId("12sessionid21");
+        $this->mockApiClientGetValueCall('StatusSesji', '1');
+        self::assertTrue($this->api->isLogged());
+    }
+
     public function testGetSessionIdFailsWhenNotLoggedIn(): void
     {
         $this->expectException(BadMethodCallException::class);
@@ -306,6 +313,11 @@ final class GusApiTest extends TestCase
     private function expectGetValueCall(string $parameter, string $value): void
     {
         $this->loginApiWithSessionId('12sessionid21');
+        $this->mockApiClientGetValueCall($parameter, $value);
+    }
+
+    private function mockApiClientGetValueCall(string $parameter, string $value): void
+    {
         $this->apiClient
             ->expects(self::once())
             ->method('getValue')
