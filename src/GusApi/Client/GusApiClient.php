@@ -107,4 +107,9 @@ class GusApiClient
             new \SoapHeader(self::ADDRESSING_NAMESPACE, 'To', $to),
         ];
     }
+
+    public function getSoapClient(): \SoapClient
+    {
+        return $this->soapClient;
+    }
 }

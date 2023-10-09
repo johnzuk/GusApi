@@ -33,7 +33,7 @@ class GusApi
     protected const SERVICE_TIME_ZONE = 'Europe/Warsaw';
 
     protected const SERVICE_STATUS_DATE_FORMAT = 'd-m-Y';
-    private GusApiClient $apiClient;
+    protected GusApiClient $apiClient;
     private string $sessionId;
 
     public function __construct(private string $userKey, string $env = 'prod', ?BuilderInterface $builder = null)
