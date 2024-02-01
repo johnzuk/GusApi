@@ -1,0 +1,20 @@
+version: 2
+updates:
+    - package-ecosystem: github-actions
+      directory: /
+      allow:
+          - dependency-type: all
+      schedule:
+          interval: weekly
+      pull-request-branch-name:
+          separator: '-'
+      open-pull-requests-limit: 20
+    - package-ecosystem: composer
+      directory: /
+      allow:
+          - dependency-type: all
+      schedule:
+          interval: weekly
+      pull-request-branch-name:
+          separator: '-'
+      open-pull-requests-limit: 20
