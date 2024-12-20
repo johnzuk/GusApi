@@ -6,22 +6,22 @@ namespace GusApi;
 
 final class ReportTypes
 {
-    public const REPORT_PERSON = 'BIR11OsFizycznaDaneOgolne';
-    public const REPORT_PERSON_CEIDG = 'BIR11OsFizycznaDzialalnoscCeidg';
-    public const REPORT_PERSON_AGRO = 'BIR11OsFizycznaDzialalnoscRolnicza';
-    public const REPORT_PERSON_OTHER = 'BIR11OsFizycznaDzialalnoscPozostala';
+    public const REPORT_PERSON = 'BIR12OsFizycznaDaneOgolne';
+    public const REPORT_PERSON_CEIDG = 'BIR12OsFizycznaDzialalnoscCeidg';
+    public const REPORT_PERSON_AGRO = 'BIR12OsFizycznaDzialalnoscRolnicza';
+    public const REPORT_PERSON_OTHER = 'BIR12OsFizycznaDzialalnoscPozostala';
     public const REPORT_PERSON_DELETED_BEFORE_20141108 = 'BIR11OsFizycznaDzialalnoscSkreslonaDo20141108';
-    public const REPORT_PERSON_LOCALS = 'BIR11OsFizycznaListaJednLokalnych';
-    public const REPORT_PERSON_LOCAL = 'BIR11JednLokalnaOsFizycznej';
-    public const REPORT_PERSON_ACTIVITY = 'BIR11OsFizycznaPkd';
-    public const REPORT_PERSON_LOCAL_ACTIVITY = 'BIR11JednLokalnaOsFizycznejPkd';
-    public const REPORT_ORGANIZATION = 'BIR11OsPrawna';
-    public const REPORT_ORGANIZATION_ACTIVITY = 'BIR11OsPrawnaPkd';
-    public const REPORT_ORGANIZATION_LOCALS = 'BIR11OsPrawnaListaJednLokalnych';
-    public const REPORT_ORGANIZATION_LOCAL = 'BIR11JednLokalnaOsPrawnej';
-    public const REPORT_ORGANIZATION_LOCAL_ACTIVITY = 'BIR11JednLokalnaOsPrawnejPkd';
-    public const REPORT_ORGANIZATION_PARTNERS = 'BIR11OsPrawnaSpCywilnaWspolnicy';
-    public const REPORT_UNIT_TYPE = 'BIR11TypPodmiotu';
+    public const REPORT_PERSON_LOCALS = 'BIR12OsFizycznaListaJednLokalnych';
+    public const REPORT_PERSON_LOCAL = 'BIR12JednLokalnaOsFizycznej';
+    public const REPORT_PERSON_ACTIVITY = 'BIR12OsFizycznaPkd';
+    public const REPORT_PERSON_LOCAL_ACTIVITY = 'BIR12JednLokalnaOsFizycznejPkd';
+    public const REPORT_ORGANIZATION = 'BIR12OsPrawna';
+    public const REPORT_ORGANIZATION_ACTIVITY = 'BIR12OsPrawnaPkd';
+    public const REPORT_ORGANIZATION_LOCALS = 'BIR12OsPrawnaListaJednLokalnych';
+    public const REPORT_ORGANIZATION_LOCAL = 'BIR12JednLokalnaOsPrawnej';
+    public const REPORT_ORGANIZATION_LOCAL_ACTIVITY = 'BIR12JednLokalnaOsPrawnejPkd';
+    public const REPORT_ORGANIZATION_PARTNERS = 'BIR12OsPrawnaSpCywilnaWspolnicy';
+    public const REPORT_UNIT_TYPE = 'BIR12TypPodmiotu';
 
     public const REPORTS = [
         self::REPORT_PERSON,
