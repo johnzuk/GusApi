@@ -260,7 +260,7 @@ final class GusApiTest extends TestCase
             [['test' => '1234']],
             $this->api->getFullReport(
                 new SearchReport(new SearchResponseCompanyData()),
-                'BIR11OsFizycznaDaneOgolne'
+                'BIR12OsFizycznaDaneOgolne'
             )
         );
     }

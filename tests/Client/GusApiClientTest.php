@@ -338,16 +338,19 @@ final class GusApiClientTest extends TestCase
         $this->assertEquals(
             new GetFullReportResponse([
                 [
+                    'praw_pkdWersja' => '2007',
                     'praw_pkdKod' => '7430Z',
                     'praw_pkdNazwa' => 'DZIAŁALNOŚĆ ZWIĄZANA Z TŁUMACZENIAMI',
                     'praw_pkdPrzewazajace' => '0',
                 ],
                 [
+                    'praw_pkdWersja' => '2007',
                     'praw_pkdKod' => '7420Z',
                     'praw_pkdNazwa' => 'DZIAŁALNOŚĆ FOTOGRAFICZNA',
                     'praw_pkdPrzewazajace' => '0',
                 ],
                 [
+                    'praw_pkdWersja' => '2007',
                     'praw_pkdKod' => '7410Z',
                     'praw_pkdNazwa' => 'DZIAŁALNOŚĆ W ZAKRESIE SPECJALISTYCZNEGO PROJEKTOWANIA',
                     'praw_pkdPrzewazajace' => '1',
