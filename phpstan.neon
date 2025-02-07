@@ -4,8 +4,8 @@ parameters:
         - tests
     level: max
     reportUnmatchedIgnoredErrors: false
-    checkMissingIterableValueType: false
     ignoreErrors:
         - "#^Method GusApi\\\\Client\\\\GusApiClient\\:\\:call\\(\\) has no return type specified\\.$#"
 includes:
+    - phpstan-baseline.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

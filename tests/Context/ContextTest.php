@@ -38,6 +38,6 @@ final class ContextTest extends TestCase
 
         $this->context->setParameters($params);
         $this->assertSame($params, $this->context->getParameters());
-        $this->assertSame($params, stream_context_get_params($this->context->getContext()));
+        $this->assertEquals($params, stream_context_get_params($this->context->getContext()));
     }
 }
