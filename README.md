@@ -86,7 +86,7 @@ try {
 
 ```
 
-Donation
-======================
-If this project help you reduce time to develop, you can give me a cup of coffee ;)  
-[PayPal Donate](https://www.paypal.me/johnzuk)
+                        
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/johnzuk/GusApi.svg?variant=light)](https://starchart.cc/johnzuk/GusApi)
+                    
