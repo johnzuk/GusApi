@@ -18,6 +18,10 @@ final class Context implements ContextInterface
 
     public function setOptions(array $options): bool
     {
+        if (function_exists('stream_context_set_options')) {
+            return stream_context_set_options($this->context, $options);
+        }
+
         return stream_context_set_option($this->context, $options);
     }
 
