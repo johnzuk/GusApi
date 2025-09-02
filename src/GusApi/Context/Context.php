@@ -22,7 +22,7 @@ final class Context implements ContextInterface
             return stream_context_set_options($this->context, $options);
         }
 
-        return stream_context_set_option($this->context, $options);
+        return (bool) stream_context_set_option($this->context, $options);
     }
 
     public function setParameters(array $parameters): bool
