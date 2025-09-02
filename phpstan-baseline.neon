@@ -1,126 +1,199 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method GusApi\\\\Client\\\\GusApiClient\\:\\:getBulkReport\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Client\\GusApiClient\:\:getBulkReport\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Client/GusApiClient.php
 
 		-
-			message: "#^Method GusApi\\\\Client\\\\GusApiClient\\:\\:setHttpOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Client\\GusApiClient\:\:getValue\(\) should return GusApi\\Type\\Response\\GetValueResponse but returns mixed\.$#'
+			identifier: return.type
 			count: 1
 			path: src/GusApi/Client/GusApiClient.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\Context\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Client\\GusApiClient\:\:login\(\) should return GusApi\\Type\\Response\\LoginResponse but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/GusApi/Client/GusApiClient.php
+
+		-
+			message: '#^Method GusApi\\Client\\GusApiClient\:\:logout\(\) should return GusApi\\Type\\Response\\LogoutResponse but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/GusApi/Client/GusApiClient.php
+
+		-
+			message: '#^Method GusApi\\Client\\GusApiClient\:\:setHttpOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/GusApi/Client/GusApiClient.php
+
+		-
+			message: '#^Parameter \#1 \$bulkReportResponseRaw of static method GusApi\\Util\\BulkReportResponseDecoder\:\:decode\(\) expects GusApi\\Type\\Response\\GetBulkReportResponseRaw, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GusApi/Client/GusApiClient.php
+
+		-
+			message: '#^Parameter \#1 \$fullReportResponseRaw of static method GusApi\\Util\\FullReportResponseDecoder\:\:decode\(\) expects GusApi\\Type\\Response\\GetFullReportResponseRaw, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GusApi/Client/GusApiClient.php
+
+		-
+			message: '#^Method GusApi\\Context\\Context\:\:getOptions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/Context.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\Context\\:\\:getParameters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\Context\:\:getParameters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/Context.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\Context\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\Context\:\:setOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/Context.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\Context\\:\\:setParameters\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\Context\:\:setParameters\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/Context.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\ContextInterface\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\ContextInterface\:\:getOptions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/ContextInterface.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\ContextInterface\\:\\:getParameters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\ContextInterface\:\:getParameters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/ContextInterface.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\ContextInterface\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\ContextInterface\:\:setOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/ContextInterface.php
 
 		-
-			message: "#^Method GusApi\\\\Context\\\\ContextInterface\\:\\:setParameters\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Context\\ContextInterface\:\:setParameters\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Context/ContextInterface.php
 
 		-
-			message: "#^Method GusApi\\\\GusApi\\:\\:checkIdentifiersCount\\(\\) has parameter \\$identifiers with no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\GusApi\:\:checkIdentifiersCount\(\) has parameter \$identifiers with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/GusApi.php
 
 		-
-			message: "#^Method GusApi\\\\GusApi\\:\\:getBulkReport\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\GusApi\:\:getBulkReport\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/GusApi.php
 
 		-
-			message: "#^Method GusApi\\\\SearchReport\\:\\:jsonSerialize\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\SearchReport\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/SearchReport.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\GetBulkReport\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\GetBulkReport\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/GetBulkReport.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\GetFullReport\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\GetFullReport\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/GetFullReport.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\GetValue\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\GetValue\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/GetValue.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\Login\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\Login\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/Login.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\Logout\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\Logout\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/Logout.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\RequestInterface\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\RequestInterface\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/RequestInterface.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\SearchData\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\SearchData\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/SearchData.php
 
 		-
-			message: "#^Method GusApi\\\\Type\\\\Request\\\\SearchParameters\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Type\\Request\\SearchParameters\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Type/Request/SearchParameters.php
 
 		-
-			message: "#^Method GusApi\\\\Util\\\\BulkReportResponseDecoder\\:\\:decode\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method GusApi\\Util\\BulkReportResponseDecoder\:\:decode\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/GusApi/Util/BulkReportResponseDecoder.php
 
 		-
-			message: "#^Method GusApi\\\\Tests\\\\Client\\\\GusApiClientTest\\:\\:expectSoapCall\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			message: '#^Cannot call method method\(\) on mixed\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: tests/Client/GusApiClientTest.php
 
 		-
-			message: "#^Method GusApi\\\\Tests\\\\Client\\\\GusApiClientTest\\:\\:getHeaders\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: tests/Client/GusApiClientTest.php
 
 		-
-			message: "#^Method GusApi\\\\Tests\\\\Client\\\\SoapActionMapperTest\\:\\:actionProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Client/GusApiClientTest.php
+
+		-
+			message: '#^Method GusApi\\Tests\\Client\\GusApiClientTest\:\:expectSoapCall\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Client/GusApiClientTest.php
+
+		-
+			message: '#^Method GusApi\\Tests\\Client\\GusApiClientTest\:\:getHeaders\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Client/GusApiClientTest.php
+
+		-
+			message: '#^Method GusApi\\Tests\\Client\\SoapActionMapperTest\:\:actionProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Client/SoapActionMapperTest.php
