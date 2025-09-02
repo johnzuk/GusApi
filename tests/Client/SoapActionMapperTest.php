@@ -25,7 +25,7 @@ final class SoapActionMapperTest extends TestCase
         SoapActionMapper::getAction('BadFunctionName');
     }
 
-    public function actionProvider(): array
+    public static function actionProvider(): array
     {
         return [
             [
