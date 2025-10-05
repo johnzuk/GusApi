@@ -6,13 +6,12 @@ namespace GusApi\Tests\Client;
 
 use GusApi\Client\SoapActionMapper;
 use GusApi\Exception\InvalidActionNameException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class SoapActionMapperTest extends TestCase
 {
-    /**
-     * @dataProvider actionProvider
-     */
+    #[DataProvider('actionProvider')]
     public function testGetActionWithValidName(string $expected, string $functionName): void
     {
         $action = SoapActionMapper::getAction($functionName);
@@ -25,27 +24,16 @@ final class SoapActionMapperTest extends TestCase
         SoapActionMapper::getAction('BadFunctionName');
     }
 
-    public static function actionProvider(): array
+    /**
+     * @return iterable<array{0: string, 1: string}>
+     */
+    public static function actionProvider(): iterable
     {
-        return [
-            [
-                'http://CIS/BIR/2014/07/IUslugaBIR/GetValue', 'GetValue',
-            ],
-            [
-                'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', 'Zaloguj',
-            ],
-            [
-                'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', 'Wyloguj',
-            ],
-            [
-                'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukajPodmioty', 'DaneSzukajPodmioty',
-            ],
-            [
-                'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', 'DanePobierzPelnyRaport',
-            ],
-            [
-                'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzRaportZbiorczy', 'DanePobierzRaportZbiorczy',
-            ],
-        ];
+        yield ['http://CIS/BIR/2014/07/IUslugaBIR/GetValue', 'GetValue'];
+        yield ['http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj', 'Zaloguj'];
+        yield ['http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Wyloguj', 'Wyloguj'];
+        yield ['http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukajPodmioty', 'DaneSzukajPodmioty'];
+        yield ['http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzPelnyRaport', 'DanePobierzPelnyRaport'];
+        yield ['http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DanePobierzRaportZbiorczy', 'DanePobierzRaportZbiorczy'];
     }
 }

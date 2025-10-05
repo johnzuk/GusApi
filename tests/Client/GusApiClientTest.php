@@ -33,9 +33,9 @@ final class GusApiClientTest extends TestCase
 {
     use GetContentTrait;
 
-    private GusApiClient $gusApiClient;
+    private readonly GusApiClient $gusApiClient;
 
-    private SoapClient|MockObject $soap;
+    private readonly SoapClient&MockObject $soap;
 
     protected function setUp(): void
     {
