@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace GusApi\Tests;
 
-use BadMethodCallException;
-use DateTimeImmutable;
-use DateTimeZone;
 use GusApi\Client\GusApiClient;
 use GusApi\Exception\InvalidReportTypeException;
 use GusApi\Exception\InvalidServerResponseException;
 use GusApi\Exception\InvalidUserKeyException;
 use GusApi\GusApi;
 use GusApi\SearchReport;
+use GusApi\Type\Request\GetBulkReport;
+use GusApi\Type\Request\GetFullReport;
 use GusApi\Type\Request\GetValue;
 use GusApi\Type\Request\Login;
 use GusApi\Type\Request\Logout;
@@ -24,15 +23,13 @@ use GusApi\Type\Response\LoginResponse;
 use GusApi\Type\Response\LogoutResponse;
 use GusApi\Type\Response\SearchDataResponse;
 use GusApi\Type\Response\SearchResponseCompanyData;
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class GusApiTest extends TestCase
 {
-    /** @var GusApiClient&MockObject */
-    private GusApiClient|MockObject $apiClient;
-    private GusApi $api;
+    private readonly GusApiClient&MockObject $apiClient;
+    private readonly GusApi $api;
 
     protected function setUp(): void
     {
@@ -56,14 +53,14 @@ final class GusApiTest extends TestCase
 
     public function testSetSessionIdWillSetSession(): void
     {
-        $this->api->setSessionId("12sessionid21");
+        $this->api->setSessionId('12sessionid21');
         $this->mockApiClientGetValueCall('StatusSesji', '1');
         self::assertTrue($this->api->isLogged());
     }
 
     public function testGetSessionIdFailsWhenNotLoggedIn(): void
     {
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('Session is not started. Call login() first.');
         $this->api->getSessionId();
     }
@@ -107,10 +104,10 @@ final class GusApiTest extends TestCase
     {
         $this->expectGetValueCall('StanDanych', '31-12-2014');
         self::assertEquals(
-            DateTimeImmutable::createFromFormat(
+            \DateTimeImmutable::createFromFormat(
                 'd-m-Y',
                 '31-12-2014',
-                new DateTimeZone('Europe/Warsaw')
+                new \DateTimeZone('Europe/Warsaw')
             ),
             $this->api->dataStatus()
         );
@@ -199,7 +196,7 @@ final class GusApiTest extends TestCase
     public function testGetByNipsWillThrowExceptionWhenToManyIdentifiersProvided(): void
     {
         $this->loginApiWithSessionId('12sessionid21');
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->api->getByNips(array_fill(0, 21, '123123123'));
     }
 
@@ -254,13 +251,38 @@ final class GusApiTest extends TestCase
         $this->apiClient
             ->expects(self::once())
             ->method('getFullReport')
+            ->with(new GetFullReport('123456789', 'BIR12OsFizycznaDaneOgolne'))
             ->willReturn(new GetFullReportResponse([['test' => '1234']]));
+
+        $searchData = new SearchResponseCompanyData();
+        $searchData->Regon = '123456789';
 
         self::assertSame(
             [['test' => '1234']],
             $this->api->getFullReport(
-                new SearchReport(new SearchResponseCompanyData()),
+                new SearchReport($searchData),
                 'BIR12OsFizycznaDaneOgolne'
+            )
+        );
+    }
+
+    public function testGetFullReportForSearchUsesRegon14(): void
+    {
+        $this->loginApiWithSessionId('12sessionid21');
+        $this->apiClient
+            ->expects(self::once())
+            ->method('getFullReport')
+            ->with(new GetFullReport('12345678900000', 'BIR12TypPodmiotu'))
+            ->willReturn(new GetFullReportResponse([['test' => '1234']]));
+
+        $searchData = new SearchResponseCompanyData();
+        $searchData->Regon = '123456789';
+
+        self::assertSame(
+            [['test' => '1234']],
+            $this->api->getFullReport(
+                new SearchReport($searchData),
+                'BIR12TypPodmiotu'
             )
         );
     }
@@ -269,19 +291,26 @@ final class GusApiTest extends TestCase
     {
         $this->loginApiWithSessionId('12sessionid21');
         $this->expectException(InvalidReportTypeException::class);
-        $this->api->getBulkReport(new DateTimeImmutable(), 'asdf');
+        $this->api->getBulkReport(new \DateTimeImmutable(), 'asdf');
     }
 
     public function testGetBulkReport(): void
     {
         $this->loginApiWithSessionId('12sessionid21');
-        $this->apiClient->expects(self::once())->method('getBulkReport')->willReturn(['test' => 'test']);
+        $this->apiClient
+            ->expects(self::once())
+            ->method('getBulkReport')
+            ->with(new GetBulkReport('2025-10-05', 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych'))
+            ->willReturn(['test' => 'test']);
 
         self::assertSame(
             [
                 'test' => 'test',
             ],
-            $this->api->getBulkReport(new DateTimeImmutable(), 'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych')
+            $this->api->getBulkReport(
+                new \DateTimeImmutable('2025-10-05 01:00:00', new \DateTimeZone('Asia/Singapore')),
+                'BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych'
+            )
         );
     }
 
@@ -299,7 +328,7 @@ final class GusApiTest extends TestCase
 
     public function testItThrowsBadMethodCallExceptionWhenLoginWasNotCalled(): void
     {
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('Session is not started. Call login() first.');
         $this->api->getMessageCode();
     }

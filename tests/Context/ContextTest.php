@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ContextTest extends TestCase
 {
-    private Context $context;
+    private readonly Context $context;
 
     protected function setUp(): void
     {

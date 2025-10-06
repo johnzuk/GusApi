@@ -14,15 +14,36 @@ final class EnvironmentFactoryTest extends TestCase
 {
     public function testCreateWillCreateProdEnvironment(): void
     {
-        self::assertInstanceOf(ProdEnvironment::class, EnvironmentFactory::create('prod'));
+        $environment = EnvironmentFactory::create('prod');
+
+        self::assertInstanceOf(ProdEnvironment::class, $environment);
+        self::assertSame(
+            'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl-ver11-prod.wsdl',
+            $environment->getWSDLUrl()
+        );
+        self::assertSame(
+            'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
+            $environment->getServerLocationUrl()
+        );
     }
 
     public function testCreateWillCreateDevEnvironment(): void
     {
+        $environment = EnvironmentFactory::create('dev');
+
+        self::assertInstanceOf(DevEnvironment::class, $environment);
+        self::assertSame(
+            'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl-ver11-test.wsdl',
+            $environment->getWSDLUrl()
+        );
+        self::assertSame(
+            'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
+            $environment->getServerLocationUrl()
+        );
         self::assertInstanceOf(DevEnvironment::class, EnvironmentFactory::create('dev'));
     }
 
-    public function testCreateWillThworExceptionWhenUndefinedEnvironmentProvided(): void
+    public function testCreateWillThrowExceptionWhenUndefinedEnvironmentProvided(): void
     {
         $this->expectException(InvalidEnvironmentNameException::class);
         EnvironmentFactory::create('asdf');
