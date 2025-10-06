@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ['8.1', '8.2', '8.3', '8.4']
+        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Checkout Code
@@ -21,37 +21,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-
-      - name: Install Dependencies
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --no-interaction --no-progress
-
-      - name: Execute PHPUnit
-        run: vendor/bin/phpunit
-
-  coverage:
-    name: Test Coverage
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v5
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
           coverage: pcov
 
       - name: Install Dependencies
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --no-interaction --no-progress
+        uses: ramsey/composer-install@v3
 
       - name: Execute PHPUnit
         run: vendor/bin/phpunit --coverage-clover=./coverage.xml

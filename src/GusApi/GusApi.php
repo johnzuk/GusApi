@@ -269,6 +269,8 @@ class GusApi
     }
 
     /**
+     * @return string[]
+     *
      * @throws InvalidReportTypeException
      */
     public function getBulkReport(DateTimeImmutable $date, string $reportName): array
@@ -320,6 +322,9 @@ class GusApi
         return (int) $response->getGetValueResult();
     }
 
+    /**
+     * @param string[] $identifiers
+     */
     private function checkIdentifiersCount(array $identifiers): void
     {
         if (\count($identifiers) > self::MAX_IDENTIFIERS) {
