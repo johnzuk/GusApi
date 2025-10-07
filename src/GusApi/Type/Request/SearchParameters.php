@@ -10,6 +10,17 @@ class SearchParameters implements RequestInterface
     {
     }
 
+    /**
+     * @return array{
+     *     'Krs': string|null,
+     *     'Krsy': string|null,
+     *     'Nip': string|null,
+     *     'Nipy': string|null,
+     *     'Regon': string|null,
+     *     'Regony9zn': string|null,
+     *     'Regony14zn': string|null
+     * }
+     */
     public function toArray(): array
     {
         return [

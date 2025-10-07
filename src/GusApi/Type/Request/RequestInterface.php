@@ -7,7 +7,7 @@ namespace GusApi\Type\Request;
 interface RequestInterface
 {
     /**
-     * @return array<string, string|int|array|null>
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 }

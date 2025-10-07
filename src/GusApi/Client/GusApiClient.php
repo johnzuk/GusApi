@@ -70,6 +70,9 @@ class GusApiClient
         return FullReportResponseDecoder::decode($rawResponse);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getBulkReport(GetBulkReport $getBulkReport, string $sessionId): array
     {
         $rawResponse = $this->call('DanePobierzRaportZbiorczy', $getBulkReport, $sessionId);

@@ -12,6 +12,9 @@ final class SearchData implements RequestInterface
     {
     }
 
+    /**
+     * @return array{'pParametryWyszukiwania': array<string, string|null>}
+     */
     public function toArray(): array
     {
         return [

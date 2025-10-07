@@ -167,6 +167,9 @@ class SearchReport implements JsonSerializable
         return trim(strtolower($type));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return get_object_vars($this);

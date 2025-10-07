@@ -360,6 +360,9 @@ final class GusApiClientTest extends TestCase
         );
     }
 
+    /**
+     * @return \SoapHeader[]
+     */
     private function getHeaders(string $action, string $to): array
     {
         return [
@@ -368,6 +371,9 @@ final class GusApiClientTest extends TestCase
         ];
     }
 
+    /**
+     * @param list<mixed> $arguments
+     */
     private function expectSoapCall(string $action, array $arguments, object $result, bool $public = true): void
     {
         $baseUrl = $public ? 'http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl' : 'http://CIS/BIR/2014/07/IUslugaBIR';

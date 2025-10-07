@@ -30,6 +30,9 @@ final class Context implements ContextInterface
         return stream_context_set_params($this->context, $parameters);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOptions(): array
     {
         return stream_context_get_options($this->context);

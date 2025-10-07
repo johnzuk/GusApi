@@ -12,6 +12,8 @@ class BulkReportResponseDecoder
 {
     /**
      * @throws InvalidServerResponseException
+     *
+     * @return list<string>
      */
     public static function decode(GetBulkReportResponseRaw $bulkReportResponseRaw): array
     {

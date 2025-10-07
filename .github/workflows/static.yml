@@ -5,34 +5,10 @@ on:
   pull_request:
 
 jobs:
-  composer:
-    name: Composer validation
-    runs-on: ubuntu-24.04
-
-    strategy:
-      matrix:
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-
-      - name: Execute composer validate
-        run: composer validate --strict
-
   phpcs:
     name: PHPCs
     runs-on: ubuntu-24.04
 
-    strategy:
-      matrix:
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -40,14 +16,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.4'
+
+      - name: Execute composer validate
+        run: composer validate --strict
 
       - name: Install Dependencies
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --no-interaction --no-progress
+        uses: ramsey/composer-install@v3
 
       - name: Execute PHPCs
         run: vendor/bin/phpcs src tests
@@ -58,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
 
     steps:
       - name: Checkout code
@@ -70,11 +45,7 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - name: Install Dependencies
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --no-interaction --no-progress
+        uses: ramsey/composer-install@v3
 
       - name: Execute PHPStan
         run: vendor/bin/phpstan --no-progress
