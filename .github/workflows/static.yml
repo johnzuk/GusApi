@@ -22,7 +22,7 @@ jobs:
         run: composer validate --strict
 
       - name: Install Dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
 
       - name: Execute PHPCs
         run: vendor/bin/phpcs src tests
@@ -45,7 +45,7 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - name: Install Dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
 
       - name: Execute PHPStan
         run: vendor/bin/phpstan --no-progress

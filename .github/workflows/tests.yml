@@ -24,7 +24,7 @@ jobs:
           coverage: pcov
 
       - name: Install Dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
 
       - name: Execute PHPUnit
         run: vendor/bin/phpunit --coverage-clover=./coverage.xml
